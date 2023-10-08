@@ -1,11 +1,37 @@
 import numpy as np
-import pandas as pd
+import random
 
-def create_connection_mat(s_mat, e_array):
-    conn_mat = np.zeros((len(s_mat[0]), len(e_array)))
-    for i, row in enumerate(s_mat):
-        conn_mat[i] = np.isin(e_array, np.where(row == 1)[0])
-    return conn_mat.astype(int)
+def create_connection_mat(s_mat):
+    dim_s = len(s_mat[0])
+    connection_mat = s_mat
+    for i in range(dim_s):
+        connection_mat[i][i] = 1
+        for j in range(dim_s):
+            if s_mat[i][j] == 1:
+                connection_mat[j][i] = 1
+    return connection_mat
+
+def create_real_knockdown_mat(s_mat, e_arr):
+    dim_s = len(s_mat[0])
+    connection_mat = create_connection_mat(s_mat)
+    knockdown_mat = np.zeros((dim_s, len(e_arr)))
+    for k, s_gene in enumerate(e_arr):
+        for i in range(dim_s):
+            if connection_mat[s_gene-1][i] == 1:
+                knockdown_mat[i][k] = 1
+    return knockdown_mat
+
+def create_observed_knockdown_mat(knockdown_mat, alpha, beta, seed=42):
+    random.seed(seed)
+    pertubed_data = knockdown_mat
+    for indices, kd_observation in np.ndenumerate(knockdown_mat):
+        rnd_num = random.random()
+        if kd_observation == 1 and rnd_num < beta:
+            pertubed_data[indices] = 0
+        elif kd_observation == 0 and rnd_num < alpha:
+            pertubed_data[indices] = 1
+    return pertubed_data
+            
 
 # def compute_scores(effect_nodes, data, A, B):
 #     """

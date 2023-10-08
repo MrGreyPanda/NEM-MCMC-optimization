@@ -13,7 +13,7 @@ class NEM:
     - e_arr (numpy.ndarray): the end nodes of the network
     - A (float): the value of the parameter A in the NEM
     - B (float): the value of the parameter B in the NEM
-    - conn_mat (numpy.ndarray): the connection matrix of the network
+    - observed_knockdown_mat (numpy.ndarray): the connection matrix of the network
 
     Methods:
     - __init__(self): initializes the NEM object by reading the network.csv file and setting the attributes
@@ -40,7 +40,6 @@ class NEM:
                 s_points = list(map(int, line.strip().split(',')))
                 if len(s_points) != 2:
                     break
-                print(s_points)
                 adj_matrix[s_points[0]-1, s_points[1]-1] = 1
                 
             # Read the last line to get the end nodes
@@ -55,7 +54,12 @@ class NEM:
         beta = errors[1]
         self.A = np.log(alpha / (1.0 - beta))
         self.B = np.log(beta / (1.0 - alpha))
-        self.conn_mat = utils.create_connection_mat(self.s_mat, self.e_arr)
+        print(self.s_mat)
+        self.real_knockdown_mat = utils.create_real_knockdown_mat(self.s_mat, self.e_arr)
+        self.observed_knockdown_mat = utils.create_observed_knockdown_mat(self.real_knockdown_mat, alpha, beta)
+        print("Observed knockdown Matrix: \n", self.observed_knockdown_mat)
+        score_table = self.build_score_table(0)
+        print(score_table)
         
     def compute_scores(self):
         """
@@ -63,12 +67,11 @@ class NEM:
         Returns:
         numpy.ndarray: The computed scores.
         """
-        
         # suppose only effect_nodes have an effect on E-genes upon perturbation i.e. we expect to see all 1
-        score = np.sum(np.where(self.conn_mat[self.eff_aarr, :] == 1, 0, self.B), axis=0) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
+        score = np.sum(np.where(self.knockdown_mat[self.e_arr, :] == 1, 0, self.B), axis=0) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
 
         # suppose the rest does not have an effect on E-genes, therefore if we perturb them we expect to see 0
-        score += np.sum(np.where(self.conn_mat[np.setdiff1d(np.arange(self.conn_mat.shape[0]), self.eff_aarr), :] == 0, 0, self.A), axis=0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
+        score += np.sum(np.where(self.knockdown_mat[np.setdiff1d(np.arange(self.knockdown_mat.shape[0]), self.e_arr-1), :] == 0, 0, self.A), axis=0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
 
         return score
     
@@ -93,8 +96,8 @@ class NEM:
         
         indices = {i for i in range(self.num_s) if i != node}
         for index in indices:
-            s = np.where(self.conn_mat[index] == 0, self.B, -self.A)
-            score_table.loc[index] = s
+            s = np.where(self.observed_knockdown_mat[index] == 0, self.B, -self.A)
+            score_table[index] = s
         
         return score_table
     
@@ -134,6 +137,28 @@ class NEM:
             l.append(all_score_tables[S_gene][S_gene]) # return base row
 
         res = np.vstack(l)
-        res = np.vstack((res, np.where(self.conn_mat == 0, 0, self.A).sum(axis=0)))
+        res = np.vstack((res, np.where(self.observed_knockdown_mat == 0, 0, self.A).sum(axis=0)))
 
         return res
+
+
+def compute_scores(effect_nodes, data, A, B):
+    """
+    Computes the scores for the given effect nodes using the given data, A, and B matrices.
+    
+    Args:
+    - effect_nodes: list of indices of effect nodes
+    - data: numpy array representing the gene expression data
+    - A: float representing the activation threshold for the effect nodes
+    - B: float representing the penalty for false negatives
+    
+    Returns:
+    - score: numpy array representing the scores for the given effect nodes
+    """
+    # suppose only effect_nodes have an effect on E-genes upon perturbation i.e. we expect to see all 1
+    score = np.sum(np.where(data[effect_nodes, :] == 1, 0, B), axis=0) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
+
+    # suppose the rest does not have an effect on E-genes, therefore if we perturb them we expect to see 0
+    score += np.sum(np.where(data[np.setdiff1d(range(data.shape[0]), effect_nodes), :] == 0, 0, A), axis=0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
+
+    return score
