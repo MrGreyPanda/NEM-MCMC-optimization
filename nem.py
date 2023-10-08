@@ -3,7 +3,27 @@ import utils
 import os
 
 class NEM:
+    """
+    A class representing a Network Error Model (NEM).
+
+    Attributes:
+    - num_s (int): the number of s-points in the network
+    - num_e (int): the number of e-points in the network
+    - s_mat (numpy.ndarray): the adjacency matrix of the network
+    - e_arr (numpy.ndarray): the end nodes of the network
+    - A (float): the value of the parameter A in the NEM
+    - B (float): the value of the parameter B in the NEM
+    - conn_mat (numpy.ndarray): the connection matrix of the network
+
+    Methods:
+    - __init__(self): initializes the NEM object by reading the network.csv file and setting the attributes
+    """
+
     def __init__(self):
+        """
+        Initializes the NEM object by reading the network.csv file and setting the attributes.
+        """
+        
         # Get the current directory
         current_dir = os.getcwd()
 
@@ -25,8 +45,95 @@ class NEM:
                 
             # Read the last line to get the end nodes
             end_nodes = np.array(list(map(int, line.split(','))))
+            errors = np.array(list(map(float, f.readline().strip().split(','))))
+            
 
         # Save the adjacency matrix and end nodes as class members
         self.s_mat = adj_matrix
         self.e_arr = end_nodes
+        alpha = errors[0]
+        beta = errors[1]
+        self.A = np.log(alpha / (1.0 - beta))
+        self.B = np.log(beta / (1.0 - alpha))
         self.conn_mat = utils.create_connection_mat(self.s_mat, self.e_arr)
+        
+    def compute_scores(self):
+        """
+        Computes the scores for a given set of effect nodes, data, and parameters A and B.
+        Returns:
+        numpy.ndarray: The computed scores.
+        """
+        
+        # suppose only effect_nodes have an effect on E-genes upon perturbation i.e. we expect to see all 1
+        score = np.sum(np.where(self.conn_mat[self.eff_aarr, :] == 1, 0, self.B), axis=0) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
+
+        # suppose the rest does not have an effect on E-genes, therefore if we perturb them we expect to see 0
+        score += np.sum(np.where(self.conn_mat[np.setdiff1d(np.arange(self.conn_mat.shape[0]), self.eff_aarr), :] == 0, 0, self.A), axis=0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
+
+        return score
+    
+    def build_score_table(self, node):
+        """
+        Builds a score table for a given node in a network.
+
+        Parameters:
+        node (int): The node for which to build the score table.
+        data (pandas.DataFrame): The data matrix containing the gene expression data.
+ 
+        Returns:
+        pandas.DataFrame: The score table for the given node.
+        """
+        # init score table
+        score_table = np.zeros((self.num_s, self.num_e))
+        
+        # compute first (base) row
+        score_table[node, :] = self.compute_scores()
+        
+        # compute the increment of score if we have additional parents
+        
+        indices = {i for i in range(self.num_s) if i != node}
+        for index in indices:
+            s = np.where(self.conn_mat[index] == 0, self.B, -self.A)
+            score_table.loc[index] = s
+        
+        return score_table
+    
+    def get_score_tables(self):
+        """
+        Computes score tables for each S_gene in the given data using the given A and B matrices.
+        
+        Args:
+        - data: pandas DataFrame containing the gene expression data
+        - A: numpy array representing the A matrix
+        - B: numpy array representing the B matrix
+        
+        Returns:
+        - all_scoretbls: list containing the score tables for each S_gene
+        """
+        all_score_tables = []
+        # compute score tables for each S_gene
+        for node in range(self.num_s):
+            all_score_tables.append(self.build_score_table(node))
+        return all_score_tables
+        
+
+    def get_node_lr_tbl(self, all_score_tables):
+        """
+        Returns a table with the node scores for all effect nodes in the network.
+        
+        Parameters:
+        all_score_tables (list): A list containing score tables for all genes in the network.
+        data (numpy.ndarray): A 2D numpy array containing the gene expression data.
+        A (float): The activation threshold for the effect nodes.
+        
+        Returns:
+        numpy.ndarray: A table with the node scores for all effect nodes in the network.
+        """
+        l = []
+        for S_gene in all_score_tables:
+            l.append(all_score_tables[S_gene][S_gene]) # return base row
+
+        res = np.vstack(l)
+        res = np.vstack((res, np.where(self.conn_mat == 0, 0, self.A).sum(axis=0)))
+
+        return res
