@@ -54,24 +54,24 @@ class NEM:
         beta = errors[1]
         self.A = np.log(alpha / (1.0 - beta))
         self.B = np.log(beta / (1.0 - alpha))
-        print(self.s_mat)
         self.real_knockdown_mat = utils.create_real_knockdown_mat(self.s_mat, self.e_arr)
         self.observed_knockdown_mat = utils.create_observed_knockdown_mat(self.real_knockdown_mat, alpha, beta)
-        print("Observed knockdown Matrix: \n", self.observed_knockdown_mat)
-        score_table = self.build_score_table(0)
-        print(score_table)
+        print("Computing all initial score tables:")
+        self.score_table_list = self.get_score_tables()
         
-    def compute_scores(self):
+    def compute_scores(self, node):
         """
         Computes the scores for a given set of effect nodes, data, and parameters A and B.
         Returns:
         numpy.ndarray: The computed scores.
         """
         # suppose only effect_nodes have an effect on E-genes upon perturbation i.e. we expect to see all 1
-        score = np.sum(np.where(self.knockdown_mat[self.e_arr, :] == 1, 0, self.B), axis=0) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
+        score = np.where(self.observed_knockdown_mat[node, :] == 1, 0, self.B) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
 
         # suppose the rest does not have an effect on E-genes, therefore if we perturb them we expect to see 0
-        score += np.sum(np.where(self.knockdown_mat[np.setdiff1d(np.arange(self.knockdown_mat.shape[0]), self.e_arr-1), :] == 0, 0, self.A), axis=0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
+        indices = {i for i in range(self.num_s) if i != node}
+        for index in indices:
+            score += np.where(self.observed_knockdown_mat[index, :] == 1, self.A, 0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
 
         return score
     
@@ -90,7 +90,7 @@ class NEM:
         score_table = np.zeros((self.num_s, self.num_e))
         
         # compute first (base) row
-        score_table[node, :] = self.compute_scores()
+        score_table[node, :] = self.compute_scores(node)
         
         # compute the increment of score if we have additional parents
         
@@ -120,7 +120,7 @@ class NEM:
         return all_score_tables
         
 
-    def get_node_lr_tbl(self, all_score_tables):
+    def get_node_lr_table(self, all_score_tables):
         """
         Returns a table with the node scores for all effect nodes in the network.
         
