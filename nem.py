@@ -133,32 +133,10 @@ class NEM:
         numpy.ndarray: A table with the node scores for all effect nodes in the network.
         """
         l = []
-        for S_gene in all_score_tables:
-            l.append(all_score_tables[S_gene][S_gene]) # return base row
+        for i in range(self.num_s):
+            l.append(all_score_tables[i][i]) # return base row
 
         res = np.vstack(l)
         res = np.vstack((res, np.where(self.observed_knockdown_mat == 0, 0, self.A).sum(axis=0)))
 
         return res
-
-
-def compute_scores(effect_nodes, data, A, B):
-    """
-    Computes the scores for the given effect nodes using the given data, A, and B matrices.
-    
-    Args:
-    - effect_nodes: list of indices of effect nodes
-    - data: numpy array representing the gene expression data
-    - A: float representing the activation threshold for the effect nodes
-    - B: float representing the penalty for false negatives
-    
-    Returns:
-    - score: numpy array representing the scores for the given effect nodes
-    """
-    # suppose only effect_nodes have an effect on E-genes upon perturbation i.e. we expect to see all 1
-    score = np.sum(np.where(data[effect_nodes, :] == 1, 0, B), axis=0) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
-
-    # suppose the rest does not have an effect on E-genes, therefore if we perturb them we expect to see 0
-    score += np.sum(np.where(data[np.setdiff1d(range(data.shape[0]), effect_nodes), :] == 0, 0, A), axis=0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
-
-    return score
