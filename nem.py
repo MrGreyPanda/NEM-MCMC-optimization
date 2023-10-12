@@ -30,34 +30,42 @@ class NEM:
         # Read the network.csv file
         with open(os.path.join(current_dir, 'network.csv'), 'r') as f:
             # Read the first line to get num_s and num_e
+            # Read the first line to get num_s and num_e
             self.num_s, self.num_e = map(int, f.readline().strip().split(','))
-
             # Create an empty adjacency matrix
             adj_matrix = np.zeros((self.num_s, self.num_s), dtype=int)
 
             # Read the connected s-points and update the adjacency matrix
             for line in f:
-                s_points = list(map(int, line.strip().split(',')))
+                s_points = [map(int, line.strip().split(','))]
                 if len(s_points) != 2:
                     break
                 adj_matrix[s_points[0]-1, s_points[1]-1] = 1
                 
             # Read the last line to get the end nodes
-            end_nodes = np.array(list(map(int, line.split(','))))
-            errors = np.array(list(map(float, f.readline().strip().split(','))))
+            self.e_arr = np.array(line.strip().split(',')).astype(int)
+            alpha, beta = map(float, f.readline().strip().split(','))
             
 
         # Save the adjacency matrix and end nodes as class members
         self.s_mat = adj_matrix
-        self.e_arr = end_nodes
-        alpha = errors[0]
-        beta = errors[1]
+        print(len(self.e_arr))
         self.A = np.log(alpha / (1.0 - beta))
         self.B = np.log(beta / (1.0 - alpha))
         self.real_knockdown_mat = utils.create_real_knockdown_mat(self.s_mat, self.e_arr)
         self.observed_knockdown_mat = utils.create_observed_knockdown_mat(self.real_knockdown_mat, alpha, beta)
-        print("Computing all initial score tables:")
-        self.score_table_list = self.get_score_tables()
+        self.all_score_tables = self.get_score_tables()
+        self.U = self.get_node_lr_table()
+        self.parent_weights = [[]]
+        # self.parentLists = utils.create_parent_lists(self.s_mat)
+        self.parentsLists = [[]]
+        for index, list in enumerate(self.parentsLists):
+            for i in list:
+                self.weights[index].append(0.5)
+                
+        self.reduced_score_tables = self.get_reduced_score_tables(self.parentsLists)
+        self.cellLRs = self.compute_ll_ratios()
+        
         
     def compute_scores(self, node):
         """
@@ -66,6 +74,7 @@ class NEM:
         numpy.ndarray: The computed scores.
         """
         # suppose only effect_nodes have an effect on E-genes upon perturbation i.e. we expect to see all 1
+        print("shape knockdown_mat", self.observed_knockdown_mat.shape)
         score = np.where(self.observed_knockdown_mat[node, :] == 1, 0, self.B) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
 
         # suppose the rest does not have an effect on E-genes, therefore if we perturb them we expect to see 0
@@ -120,7 +129,7 @@ class NEM:
         return all_score_tables
         
 
-    def get_node_lr_table(self, all_score_tables):
+    def get_node_lr_table(self):
         """
         Returns a table with the node scores for all effect nodes in the network.
         
@@ -134,9 +143,56 @@ class NEM:
         """
         l = []
         for i in range(self.num_s):
-            l.append(all_score_tables[i][i]) # return base row
+            l.append(self.all_score_tables[i][i]) # return base row
 
         res = np.vstack(l)
         res = np.vstack((res, np.where(self.observed_knockdown_mat == 0, 0, self.A).sum(axis=0)))
 
         return res
+    
+    def get_reduced_score_tables(self, parentLists):
+        """
+        Returns a list of reduced score tables based on the given parent lists.
+
+        Args:
+        parentLists (list): A list of lists containing the indices of the parents for each student.
+
+        Returns:
+        list: A list of numpy arrays containing the scores of each student's parents.
+        """
+        reduced_score_tables = [
+            np.array([self.all_score_tables[i][j] for j in parentLists[i]])
+            for i in range(self.num_s)
+        ]
+        return reduced_score_tables
+    
+    def compute_ll_ratios(self):
+        """
+        Computes the log-likelihood ratios for each cell in the NEM matrix.
+
+        Returns:
+        cellLRs (numpy.ndarray): A 2D numpy array of shape (num_s, num_t) containing the log-likelihood ratios for each cell in the NEM matrix.
+        """
+        nparents = [len(self.parentsLists[i]) for i in range(self.num_s)]
+        cellLRs = self.U
+        for ii in range(self.num_s):
+            if nparents[ii] > 1:
+                cellLRs[ii, :] = cellLRs[ii, :] + np.sum(np.log(1 - self.parent_weights[ii] + self.parent_weights[ii] * np.exp(self.reduced_score_tables[ii])), axis=0)
+            if nparents[ii] == 1:
+                cellLRs[ii, :] = cellLRs[ii, :] + np.log(1 - self.parent_weights[ii] + self.parent_weights[ii] * np.exp(self.reduced_score_tables[ii]))
+        return cellLRs
+            
+#     # loop over S-genes
+#   # for each subsetted score table: sum over rows(S-genes) to obtain a vector of dim 1 x #E-genes
+#   for (ii in 1:n) { 
+#     if (nparents[ii] > 1) {
+#       cellLRs[ii, ] <- as.numeric(cellLRs[ii, ] + colSums(log(1 - parentWeights[[ii]] + parentWeights[[ii]]*exp(parentRs[[ii]]))))
+#     }
+#     if (nparents[ii] == 1) {
+#       cellLRs[ii, ] <- as.numeric(cellLRs[ii, ] + log(1 - parentWeights[[ii]] + parentWeights[[ii]]*exp(parentRs[[ii]])))
+#     }
+#   }
+#   cellLRs
+# 
+# loop over S-genes
+# for each subsetted score table: sum over rows(S-genes) to obtain a vector of dim 1 x #E-genes
