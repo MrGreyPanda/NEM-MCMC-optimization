@@ -19,7 +19,7 @@ class NEM:
     - __init__(self): initializes the NEM object by reading the network.csv file and setting the attributes
     """
 
-    def __init__(self):
+    def __init__(self, pathname):
         """
         Initializes the NEM object by reading the network.csv file and setting the attributes.
         """
@@ -28,7 +28,7 @@ class NEM:
         current_dir = os.getcwd()
 
         # Read the network.csv file
-        with open(os.path.join(current_dir, 'network.csv'), 'r') as f:
+        with open(os.path.join(current_dir, pathname), 'r') as f:
             # Read the first line to get num_s and num_e
             self.num_s, self.num_e = map(int, f.readline().strip().split(','))
 
@@ -46,8 +46,9 @@ class NEM:
             end_nodes = np.array(list(map(int, line.split(','))))
             errors = np.array(list(map(float, f.readline().strip().split(','))))
             
-
-        # Save the adjacency matrix and end nodes as class members
+        # --------------------------------------------------------------------------------#
+        # Need to make this cleaner and get rid of the hardcoding and not needed variables
+        # --------------------------------------------------------------------------------#
         self.s_mat = adj_matrix
         self.e_arr = end_nodes
         alpha = errors[0]
@@ -64,7 +65,7 @@ class NEM:
         for index, curr in enumerate(self.parent_lists):
             self.parent_weights[index] = np.array([0.5 for _ in range(len(curr))])
         self.reduced_score_tables = self.get_reduced_score_tables()
-        self.cell_ratios = self.compute_ll_ratios()
+        
         
     def compute_scores(self, node):
         """
@@ -181,5 +182,13 @@ class NEM:
         return cellLRs
     
     def compute_ll(self):
+        """
+        Computes the log-likelihood of the NEM model.
+
+        Returns:
+        -------
+        float:
+            The log-likelihood of the NEM model.
+        """
         return sum(np.log(np.sum(np.exp(self.cell_ratios), axis=0)))
         

@@ -6,6 +6,8 @@ def generate_dot_language():
     i = 1
     csv_file_path = f"csv/network{i}.csv"
     while os.path.exists(csv_file_path):
+        if i >= 100:
+            break
         csv_file_path = f"csv/network{i}.csv"
         dot_string = ''
         output_file_path = f"dot/network{i}.dot"
@@ -33,7 +35,5 @@ def generate_dot_language():
             with open(output_file_path, 'w') as file:
                 file.write(dot_string)
             print(f"Generated {output_file_path}")
-        if i >= 100:
-            break
             
 generate_dot_language()
