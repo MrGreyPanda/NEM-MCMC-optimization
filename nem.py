@@ -1,6 +1,7 @@
 import numpy as np
 import utils
 import os
+import random
 
 class NEM:
     """
@@ -57,14 +58,17 @@ class NEM:
         self.B = np.log(beta / (1.0 - alpha))
         self.real_knockdown_mat = utils.create_real_knockdown_mat(self.s_mat, self.e_arr)
         self.observed_knockdown_mat = utils.create_observed_knockdown_mat(self.real_knockdown_mat, alpha, beta)
-        self.score_table_list = self.get_score_tables()
+        self.get_score_tables()
         self.U = self.get_node_lr_table(self.score_table_list)
+        self.permutation_order = np.array(random.sample(range(self.num_s), self.num_s))
         self.parent_lists = [[4], [2, 3, 4], [4], [], []]
         # self.parentLists = utils.create_parent_lists(self.s_mat)
         self.parent_weights = [np.array([]) for _ in range(self.num_s)]
         for index, curr in enumerate(self.parent_lists):
             self.parent_weights[index] = np.array([0.5 for _ in range(len(curr))])
+        self.n_parents = [len(self.parent_lists[i]) for i in range(self.num_s)]
         self.reduced_score_tables = self.get_reduced_score_tables()
+        self.compute_ll_ratios()
         
         
     def compute_scores(self, node):
@@ -125,7 +129,7 @@ class NEM:
         # compute score tables for each S_gene
         for node in range(self.num_s):
             all_score_tables.append(self.build_score_table(node))
-        return all_score_tables
+        self.score_table_list = all_score_tables
         
 
     def get_node_lr_table(self, all_score_tables):
@@ -167,7 +171,7 @@ class NEM:
     def compute_ll_ratios(self):
         """
         Computes the log-likelihood ratios for each cell in the NEM matrix.
-
+        Equivalent to Equation 13 in the Abstract from Dr. Jack Kuipers.
         Returns:
         cellLRs (numpy.ndarray): A 2D numpy array of shape (num_s, num_t) containing the log-likelihood ratios for each cell in the NEM matrix.
         """
@@ -176,19 +180,43 @@ class NEM:
         cellLRs = self.U
         for ii in range(self.num_s):        # iterate through all nodes
             if nparents[ii] > 1:
-                cellLRs[ii, :] += np.sum(np.log(1 - self.parent_weights[ii][:, np.newaxis] + self.parent_weights[ii][:, np.newaxis] * np.exp(self.reduced_score_tables[ii])), axis=0)
+                cellLRs[ii, :] += np.sum(np.log(1 - 
+                                                self.parent_weights[ii][:, np.newaxis] + 
+                                                self.parent_weights[ii][:, np.newaxis] * 
+                                                np.exp(self.reduced_score_tables[ii])), 
+                                         axis=0)
             # elif nparents[ii] == 1:
             #     cellLRs[ii, :] += np.log(1 - self.parent_weights[ii] + self.parent_weights[ii] * np.exp(self.reduced_score_tables[ii]))
-        return cellLRs
+        self.cell_ratios = cellLRs
     
     def compute_ll(self):
         """
         Computes the log-likelihood of the NEM model.
-
+        Equivalent to equation 14 in the Abstract from Dr. Jack Kuipers.
         Returns:
         -------
         float:
             The log-likelihood of the NEM model.
         """
-        return sum(np.log(np.sum(np.exp(self.cell_ratios), axis=0)))
+        # cellLRs_t = cellLRs.T # us this in the sum
+        # max_val = np.max(cellLRs, axis=0)
+        return sum(np.log(np.sum(np.exp(self.cell_ratios), axis=0))) # Make numerically stable by ...(np.exp(self.cell_ratios - max_val))) + max_val
         
+        
+    def calculate_order_weights(self):
+            """
+            Calculates the order weights for each cell in the NEM model.
+            Equivalent to equation 16 in the Abstract from Dr. Jack Kuipers.
+            Returns:
+            order_weights (numpy.ndarray): A 2D array of shape (num_s + 1, num_e) containing the order weights for each cell.
+            """
+            ll_ratio_sum = sum(np.exp(self.cell_ratios), axis=0)
+            
+            order_weights = np.zeros((self.num_s + 1, self.num_e))
+
+            for i in range(self.num_s):
+                order_weights[i, :] = np.exp(self.cell_ratios[i, :]) / ll_ratio_sum
+            
+            self.order_weights = order_weights
+        
+    

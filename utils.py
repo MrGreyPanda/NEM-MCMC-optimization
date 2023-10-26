@@ -31,101 +31,49 @@ def create_observed_knockdown_mat(knockdown_mat, alpha, beta, seed=42):
         elif kd_observation == 0 and rnd_num < alpha:
             pertubed_data[indices] = 1
     return pertubed_data
-            
 
-# def compute_scores(effect_nodes, data, A, B):
-#     """
-#     Computes the scores for a given set of effect nodes, data, and parameters A and B.
-
-#     Parameters:
-#     effect_nodes (numpy.ndarray): The set of effect nodes.
-#     data (numpy.ndarray): The data to compute the scores on.
-#     A (float): The parameter A.
-#     B (float): The parameter B.
-
-#     Returns:
-#     numpy.ndarray: The computed scores.
-#     """
-    
-#     # suppose only effect_nodes have an effect on E-genes upon perturbation i.e. we expect to see all 1
-#     score = np.sum(np.where(data[effect_nodes, :] == 1, 0, B), axis=0) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
-
-#     # suppose the rest does not have an effect on E-genes, therefore if we perturb them we expect to see 0
-#     score += np.sum(np.where(data[np.setdiff1d(np.arange(data.shape[0]), effect_nodes), :] == 0, 0, A), axis=0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
-
-#     return score
-
-# def build_score_table(node, data, A, B):
-#     """
-#     Builds a score table for a given node in a network.
-
-#     Parameters:
-#     node (str): The node for which to build the score table.
-#     data (pandas.DataFrame): The data matrix containing the gene expression data.
-#     A (float): The activation parameter.
-#     B (float): The inhibition parameter.
-
-#     Returns:
-#     pandas.DataFrame: The score table for the given node.
-#     """
-#     node_idx = np.where(data.index == node)[0][0]
-#     E_genes = data.columns
-#     S_genes = data.index
-    
-#     # init score table
-#     score_tbl = pd.DataFrame(np.zeros((len(S_genes), len(E_genes))), index=S_genes, columns=E_genes)
-    
-#     # compute first (base) row
-#     score_tbl.loc[node] = compute_scores(effect_nodes=node_idx, data=data.values, A=A, B=B)
-    
-#     # compute the increment of score if we have additional parents
-#     for parents in set(S_genes) - {node}:
-#         parents_idx = np.where(data.index == parents)[0][0]
-#         s = np.where(data.iloc[parents_idx] == 0, B, -A)
-#         score_tbl.loc[parents] = s
-    
-#     return score_tbl
-
-# def get_score_tables(data, A, B):
-#     """
-#     Computes score tables for each S_gene in the given data using the given A and B matrices.
-    
-#     Args:
-#     - data: pandas DataFrame containing the gene expression data
-#     - A: numpy array representing the A matrix
-#     - B: numpy array representing the B matrix
-    
-#     Returns:
-#     - all_scoretbls: dictionary containing the score tables for each S_gene
-#     """
-#     all_scoretbls = {}
-#     # compute score tables for each S_gene
-#     for node in data.index:
-#         score_tbl = build_score_table(node, data, A, B)
-#         all_scoretbls[node] = score_tbl
-#     return all_scoretbls
+def ancestor(incidence):
+    incidence1 = incidence
+    incidence2 = incidence
+    k = 1
+    while k < incidence.shape[0]:
+        incidence1 = incidence1.dot(incidence)
+        incidence2 = incidence2 + incidence1
+        k += 1
+    incidence2[incidence2 > 0] = 1
+    return incidence2
 
 
-# def get_node_lr_tbl(all_score_tbls, data, A):
-#     """
-#     Returns a table with the node scores for all effect nodes in the network.
-    
-#     Parameters:
-#     all_score_tbls (dict): A dictionary containing score tables for all genes in the network.
-#     data (numpy.ndarray): A 2D numpy array containing the gene expression data.
-#     A (float): The activation threshold for the effect nodes.
-    
-#     Returns:
-#     pandas.DataFrame: A table with the node scores for all effect nodes in the network.
-#     """
-#     l = []
-#     for S_gene in all_score_tbls:
-#         l.append(all_score_tbls[S_gene].loc[S_gene]) # return base row
+def compute_ll_ratios(parent_lists, U, parent_weights, reduced_score_tables):
+    """
+    Computes the log-likelihood ratios for each cell in the NEM matrix.
 
-#     res = pd.concat(l, axis=1).T
-#     res.index = all_score_tbls.keys()
+    Returns:
+    cell_log_ratios (numpy.ndarray): A 2D numpy array of shape (num_s, num_t) containing the log-likelihood ratios for each cell in the NEM matrix.
+    Equivalent to Equation 13 in the Abstract from Dr. Jack Kuipers.
+    """
+    num_s = len(parent_lists[0])
+    nparents = [len(parent_lists[i]) for i in range(num_s)]
+    cell_log_ratios = U
+    for i in range(num_s):        # iterate through all nodes
+        if nparents[i] > 1:
+            cell_log_ratios[i, :] += np.sum(np.log(1 - parent_weights[i][:, np.newaxis] +
+                                            parent_weights[i][:, np.newaxis] *
+                                            np.exp(reduced_score_tables[i])),
+                                    axis=0)
+    return cell_log_ratios
 
-#     # all effect nodes are disconnected (we expect their state to stay 0)
-#     res.loc['S0'] = np.where(data == 0, 0, A).sum(axis=0)
-    
-#     return res
+def compute_ll(cell_ratios):
+    """
+    Computes the log-likelihood of the NEM model.
+
+    Returns: the total log-likelihood score of the given order.
+    Equivalent to equation 14 in the Abstract from Dr. Jack Kuipers.
+    -------
+    float:
+        The log-likelihood of the NEM model.
+    """
+    # cellLRs_t = cellLRs.T # us this in the sum
+    # max_val = np.max(cellLRs, axis=0)
+    return sum(np.log(np.sum(np.exp(cell_ratios), axis=0))) # Make numerically stable by ...(np.exp(self.cell_ratios - max_val))) + max_val
+
