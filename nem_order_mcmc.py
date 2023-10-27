@@ -89,8 +89,7 @@ class NEMOrderMCMC():
             # ll_ratio_sum = np.sum(np.exp(self.cell_ratios - max_val) + max_val, axis=0)
             
             # order_weights = np.exp(self.cell_ratios) / ll_ratio_sum
-            ll_ratio_sum = np.log(np.sum(np.exp(self.cell_ratios - max_val), axis=0)) + max_val
-            
+            ll_ratio_sum = np.log(np.sum(np.exp(self.cell_ratios), axis=0))
             
             self.order_weights = np.exp(self.cell_ratios - ll_ratio_sum)
             
