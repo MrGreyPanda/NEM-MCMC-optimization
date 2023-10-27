@@ -1,0 +1,169 @@
+List 1,List 2,List 3
+6.405227982088607,"[list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+6.644983425029633,"[list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])]) list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+6.809345661549987,"[list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])]) list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+6.809345661549987,"[list([]) list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+6.809345661549987,"[list([]) list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+6.809345661549987,"[list([]) list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+6.849415647977563,"[list([]) list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5])]) list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+6.977872629591507,"[list([]) list([array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.091691021597321,"[list([array([0.5])]) list([array([0.5]), array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.19386846605741,"[list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.2865667575825475,"[list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.371396337657475,"[list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([array([0.5])])
+ list([]) list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.449589184129197,"[list([array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.449589184129197,"[list([array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])]",[2 1 0 3 4]
+7.449589184129197,"[list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])]",[2 1 0 3 4]
+7.478050639018438,"[list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5])])]",[2 1 0 3 4]
+7.520223368009602,"[list([array([0.5])]) list([array([0.5]), array([0.5]), array([0.5])])
+ list([]) list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.579636605317983,"[list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.629227964069229,"[list([array([0.5])]) list([array([0.5]), array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.695314455846821,"[list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.7672396417325595,"[list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])]) list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.834336903443173,"[list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])]) list([array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.864054881880746,"[list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.897213813236096,"[list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([array([0.5])])
+ list([])]",[2 1 0 3 4]
+7.929308427108914,"[list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5])]) list([])]",[2 1 0 3 4]
+7.968426245643049,"[list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])]",[2 1 0 3 4]
+7.968426245643049,"[list([array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.96842624570761,"[list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])]) list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.971238701100449,"[list([array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])]",[2 1 0 3 4]
+7.979146898886447,"[list([array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+8.017546303608269,"[list([array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([array([0.5])])]",[2 1 0 3 4]
+8.054525558902853,"[list([array([0.5]), array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([])]",[2 1 0 3 4]
+8.082011977562162,"[list([array([0.5]), array([0.5])]) list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])]",[2 1 0 3 4]
+8.100740116003072,"[list([array([0.5])]) list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])]",[2 1 0 3 4]
+8.100740116003072,"[list([]) list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([array([0.5])])]",[2 1 0 3 4]
+8.100740116022052,"[list([]) list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5])])]",[2 1 0 3 4]
+8.141559581166588,"[list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5])])]",[2 1 0 3 4]
+8.174295051242236,"[list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])])]",[2 1 0 3 4]
+8.219452725172024,"[list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])])]",[2 1 0 3 4]
+8.24280837654665,"[list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])
+ list([array([0.5])])]",[2 1 0 3 4]
+8.27831601830675,"[list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])]) list([]) list([array([0.5])])]",[2 1 0 3 4]
+8.30692710604875,"[list([]) list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([array([0.5])])]",[2 1 0 3 4]
+8.34658529092539,"[list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])]",[2 1 0 3 4]
+8.384730514747737,"[list([]) list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([array([0.5])])]",[2 1 0 3 4]
+8.390775958636711,"[list([]) list([array([0.5])]) list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+8.390775958636711,"[list([array([0.5])]) list([]) list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])]",[2 1 0 3 4]
+8.427301965860412,"[list([array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])]",[2 1 0 3 4]
+8.44631582805897,"[list([array([0.5])]) list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])]) list([])]",[2 1 0 3 4]
+8.464974898769038,"[list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5])]) list([])]",[2 1 0 3 4]
+8.488771745429098,"[list([array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5]), array([0.5]), array([0.5]), array([0.5])])
+ list([array([0.5])]) list([])]",[2 1 0 3 4]
