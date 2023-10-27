@@ -8,7 +8,6 @@ class NEMOrderMCMC():
         self.num_s = nem.num_s
         self.U = nem.U
         self.score_table_list = nem.get_score_tables()
-        self.reset(permutation_order)
         
     def reset(self, permutation_order):
         self.get_permissible_parents(permutation_order)
@@ -64,8 +63,9 @@ class NEMOrderMCMC():
                                                 np.exp(self.reduced_score_tables[i][j])), 
                                          axis=0)
         self.cell_ratios = cell_ratios
-    
-    def compute_likelihood_score(self):
+        
+        
+    def compute_loglikelihood_score(self):
         """
         Computes the log-likelihood of the NEM model.
         Equivalent to equation 14 in the Abstract from Dr. Jack Kuipers.
@@ -89,43 +89,33 @@ class NEMOrderMCMC():
             # ll_ratio_sum = np.sum(np.exp(self.cell_ratios - max_val) + max_val, axis=0)
             
             # order_weights = np.exp(self.cell_ratios) / ll_ratio_sum
-            print(max_val)
-            ll_ratio_sum = np.log(np.sum(np.exp(self.cell_ratios), axis=0))
-            order_weights = np.exp(self.cell_ratios - ll_ratio_sum)
-            
-            self.order_weights = order_weights
+            ll_ratio_sum = np.log(np.sum(np.exp(self.cell_ratios - max_val), axis=0)) + max_val
             
             
-    def calculate_local_optimum(self, old_weights, new_weights):
+            self.order_weights = np.exp(self.cell_ratios - ll_ratio_sum)
+            
+            
+    def calculate_local_optimum(self, i, j):
         """
         Calculates the local optimum for the given old and new weights.
         Equivalent to equation 19in the Abstract from Dr. Jack Kuipers.
         Args:
-            old_weights (numpy.ndarray): The old weights.
-            new_weights (numpy.ndarray): The new weights.
+            weights: 
 
         Returns:
             numpy.ndarray: The local optimum.
         """
-        a = self.order_weights * (self.cell_ratios - 1)
-           
-        b = 1 - old_weights * a + old_weights * (self.cell_ratios - 1)
-        
+        a = self.order_weights[i] * (self.reduced_score_tables[i][j] - 1.0)
+        b = 1 - self.parent_weights[i][j] * a + self.parent_weights[i][j] * (self.reduced_score_tables[i][j] - 1.0)
         c = a / b
-        
         def local_ll_sum(x, c):
-            # max_weight = np.max(c)
-            return -np.sum(np.log(new_weights * c + 1))
+            return -np.sum(np.log(c * x + 1))
         
-        # res = minimize(local_ll_sum, x0=0.5, bounds=[(0, 1)], args=(c), method='L-BFGS-B', options={'ftol': 0.01})
-
-        # if not res.success:
-        #     print(f"Minimization not successful, Reason: {res.message}")
-        # return res.x
-        res = fmin_l_bfgs_b(local_ll_sum, x0=0.5, bounds=[(0, 1)], args=(c,), approx_grad=True, factr=10, epsilon=1e-8)
-
+        res = fmin_l_bfgs_b(local_ll_sum, x0=0.5, bounds=[(0, 1)], args=(c,), approx_grad=True, factr=10, epsilon=1e-8, maxls=10)
+        
         if res[2]['warnflag'] != 0:
             print(f"Minimization not successful, Reason: {res[2]['task']}")
+            raise()
         return res[0]
     
     
@@ -147,34 +137,37 @@ class NEMOrderMCMC():
         """
         old_ll = -float('inf')
         ll_diff = float('inf')
-        self.compute_ll_ratios()
-        ll = np.log(self.compute_likelihood_score())
         iter_count = 0
-        print(f"Initial LL: {ll}")
+        ll = 0.0
+        #abs_diff could be varied
         while(ll_diff > abs_diff and iter_count < max_iter):
+            print(f"Iteration: {iter_count}")
+            self.compute_ll_ratios()
             self.calculate_order_weights()
-            old_weights = self.parent_weights
+            ll = self.compute_loglikelihood_score()
             
+            new_parent_weights = self.parent_weights
             for i in range(self.num_s):
                 for j in range(self.n_parents[i]):
-                    self.parent_weights[i][j] = self.calculate_local_optimum(old_weights[i][j], self.parent_weights[i][j])
-            
+                    new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
+                    
+            # one could vary the time of the computation of ll_ratios
             self.compute_ll_ratios()
-            old_weights = self.parent_weights
-            ll = np.log(self.compute_likelihood_score())
+            self.parent_weights = new_parent_weights
             ll_diff = ll - old_ll
             old_ll = ll
             iter_count += 1
             
-            print(f"Iteration {iter_count}: LL: {ll}")
-        return old_weights, old_ll
+        print(ll)
+        return self.parent_weights, ll
         
-    def method(self, move_prob=(0.9, 0.1), gamma=1, seed=42, n_iterations=50):
+    def method(self, move_prob=(0.95, 0.05), gamma=1, seed=42, n_iterations=500):
         permutation_order = np.array(random.sample(range(self.num_s), self.num_s))
         permutation_list = []
         score_list = []
         weights_list = []
         for i in range(n_iterations):
+            print(f"##########-Iteration: {i}")
             swap = random.random() < move_prob[0]
             if swap:
                 # swap two random nodes
