@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import os
 
 def create_connection_mat(s_mat):
     dim_s = len(s_mat[0])
@@ -77,3 +78,26 @@ def compute_ll(cell_ratios):
     # max_val = np.max(cellLRs, axis=0)
     return sum(np.log(np.sum(np.exp(cell_ratios), axis=0))) # Make numerically stable by ...(np.exp(self.cell_ratios - max_val))) + max_val
 
+def read_csv_to_adj(pathname):
+    current_dir = os.getcwd()
+
+    # Read the network.csv file
+    with open(os.path.join(current_dir, pathname), 'r') as f:
+        # Read the first line to get num_s and num_e
+        num_s, num_e = map(int, f.readline().strip().split(','))
+
+        # Create an empty adjacency matrix
+        adj_matrix = np.zeros((num_s, num_s), dtype=int)
+
+        # Read the connected s-points and update the adjacency matrix
+        for line in f:
+            s_points = list(map(int, line.strip().split(',')))
+            if len(s_points) != 2:
+                break
+            adj_matrix[s_points[0], s_points[1]] = 1
+            
+        # Read the last line to get the end nodes
+        end_nodes = np.array(list(map(int, line.split(','))))
+        errors = np.array(list(map(float, f.readline().strip().split(','))))
+        
+        return adj_matrix, end_nodes, errors, num_s, num_e

@@ -11,68 +11,46 @@ class NEM:
     Attributes:
     - num_s (int): the number of s-points in the network
     - num_e (int): the number of e-points in the network
-    - s_mat (numpy.ndarray): the adjacency matrix of the network
     - e_arr (numpy.ndarray): the end nodes of the network
     - A (float): the value of the parameter A in the NEM
     - B (float): the value of the parameter B in the NEM
     - observed_knockdown_mat (numpy.ndarray): the connection matrix of the network
+    - parents_list (list(int)): list of parents of node i
+    - n_parents (list(int)): number of parents node i has
+    - parent_weights (list(np.array(float))): the weights of the parents of node i
+    
 
     Methods:
     - __init__(self): initializes the NEM object by reading the network.csv file and setting the attributes
     """
 
-    def __init__(self, pathname):
+
+    def __init__(self, adj_matrix, end_nodes, errors, num_s, num_e):
         """
         Initializes the NEM object by reading the network.csv file and setting the attributes.
-        """
         
-        # Get the current directory
-        current_dir = os.getcwd()
-
-        # Read the network.csv file
-        with open(os.path.join(current_dir, pathname), 'r') as f:
-            # Read the first line to get num_s and num_e
-            self.num_s, self.num_e = map(int, f.readline().strip().split(','))
-
-            # Create an empty adjacency matrix
-            adj_matrix = np.zeros((self.num_s, self.num_s), dtype=int)
-
-            # Read the connected s-points and update the adjacency matrix
-            for line in f:
-                s_points = list(map(int, line.strip().split(',')))
-                if len(s_points) != 2:
-                    break
-                adj_matrix[s_points[0], s_points[1]] = 1
-                
-            # Read the last line to get the end nodes
-            end_nodes = np.array(list(map(int, line.split(','))))
-            errors = np.array(list(map(float, f.readline().strip().split(','))))
-            
-        # --------------------------------------------------------------------------------#
-        # Need to make this cleaner and get rid of the hardcoding and not needed variables
-        # --------------------------------------------------------------------------------#
-        self.s_mat = adj_matrix
-        self.e_arr = end_nodes
+        :param pathname: The path to the network.csv file.
+        :type pathname: str
+        
+        :return: None
+        """
+        self.num_s = num_s
+        self.num_e = num_e
+        
         alpha = errors[0]
         beta = errors[1]
+        real_knockdown_mat = utils.create_real_knockdown_mat(adj_matrix, end_nodes)
+        permutation_order = np.array(random.sample(range(self.num_s), self.num_s))
+        
         self.A = np.log(alpha / (1.0 - beta))
         self.B = np.log(beta / (1.0 - alpha))
-        self.real_knockdown_mat = utils.create_real_knockdown_mat(self.s_mat, self.e_arr)
-        self.observed_knockdown_mat = utils.create_observed_knockdown_mat(self.real_knockdown_mat, alpha, beta)
-        self.get_score_tables()
-        self.U = self.get_node_lr_table(self.score_table_list)
-        permutation_order = np.array(random.sample(range(self.num_s), self.num_s))
-        # self.parent_lists = [[4], [2, 3, 4], [4], [], []]
-        # # self.parentLists = utils.create_parent_lists(self.s_mat)
-        # self.parent_weights = [np.array([]) for _ in range(self.num_s)]
-        # for index, curr in enumerate(self.parent_lists):
-        #     self.parent_weights[index] = np.array([0.5 for _ in range(len(curr))])
-        # self.n_parents = [len(self.parent_lists[i]) for i in range(self.num_s)]
-        
-        self.parent_lists, self.n_parents, self.parent_weights = self.get_permissible_parents(permutation_order)
-        self.reduced_score_tables = self.get_reduced_score_tables()
+        self.observed_knockdown_mat = utils.create_observed_knockdown_mat(real_knockdown_mat, alpha, beta)
+        # score_table_list = get_score_tables()
+        self.get_permissible_parents(permutation_order)
+        self.U = self.get_node_lr_table(self.get_score_tables())
+        self.reduced_score_tables = self.get_reduced_score_tables(self.get_score_tables())
         self.compute_ll_ratios()
-        
+    
         
     def compute_scores(self, node):
         """
@@ -100,7 +78,7 @@ class NEM:
             n_parents[i] = len(parents_list[i])
             parent_weights[i] = [0.5] * n_parents[i]
         
-        return parents_list, n_parents, parent_weights
+        self.parents_list, self.n_parents, self.parent_weights = parents_list, n_parents, parent_weights
     
     def build_score_table(self, node):
         """
@@ -144,7 +122,7 @@ class NEM:
         # compute score tables for each S_gene
         for node in range(self.num_s):
             all_score_tables.append(self.build_score_table(node))
-        self.score_table_list = all_score_tables
+        return all_score_tables
         
 
     def get_node_lr_table(self, all_score_tables):
@@ -168,7 +146,7 @@ class NEM:
 
         return res
     
-    def get_reduced_score_tables(self):
+    def get_reduced_score_tables(self, score_table_list):
         """
         Returns a list of reduced score tables based on the given parent lists.
 
@@ -181,7 +159,7 @@ class NEM:
         # reduced_score_tables = [[] for _ in range(self.num_s)]
         reduced_score_tables = []
         for i in range(self.num_s):
-            reduced_score_tables.append(np.array([self.score_table_list[i][j] for j in self.parent_lists[i]]))
+            reduced_score_tables.append(np.array([score_table_list[i][j] for j in self.parents_list[i]]))
         return reduced_score_tables
     
     
@@ -229,6 +207,7 @@ class NEM:
             Returns:
             order_weights (numpy.ndarray): A 2D array of shape (num_s + 1, num_e) containing the order weights for each cell.
             """
+            # max_val = np.max(self.cell_ratios)
             ll_ratio_sum = np.sum(np.exp(self.cell_ratios), axis=0)
             
             # order_weights = np.zeros((self.num_s + 1, self.num_e))
@@ -262,31 +241,33 @@ class NEM:
         
         res = minimize(local_ll_sum, x0=0.5, bounds=[(0, 1)], args=(c), method='L-BFGS-B', options={'ftol': 0.01})
 
-        # return res.x
         if not res.success:
-            print("Minimization not successful, Reason: {res.message}")
+            print(f"Minimization not successful, Reason: {res.message}")
         return res.x
-        
-    #TODO cell ratios need to be updated
-    def get_optimal_weights(self, rel_err=0.1, max_iter = 1000):
+    
+    
+    def get_optimal_weights(self, abs_diff=0.1, max_iter = 1000):
         """
             Calculates the optimal weights for the NEM model using the specified relative error and maximum number of iterations.
 
             Args:
-            - rel_err: a float representing the relative error threshold for convergence (default: 0.1)
+            - abs_diff: a float representing the absolute difference threshold for convergence (default: 0.1)
             - max_iter: an integer representing the maximum number of iterations (default: 1000)
 
             Returns:
             - parent_weights: a list of length num_s containing the optimal weights for each variable's parents
+            
+            TODO:
+            - Check if log-likelihood ratios are updated accordingly
+            - Check if function is too flat (if not, one could decrease abs_diff, need to tackle overflows)
         """
         old_ll = -float('inf')
         ll_diff = float('inf')
         self.compute_ll_ratios()
-        print(f"Likelihood-score: {self.compute_likelihood_score()}")
         ll = np.log(self.compute_likelihood_score())
         iter_count = 0
         print(f"Initial LL: {ll}")
-        while(ll_diff > rel_err and iter_count < max_iter):
+        while(ll_diff > abs_diff and iter_count < max_iter):
             self.calculate_order_weights()
             old_weights = self.parent_weights
             # new_weights = self.parent_weights
