@@ -7,10 +7,7 @@ from utils import ancestor, compute_ll_ratios, compute_ll
 class CustomNEMOptimizer():
     def __init__(self, nem):
         self.nem = nem
-        self.nem_order_score()
-        
-        
-        
+        self.nem_order_score()     
     
     def get_permissible_parents(self, n, permutation_order, allparentRs):
         parentRs = np.empty(n, dtype=object)
@@ -35,7 +32,6 @@ class CustomNEMOptimizer():
     # parentWeights = parentWeights
     # parentRs = list of reduced score tables (without curent nodes scores)
     # n = numS
-
     def get_optimal_weights(self):
         # work out likelihood components of each attachment(E-gene)
         # we average over the parent sets with each weighted
@@ -62,9 +58,7 @@ class CustomNEMOptimizer():
             LL = np.sum(cellSums)
 
             parent_weights = self.nem.parent_weights
-            # -> we are here
             # optimise each weight given old values
-            # Redo this part without using the legacy R code
             parent_weigths_new = parent_weights.copy()
             n = self.nem.num_s
             for i in range(n):

@@ -2,6 +2,7 @@ import numpy as np
 import utils
 import os
 import random
+from scipy.optimize import minimize
 
 class NEM:
     """
@@ -60,13 +61,15 @@ class NEM:
         self.observed_knockdown_mat = utils.create_observed_knockdown_mat(self.real_knockdown_mat, alpha, beta)
         self.get_score_tables()
         self.U = self.get_node_lr_table(self.score_table_list)
-        self.permutation_order = np.array(random.sample(range(self.num_s), self.num_s))
-        self.parent_lists = [[4], [2, 3, 4], [4], [], []]
-        # self.parentLists = utils.create_parent_lists(self.s_mat)
-        self.parent_weights = [np.array([]) for _ in range(self.num_s)]
-        for index, curr in enumerate(self.parent_lists):
-            self.parent_weights[index] = np.array([0.5 for _ in range(len(curr))])
-        self.n_parents = [len(self.parent_lists[i]) for i in range(self.num_s)]
+        permutation_order = np.array(random.sample(range(self.num_s), self.num_s))
+        # self.parent_lists = [[4], [2, 3, 4], [4], [], []]
+        # # self.parentLists = utils.create_parent_lists(self.s_mat)
+        # self.parent_weights = [np.array([]) for _ in range(self.num_s)]
+        # for index, curr in enumerate(self.parent_lists):
+        #     self.parent_weights[index] = np.array([0.5 for _ in range(len(curr))])
+        # self.n_parents = [len(self.parent_lists[i]) for i in range(self.num_s)]
+        
+        self.parent_lists, self.n_parents, self.parent_weights = self.get_permissible_parents(permutation_order)
         self.reduced_score_tables = self.get_reduced_score_tables()
         self.compute_ll_ratios()
         
@@ -86,6 +89,18 @@ class NEM:
             score += np.where(self.observed_knockdown_mat[index, :] == 1, self.A, 0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
 
         return score
+    
+    def get_permissible_parents(self, permutation_order):
+        parent_weights = np.empty(self.num_s, dtype=object)
+        parents_list = np.empty(self.num_s, dtype=object)
+        n_parents = np.empty(self.num_s, dtype=int)
+        for i in range(self.num_s):
+            index = np.where(permutation_order == i)[0][0]
+            parents_list[i] = permutation_order[index + 1:]            
+            n_parents[i] = len(parents_list[i])
+            parent_weights[i] = [0.5] * n_parents[i]
+        
+        return parents_list, n_parents, parent_weights
     
     def build_score_table(self, node):
         """
@@ -158,15 +173,17 @@ class NEM:
         Returns a list of reduced score tables based on the given parent lists.
 
         Args:
-        parentLists (list): A list of lists containing the indices of the parents for each student.
+        parentLists (list): A list of lists containing the indices of the parents for each node.
 
         Returns:
-        list: A list of numpy arrays containing the scores of each student's parents.
+        list: A list of lists of numpy arrays containing the scores of each node's parents.
         """
+        # reduced_score_tables = [[] for _ in range(self.num_s)]
         reduced_score_tables = []
         for i in range(self.num_s):
             reduced_score_tables.append(np.array([self.score_table_list[i][j] for j in self.parent_lists[i]]))
         return reduced_score_tables
+    
     
     def compute_ll_ratios(self):
         """
@@ -176,20 +193,17 @@ class NEM:
         cellLRs (numpy.ndarray): A 2D numpy array of shape (num_s, num_t) containing the log-likelihood ratios for each cell in the NEM matrix.
         """
 
-        nparents = [len(self.parent_lists[i]) for i in range(self.num_s)]
-        cellLRs = self.U
-        for ii in range(self.num_s):        # iterate through all nodes
-            if nparents[ii] > 1:
-                cellLRs[ii, :] += np.sum(np.log(1 - 
-                                                self.parent_weights[ii][:, np.newaxis] + 
-                                                self.parent_weights[ii][:, np.newaxis] * 
-                                                np.exp(self.reduced_score_tables[ii])), 
+        cell_ratios = self.U
+        for i in range(self.num_s):        # iterate through all nodes
+            for j in range(self.n_parents[i]):
+                cell_ratios[i, :] += np.sum(np.log(1. - 
+                                                self.parent_weights[i][j] + 
+                                                self.parent_weights[i][j] * 
+                                                np.exp(self.reduced_score_tables[i][j])), 
                                          axis=0)
-            # elif nparents[ii] == 1:
-            #     cellLRs[ii, :] += np.log(1 - self.parent_weights[ii] + self.parent_weights[ii] * np.exp(self.reduced_score_tables[ii]))
-        self.cell_ratios = cellLRs
+        self.cell_ratios = cell_ratios
     
-    def compute_ll(self):
+    def compute_likelihood_score(self):
         """
         Computes the log-likelihood of the NEM model.
         Equivalent to equation 14 in the Abstract from Dr. Jack Kuipers.
@@ -199,8 +213,13 @@ class NEM:
             The log-likelihood of the NEM model.
         """
         # cellLRs_t = cellLRs.T # us this in the sum
-        # max_val = np.max(cellLRs, axis=0)
-        return sum(np.log(np.sum(np.exp(self.cell_ratios), axis=0))) # Make numerically stable by ...(np.exp(self.cell_ratios - max_val))) + max_val
+        max_val = np.max(self.cell_ratios)
+        # sum_res = np.sum(np.exp(self.cell_ratios - max_val), axis=0)
+        # logar = np.log(sum_res)
+        # print(f"Logorithm: {logar}")
+        # print(f"sum: {sum_res}")
+        
+        return sum(np.log(np.sum(np.exp(self.cell_ratios - max_val), axis=0))) + max_val# Make numerically stable by ...(np.exp(self.cell_ratios - max_val))) + max_val
         
         
     def calculate_order_weights(self):
@@ -210,13 +229,80 @@ class NEM:
             Returns:
             order_weights (numpy.ndarray): A 2D array of shape (num_s + 1, num_e) containing the order weights for each cell.
             """
-            ll_ratio_sum = sum(np.exp(self.cell_ratios), axis=0)
+            ll_ratio_sum = np.sum(np.exp(self.cell_ratios), axis=0)
             
-            order_weights = np.zeros((self.num_s + 1, self.num_e))
+            # order_weights = np.zeros((self.num_s + 1, self.num_e))
 
-            for i in range(self.num_s):
-                order_weights[i, :] = np.exp(self.cell_ratios[i, :]) / ll_ratio_sum
+            # for i in range(self.num_s + 1):
+            #     order_weights[i, :] = np.exp(self.cell_ratios[i, :]) / ll_ratio_sum
+            order_weights = np.exp(self.cell_ratios) / ll_ratio_sum
             
             self.order_weights = order_weights
+            
+            
+    def calculate_local_optimum(self, old_weights, new_weights):
+        """
+        Calculates the local optimum for the given old and new weights.
+        Equivalent to equation 19in the Abstract from Dr. Jack Kuipers.
+        Args:
+            old_weights (numpy.ndarray): The old weights.
+            new_weights (numpy.ndarray): The new weights.
+
+        Returns:
+            numpy.ndarray: The local optimum.
+        """
+        a = self.order_weights * (self.cell_ratios - 1)
+           
+        b = 1 - old_weights * a + old_weights * (self.cell_ratios - 1)
         
-    
+        c = a / b
+        
+        def local_ll_sum(x, c):
+            return -np.sum(np.log(new_weights * a / b + 1))
+        
+        res = minimize(local_ll_sum, x0=0.5, bounds=[(0, 1)], args=(c), method='L-BFGS-B', options={'ftol': 0.01})
+
+        # return res.x
+        if not res.success:
+            print("Minimization not successful, Reason: {res.message}")
+        return res.x
+        
+    #TODO cell ratios need to be updated
+    def get_optimal_weights(self, rel_err=0.1, max_iter = 1000):
+        """
+            Calculates the optimal weights for the NEM model using the specified relative error and maximum number of iterations.
+
+            Args:
+            - rel_err: a float representing the relative error threshold for convergence (default: 0.1)
+            - max_iter: an integer representing the maximum number of iterations (default: 1000)
+
+            Returns:
+            - parent_weights: a list of length num_s containing the optimal weights for each variable's parents
+        """
+        old_ll = -float('inf')
+        ll_diff = float('inf')
+        self.compute_ll_ratios()
+        print(f"Likelihood-score: {self.compute_likelihood_score()}")
+        ll = np.log(self.compute_likelihood_score())
+        iter_count = 0
+        print(f"Initial LL: {ll}")
+        while(ll_diff > rel_err and iter_count < max_iter):
+            self.calculate_order_weights()
+            old_weights = self.parent_weights
+            # new_weights = self.parent_weights
+            
+            for i in range(self.num_s):
+                for j in range(self.n_parents[i]):
+                    self.parent_weights[i][j] = self.calculate_local_optimum(old_weights[i][j], self.parent_weights[i][j])
+            
+            self.compute_ll_ratios()
+            old_weights = self.parent_weights
+            ll = np.log(self.compute_likelihood_score())
+            ll_diff = ll - old_ll
+            old_ll = ll
+            iter_count += 1
+            
+            print(f"Iteration {iter_count}: LL: {ll}")
+        
+        
+        
