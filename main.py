@@ -5,8 +5,10 @@ import utils
 import numpy as np
 import random
 import csv
+import logging
 
 def main():
+    logging.basicConfig(filename='nem_mcmc.log', level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s')
     adj_matrix, end_nodes, errors, num_s, num_e = utils.read_csv_to_adj("network.csv")
     my_nem = nem.NEM(adj_matrix, end_nodes, errors, num_s, num_e)
     permutation_order = np.array(random.sample(range(num_s), num_s))
