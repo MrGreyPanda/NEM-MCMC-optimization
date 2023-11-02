@@ -14,7 +14,10 @@ def main():
     permutation_order = np.array(random.sample(range(num_s), num_s))
     mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
     
-    result = mcmc_nem.method(n_iterations=50)
+    score, best_nem = mcmc_nem.method()
+    print(f"Score: {score}")
+    print("NEM:")
+    print(best_nem)
     
 if __name__ == "__main__":
     main()

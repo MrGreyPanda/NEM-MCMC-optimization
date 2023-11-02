@@ -34,18 +34,26 @@ def create_observed_knockdown_mat(knockdown_mat, alpha, beta, seed=42):
     return pertubed_data
 
 def ancestor(incidence):
-    incidence1 = incidence
-    incidence2 = incidence
-    k = 1
-    while k < incidence.shape[0]:
+    """
+    Computes the ancestor matrix of a given incidence matrix.
+
+    Parameters:
+    incidence (numpy.ndarray): A 2D numpy array of shape (num_s, num_e) containing the incidence matrix.
+
+    Returns:
+    ancestor_mat (numpy.ndarray): A 2D numpy array of shape (num_s, num_s) containing the ancestor matrix.
+    """
+    num_s = incidence.shape[0]
+    incidence1 = incidence.copy()
+    incidence2 = incidence.copy()
+    for k in range(1, num_s):
         incidence1 = incidence1.dot(incidence)
-        incidence2 = incidence2 + incidence1
-        k += 1
-    incidence2[incidence2 > 0] = 1
-    return incidence2
+        incidence2 += incidence1
+    ancestor_mat = (incidence2 > 0).astype(int)
+    return ancestor_mat
 
 
-def compute_ll_ratios(parent_lists, U, parent_weights, reduced_score_tables):
+def compute_ll_ratios(n_parents, U, parent_weights, reduced_score_tables):
     """
     Computes the log-likelihood ratios for each cell in the NEM matrix.
 
@@ -53,15 +61,18 @@ def compute_ll_ratios(parent_lists, U, parent_weights, reduced_score_tables):
     cell_log_ratios (numpy.ndarray): A 2D numpy array of shape (num_s, num_t) containing the log-likelihood ratios for each cell in the NEM matrix.
     Equivalent to Equation 13 in the Abstract from Dr. Jack Kuipers.
     """
-    num_s = len(parent_lists[0])
-    nparents = [len(parent_lists[i]) for i in range(num_s)]
-    cell_log_ratios = U
+    num_s = len(parent_weights)
+    cell_log_ratios = U.copy()
     for i in range(num_s):        # iterate through all nodes
-        if nparents[i] > 1:
-            cell_log_ratios[i, :] += np.sum(np.log(1 - parent_weights[i][:, np.newaxis] +
-                                            parent_weights[i][:, np.newaxis] *
-                                            np.exp(reduced_score_tables[i])),
-                                    axis=0)
+        for j in range(n_parents[i]):
+            cell_log_ratios[i, :] += np.log(1 - parent_weights[i][j] +
+                                        parent_weights[i][j] *
+                                        np.exp(reduced_score_tables[i][j]))
+            # print(f"U= {U[i, :]}")
+            # print(f"reduce_score_table= {reduced_score_tables[i][j]}")
+            # print(f"parent_weights= {parent_weights[i][j]}")
+            # print(f"Cell ratio= {cell_log_ratios[i, :]}") 
+                         
     return cell_log_ratios
 
 def compute_ll(cell_ratios):
@@ -74,9 +85,10 @@ def compute_ll(cell_ratios):
     float:
         The log-likelihood of the NEM model.
     """
-    # cellLRs_t = cellLRs.T # us this in the sum
-    # max_val = np.max(cellLRs, axis=0)
-    return sum(np.log(np.sum(np.exp(cell_ratios), axis=0))) # Make numerically stable by ...(np.exp(self.cell_ratios - max_val))) + max_val
+    
+    max_vec = np.max(cell_ratios, axis=0)
+    
+    return sum(np.log(np.sum(np.exp(cell_ratios - max_vec), axis=0)) + max_vec) # Make numerically stable by ...(np.exp(self.cell_ratios - max_val))) + max_val
 
 def read_csv_to_adj(pathname):
     current_dir = os.getcwd()

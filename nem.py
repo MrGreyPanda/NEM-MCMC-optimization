@@ -83,7 +83,7 @@ class NEM:
         # compute the increment of score if we have additional parents
         indices = {i for i in range(self.num_s) if i != node}
         for index in indices:
-            score_table[index] = np.where(self.observed_knockdown_mat[index] == 0, self.B, -self.A)
+            score_table[index, :] = np.where(self.observed_knockdown_mat[index] == 0, self.B, -self.A)
         
         return score_table
     
@@ -119,10 +119,10 @@ class NEM:
         l = []
         for i in range(self.num_s):
             l.append(all_score_tables[i][i]) # return base row
-
+            
         res = np.vstack(l)
         res = np.vstack((res, np.where(self.observed_knockdown_mat == 0, 0, self.A).sum(axis=0)))
-
+        
         return res
     
     
