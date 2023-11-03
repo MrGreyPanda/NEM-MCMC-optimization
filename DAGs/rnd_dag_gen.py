@@ -27,7 +27,7 @@ def transitive_closure(a):
 
     return closure
 
-def gen_rnd_dag(min_per_rank=1, max_per_rank=5, min_ranks=2, max_ranks=5, percent=35, min_end_nodes=10, max_end_nodes=20):
+def gen_rnd_dag(min_per_rank=1, max_per_rank=5, min_ranks=2, max_ranks=5, percent=35, max_end_nodes=30):
     """
     Generates a random directed acyclic graph (DAG) and writes it to a CSV file.
     Implementation follows Algorithm from: https://stackoverflow.com/questions/12790337/generating-a-random-dag
@@ -64,6 +64,7 @@ def gen_rnd_dag(min_per_rank=1, max_per_rank=5, min_ranks=2, max_ranks=5, percen
 
         nodes += new_nodes # Accumulate into old node set.
     data = transitive_closure(data)
+    min_end_nodes = int(1.5 * nodes)
     num_end_nodes = random.randint(min_end_nodes, max_end_nodes)
     end_nodes = []
     probs = [0.05, 0.08]

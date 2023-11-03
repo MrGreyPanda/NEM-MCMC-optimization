@@ -68,10 +68,6 @@ def compute_ll_ratios(n_parents, U, parent_weights, reduced_score_tables):
             cell_log_ratios[i, :] += np.log(1 - parent_weights[i][j] +
                                         parent_weights[i][j] *
                                         np.exp(reduced_score_tables[i][j]))
-            # print(f"U= {U[i, :]}")
-            # print(f"reduce_score_table= {reduced_score_tables[i][j]}")
-            # print(f"parent_weights= {parent_weights[i][j]}")
-            # print(f"Cell ratio= {cell_log_ratios[i, :]}") 
                          
     return cell_log_ratios
 
@@ -113,3 +109,13 @@ def read_csv_to_adj(pathname):
         errors = np.array(list(map(float, f.readline().strip().split(','))))
         
         return adj_matrix, end_nodes, errors, num_s, num_e
+    
+def transitive_reduction(adj_matrix):
+    adj_mat = adj_matrix.copy()
+    n = len(adj_mat[0])
+    for x in range(n):
+        for y in range(n):
+            for z in range(n):
+                if not x == y == z and (adj_mat[x][y] == 1 and adj_mat[y][z] == 1):
+                    adj_mat[x][z] = 0
+    return adj_mat

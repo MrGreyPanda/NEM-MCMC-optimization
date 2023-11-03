@@ -10,6 +10,13 @@ def local_ll_sum(x, c):
 
 class NEMOrderMCMC():
     def __init__(self, nem, permutation_order):
+        """
+        Initializes an instance of the NEMOrderMCMC class.
+
+        Args:
+        - nem (NEM): an instance of the NEM class
+        - permutation_order (numpy.ndarray): A 1D numpy array representing the permutation order of the nodes in the network.
+        """
         self.nem = nem
         self.num_s = nem.num_s
         self.U = nem.U
@@ -19,13 +26,16 @@ class NEMOrderMCMC():
         self.cell_ratios = self.compute_ll_ratios()
         
     def reset(self, permutation_order):
+        """
+        Resets the instance of the NEMOrderMCMC class.
+
+        Args:
+        - permutation_order (numpy.ndarray): A 1D numpy array representing the permutation order of the nodes in the network.
+        """
         self.ll = 0.0
         self.get_permissible_parents(permutation_order)
         self.get_reduced_score_tables(self.score_table_list)
-        # self.compute_ll_ratios()
         
-        
-
     def get_permissible_parents(self, permutation_order):
         """
         Initializes the permissible parents and their weights for each node in the network given a permutation order.
@@ -62,6 +72,8 @@ class NEMOrderMCMC():
         Computes the log-likelihood ratios for each cell in the NEM matrix.
         Equivalent to Equation 13 in the Abstract from Dr. Jack Kuipers.
        
+        Returns:
+        - numpy.ndarray: The log-likelihood ratios for each cell in the NEM matrix.
         """
         cell_ratios = self.U.copy()
         for i in range(self.num_s):        # iterate through all nodes
@@ -73,6 +85,12 @@ class NEMOrderMCMC():
         return cell_ratios
         
     def calculate_ll(self):
+        """
+        Calculates the log-likelihood of the NEM model.
+
+        Returns:
+        - tuple: A tuple containing the order weights and the log-likelihood of the NEM model.
+        """
         max_val = np.max(self.cell_ratios, axis=0)
         cell_sums = np.log(np.sum(np.exp(self.cell_ratios - max_val), axis=0)) + max_val
         order_weights = np.exp(self.cell_ratios - cell_sums)
@@ -93,19 +111,14 @@ class NEMOrderMCMC():
         a = (local_vec - 1.0) * self.order_weights[i]
         b = 1.0 - self.parent_weights[i][j] * a + self.parent_weights[i][j] * (local_vec - 1.0)
         c = a / b
-        #Using this minimizer requires to quote at least this:J.L. Morales and J. Nocedal. L-BFGS-B: Remark on Algorithm 778: L-BFGS-B, FORTRAN routines for large scale bound constrained optimization (2011), ACM Transactions on Mathematical Software, 38, 1.
-        # res = fmin_l_bfgs_b(local_ll_sum, x0=0.5, bounds=[(0.1, 1.0)], args=(c,), approx_grad=True, factr=10, epsilon=1e-8, maxls=8)
-        # if res[2]['warnflag'] != 0:
-        #     raise Exception(f"Minimization not successful, Reason: {res[2]['task']}")
-        # return res[0]
         
-        res = minimize(local_ll_sum, x0=0.5, bounds=[(0.001, 1.0)], args=(c,), method='L-BFGS-B', tol=0.1)
+        res = minimize(local_ll_sum, x0=0.5, bounds=[(0.0, 1.0)], args=(c,), method='L-BFGS-B', tol=0.1)
         if res.success == False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         return res.x
     
     
-    def get_optimal_weights(self, abs_diff=0.1, max_iter = 100):
+    def get_optimal_weights(self, abs_diff=0.01, max_iter = 100):
         """
             Calculates the optimal weights for the NEM model using the specified relative error and maximum number of iterations.
 
@@ -126,24 +139,18 @@ class NEMOrderMCMC():
         self.ll = 0.0
         #abs_diff could be varied
         while(ll_diff > abs_diff and iter_count < max_iter):
-            # print(f"Iteration: {iter_count}")
             self.cell_ratios = self.compute_ll_ratios()
-            # self.order_weights = self.calculate_order_weights()
-            # self.ll = self.compute_loglikelihood_score()
-            
             self.order_weights, self.ll = self.calculate_ll()
-            logging.info(f"self.ll: {self.ll}")
             new_parent_weights = self.parent_weights
             for i in range(self.num_s):
                 for j in range(self.n_parents[i]):
-                    # self.parent_weights[i][j] = self.calculate_local_optimum(i, j)
                     new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
-                    
             self.parent_weights = new_parent_weights
-            print(f"ll: {self.ll}")
             ll_diff = self.ll - old_ll
             old_ll = self.ll
             iter_count += 1
+        
+        print(f"Number of iterations: {iter_count}")
         return self.ll
     
     def dag_or_nem(self, is_dag = False):
@@ -153,33 +160,43 @@ class NEMOrderMCMC():
             for j in range(self.n_parents[i]):
                 dag_weights[i][j] = 1 * (self.parent_weights[i][j] > 0.5)
                 dag[i, self.parents_list[i][j]] = dag_weights[i][j]
-        # dag_ll = utils.compute_ll(utils.compute_ll_ratios(self.n_parents, self.U, dag_weights, self.reduced_score_tables))
         if is_dag:
             return dag, utils.compute_ll(utils.compute_ll_ratios(self.n_parents, self.U, dag_weights, self.reduced_score_tables))
         nem = utils.ancestor(dag)
         nem_weights = self.parent_weights
         for i in range(self.num_s):
             for j in range(self.n_parents[i]):
-                nem_weights[i][j] = nem[self.parents_list[i][j]][i]
+                nem_weights[i][j] = nem[i][self.parents_list[i][j]]
         nem_ll = utils.compute_ll(utils.compute_ll_ratios(self.n_parents, self.U, nem_weights, self.reduced_score_tables))
         return nem, nem_ll
-            
-        
-    def method(self, swap_prob=0.95, gamma=1, seed=0, n_iterations=500, is_dag=False):
-        best_score = -float('inf')
+    
+    def method(self, swap_prob=0.95, gamma=1, seed=1234, n_iterations=500, is_dag=True):
+        """
+        Runs the MCMC algorithm to find the optimal permutation order for the NEM model.
+
+        Args:
+        - swap_prob (float): Probability of swapping two nodes in the permutation order.
+        - gamma (float): Scaling factor for the acceptance rate calculation.
+        - seed (int): Seed for the random number generator.
+        - n_iterations (int): Number of iterations to run the MCMC algorithm.
+        - is_dag (bool): Whether the graph is a directed acyclic graph (DAG).
+
+        Returns:
+        - best_score (float): The highest score achieved during the MCMC iterations.
+        - best_nem (list): The optimal NEM model found during the MCMC iterations.
+        """
         random.seed(seed)
         current_permutation_order = np.array(random.sample(range(self.num_s), self.num_s))
         current_score = self.get_optimal_weights()
+        best_score = current_score
         permutation_order = current_permutation_order
         best_nem = []
+        counter = 0
         for i in range(n_iterations):
             print(f"Starting MCMC iteration {i}")
-            print()
-            logging.info(f"Starting MCMC iteration {i}")
-            logging.info(f"###########################")
-            swap = random.random() < swap_prob
+            is_swap = random.random() < swap_prob
             
-            if swap:
+            if is_swap:
                 # swap two random nodes
                 i, j = random.sample(range(self.num_s), 2)
                 permutation_order[i], permutation_order[j] = permutation_order[j], permutation_order[i]
@@ -187,26 +204,23 @@ class NEMOrderMCMC():
                 # swap two adjacent nodes
                 i = random.randint(0, self.num_s - 2)
                 permutation_order[i], permutation_order[i + 1] = permutation_order[i + 1], permutation_order[i]
-                
-            score = self.get_optimal_weights()
-            
-            acceptance_rate = np.exp(gamma * abs(score - current_score))
+            self.get_optimal_weights()
+            nem, score = self.dag_or_nem(is_dag)
+            print(f"Score: {score}, Current Score: {current_score}")
+            acceptance_rate = np.exp(gamma * (score - current_score))
             if random.random() < acceptance_rate:
                 current_permutation_order = permutation_order
                 current_score = score
+                counter += 1
                 if(current_score > best_score):
                     best_score = current_score
-                    best_weights = self.parent_weights
-                    best_parents = self.parents_list
-                    ##nem
                     dag_weights = self.parent_weights
                     dag = np.zeros((self.num_s, self.num_s))
                     for i in range(self.num_s):
                         for j in range(self.n_parents[i]):
                             dag_weights[i][j] = 1 * (self.parent_weights[i][j] > 0.5)
                             dag[i, self.parents_list[i][j]] = dag_weights[i][j]
-                    best_nem = utils.ancestor(dag)   
+                    best_nem = nem  
             self.reset(permutation_order)
-
+        print(counter)
         return best_score, best_nem
-    
