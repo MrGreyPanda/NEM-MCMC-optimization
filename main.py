@@ -19,6 +19,7 @@ def get_initial_order(observed_knockdown_mat):
     print(order)
     return order
 
+
 def main():
     # logging.basicConfig(filename='nem_mcmc.log', level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s')
     adj_matrix, end_nodes, errors, num_s, num_e = utils.read_csv_to_adj("DAGs/csv/network10.csv")
@@ -27,15 +28,14 @@ def main():
     permutation_order = get_initial_order(my_nem.observed_knockdown_mat)
     gamma = 2.0 * my_nem.num_s / my_nem.num_e
     mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
-    
     score, best_nem = mcmc_nem.method(n_iterations=100, gamma=gamma)
     # for i in range(my_nem.num_s):
     #     best_nem = utils.ancestor(best_nem)
-    if os.path.exists("output.pdf"):
+    if os.path.exists("/output/output.pdf"):
         os.remove("output.pdf")
     print(f"Final Score: {score}")
-    dot.generate_dot_from_matrix(best_nem, "output.dot")
-    graph.create_graph_from_dot("output.dot", "output.pdf")
+    dot.generate_dot_from_matrix(best_nem, "/output/output.dot")
+    graph.create_graph_from_dot("/output/output.dot", "/output/output.pdf")
     
 if __name__ == "__main__":
     main()

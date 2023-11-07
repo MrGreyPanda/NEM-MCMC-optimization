@@ -40,31 +40,34 @@ class NEM:
         alpha = errors[0]
         beta = errors[1]
         real_knockdown_mat = utils.create_real_knockdown_mat(adj_matrix, end_nodes)
+        row_sums = np.sum(real_knockdown_mat, axis=1)
+        sorted_indices = np.argsort(row_sums)[::-1]
+        self.real_parent_order = np.arange(num_s)[sorted_indices]
         
         self.A = np.log(alpha / (1.0 - beta))
         self.B = np.log(beta / (1.0 - alpha))
         self.observed_knockdown_mat = utils.create_observed_knockdown_mat(real_knockdown_mat, alpha, beta)
-        self.U = self.get_node_lr_table(self.get_score_tables())
+        self.U = self.get_node_lr_table(self.get_score_tables(self.observed_knockdown_mat))
+        self.real_score_table_list = self.get_score_tables(real_knockdown_mat)
         
         
-        
-    def compute_scores(self, node):
+    def compute_scores(self, node, knockdown_mat):
         """
         Computes the scores for a given set of effect nodes, data, and parameters A and B.
         Returns:
         numpy.ndarray: The computed scores.
         """
         # suppose only effect_nodes have an effect on E-genes upon perturbation i.e. we expect to see all 1
-        score = np.where(self.observed_knockdown_mat[node, :] == 1, 0, self.B) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
+        score = np.where(knockdown_mat[node, :] == 1, 0, self.B) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
 
         # suppose the rest does not have an effect on E-genes, therefore if we perturb them we expect to see 0
         indices = {i for i in range(self.num_s) if i != node}
         for index in indices:
-            score += np.where(self.observed_knockdown_mat[index, :] == 1, self.A, 0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
+            score += np.where(knockdown_mat[index, :] == 1, self.A, 0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
 
         return score
     
-    def build_score_table(self, node):
+    def build_score_table(self, node, knockdown_mat):
         """
         Builds a score table for a given node in a network.
 
@@ -78,16 +81,16 @@ class NEM:
         score_table = np.zeros((self.num_s, self.num_e))
         
         # compute first (base) row
-        score_table[node, :] = self.compute_scores(node)
+        score_table[node, :] = self.compute_scores(node, knockdown_mat)
         
         # compute the increment of score if we have additional parents
         indices = {i for i in range(self.num_s) if i != node}
         for index in indices:
-            score_table[index, :] = np.where(self.observed_knockdown_mat[index] == 0, self.B, -self.A)
+            score_table[index, :] = np.where(knockdown_mat[index] == 0, self.B, -self.A)
         
         return score_table
     
-    def get_score_tables(self):
+    def get_score_tables(self, knockdown_mat):
         """
         Computes score tables for each S_gene in the given data using the given A and B matrices.
         
@@ -102,9 +105,8 @@ class NEM:
         all_score_tables = []
         # compute score tables for each S_gene
         for node in range(self.num_s):
-            all_score_tables.append(self.build_score_table(node))
+            all_score_tables.append(self.build_score_table(node, knockdown_mat))
         return all_score_tables
-        
 
     def get_node_lr_table(self, all_score_tables):
         """

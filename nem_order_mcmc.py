@@ -20,9 +20,9 @@ class NEMOrderMCMC():
         self.nem = nem
         self.num_s = nem.num_s
         self.U = nem.U
-        self.score_table_list = nem.get_score_tables()
+        self.score_table_list = nem.get_score_tables(nem.observed_knockdown_mat)
         self.get_permissible_parents(permutation_order)
-        self.get_reduced_score_tables(self.score_table_list)
+        self.get_reduced_score_tables = self.get_reduced_score_tables(self.score_table_list, self.parents_list)
         self.cell_ratios = self.compute_ll_ratios()
         
     def reset(self, permutation_order):
@@ -34,6 +34,7 @@ class NEMOrderMCMC():
         """
         self.ll = 0.0
         self.get_permissible_parents(permutation_order)
+        self.reduced_score_tables.clear()
         self.get_reduced_score_tables(self.score_table_list)
         
     def get_permissible_parents(self, permutation_order):
@@ -54,18 +55,17 @@ class NEMOrderMCMC():
             parent_weights[i] = [0.5] * n_parents[i]
         self.parents_list, self.n_parents, self.parent_weights = parents_list, n_parents, parent_weights
 
-    def get_reduced_score_tables(self, score_table_list):
+    def get_reduced_score_tables(self, score_table_list, parents_list):
         """
         Initializes a list of reduced score tables based on the given score_table_list.
 
         Args:
         score_table_list (list(np.array)): a list containing the score tables for each gene in the network.
         """
-        self.reduced_score_tables = []
-        self.reduced_score_tables.clear()
+        reduced_score_tables = []
         for i in range(self.num_s):
-            self.reduced_score_tables.append(np.array([score_table_list[i][j] for j in self.parents_list[i]]))
-    
+            reduced_score_tables.append(np.array([score_table_list[i][j] for j in parents_list[i]]))
+        return reduced_score_tables
     
     def compute_ll_ratios(self):
         """
