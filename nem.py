@@ -40,17 +40,28 @@ class NEM:
         alpha = errors[0]
         beta = errors[1]
         real_knockdown_mat = utils.create_real_knockdown_mat(adj_matrix, end_nodes)
-        row_sums = np.sum(real_knockdown_mat, axis=1)
-        sorted_indices = np.argsort(row_sums)[::-1]
-        self.real_parent_order = np.arange(num_s)[sorted_indices]
         
         self.A = np.log(alpha / (1.0 - beta))
         self.B = np.log(beta / (1.0 - alpha))
         self.observed_knockdown_mat = utils.create_observed_knockdown_mat(real_knockdown_mat, alpha, beta)
         self.U = self.get_node_lr_table(self.get_score_tables(self.observed_knockdown_mat))
-        self.real_score_table_list = self.get_score_tables(real_knockdown_mat)
         
-        
+        #computation of real score
+        row_sums = np.sum(real_knockdown_mat, axis=1)
+        sorted_indices = np.argsort(row_sums)[::-1]
+        real_parent_order = np.arange(num_s)[sorted_indices]
+        real_score_table_list = self.get_score_tables(real_knockdown_mat)
+        real_n_parents = np.empty(self.num_s, dtype=int)
+        real_parents_list = np.empty(self.num_s, dtype=object)
+        real_parent_weights = np.empty(self.num_s, dtype=int)
+        for index in range(self.num_s):
+            real_parents_list[index] = real_parent_order[index + 1:]
+            real_n_parents[index] = len(real_parents_list[index])
+            real_parent_weights[index].append(real_knockdown_mat[index, real_parents_list[index]])
+        real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
+        real_cell_ratios = self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents)
+        self.real_ll = self.calculate_ll(real_cell_ratios)
+
     def compute_scores(self, node, knockdown_mat):
         """
         Computes the scores for a given set of effect nodes, data, and parameters A and B.
@@ -127,4 +138,43 @@ class NEM:
         
         return res
     
+    def get_reduced_score_tables(self, score_table_list, parents_list):
+        """
+        Initializes a list of reduced score tables based on the given score_table_list.
+
+        Args:
+        score_table_list (list(np.array)): a list containing the score tables for each gene in the network.
+        """
+        reduced_score_tables = []
+        for i in range(self.num_s):
+            reduced_score_tables.append(np.array([score_table_list[i][j] for j in parents_list[i]]))
+        return reduced_score_tables
     
+    def compute_ll_ratios(self, parent_weights, reduced_score_tables, real_n_parents):
+        """
+        Computes the log-likelihood ratios for each cell in the NEM matrix.
+        Equivalent to Equation 13 in the Abstract from Dr. Jack Kuipers.
+       
+        Returns:
+        - numpy.ndarray: The log-likelihood ratios for each cell in the NEM matrix.
+        """
+        cell_ratios = self.U.copy()
+        for i in range(self.num_s):        # iterate through all nodes
+            for j in range(real_n_parents[i]):
+                cell_ratios[i, :] += np.log(1.0 - 
+                                            parent_weights[i][j] + 
+                                            parent_weights[i][j] * 
+                                            np.exp(reduced_score_tables[i][j]))
+        return cell_ratios
+    
+    def calculate_ll(self, cell_ratios):
+        """
+        Calculates the log-likelihood of the NEM model.
+
+        Returns:
+        - tuple: A tuple containing the order weights and the log-likelihood of the NEM model.
+        """
+        max_val = np.max(cell_ratios, axis=0)
+        cell_sums = np.log(np.sum(np.exp(cell_ratios - max_val), axis=0)) + max_val
+        ll = sum(cell_sums)
+        return ll
