@@ -53,11 +53,13 @@ class NEM:
         real_score_table_list = self.get_score_tables(real_knockdown_mat)
         real_n_parents = np.empty(self.num_s, dtype=int)
         real_parents_list = np.empty(self.num_s, dtype=object)
-        real_parent_weights = np.empty(self.num_s, dtype=int)
+        real_parent_weights = np.empty(self.num_s, dtype=object)
         for index in range(self.num_s):
             real_parents_list[index] = real_parent_order[index + 1:]
             real_n_parents[index] = len(real_parents_list[index])
-            real_parent_weights[index].append(real_knockdown_mat[index, real_parents_list[index]])
+            real_parent_weights[index] = []
+            for j in range(real_n_parents[index]):
+                real_parent_weights[index].append(real_knockdown_mat[index, real_parents_list[index][j]])
         real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
         real_cell_ratios = self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents)
         self.real_ll = self.calculate_ll(real_cell_ratios)

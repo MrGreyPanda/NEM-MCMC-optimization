@@ -22,7 +22,7 @@ class NEMOrderMCMC():
         self.U = nem.U
         self.score_table_list = nem.get_score_tables(nem.observed_knockdown_mat)
         self.get_permissible_parents(permutation_order)
-        self.get_reduced_score_tables = self.get_reduced_score_tables(self.score_table_list, self.parents_list)
+        self.reduced_score_tables = self.get_reduced_score_tables(self.score_table_list, self.parents_list)
         self.cell_ratios = self.compute_ll_ratios()
         
     def reset(self, permutation_order):
@@ -35,7 +35,7 @@ class NEMOrderMCMC():
         self.ll = 0.0
         self.get_permissible_parents(permutation_order)
         self.reduced_score_tables.clear()
-        self.get_reduced_score_tables(self.score_table_list)
+        self.get_reduced_score_tables(self.score_table_list, self.parents_list)
         
     def get_permissible_parents(self, permutation_order):
         """
