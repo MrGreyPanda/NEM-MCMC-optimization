@@ -1,5 +1,6 @@
 import csv
 import os
+import os
 
 def generate_dot_language(csv_file_path, output_file_path):
     # Read in the CSV file
@@ -24,7 +25,7 @@ def generate_dot_language(csv_file_path, output_file_path):
     with open(output_file_path, 'w') as file:
         file.write(dot_string)
     print(f"Generated {output_file_path}")
-            
+
 def generate_dot_from_matrix(adj_matrix, output_file):
     dot_string = 'digraph {\n'
     # Add the edges to the DOT language string
@@ -35,6 +36,9 @@ def generate_dot_from_matrix(adj_matrix, output_file):
     # Close the DOT language string
     dot_string += '}'
     
+    dot_string += '}'
+    
+    os.chdir('../')
     # Write the DOT language string to the output file
     with open(output_file, 'w') as file:
         file.write(dot_string)

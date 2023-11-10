@@ -4,6 +4,7 @@ import os
 import random
 from scipy.optimize import minimize
 
+
 class NEM:
     """
     A class representing a Network Error Model (NEM).
@@ -23,7 +24,6 @@ class NEM:
     Methods:
     - __init__(self): initializes the NEM object by reading the network.csv file and setting the attributes
     """
-
 
     def __init__(self, adj_matrix, end_nodes, errors, num_s, num_e):
         """
@@ -45,24 +45,7 @@ class NEM:
         self.B = np.log(beta / (1.0 - alpha))
         self.observed_knockdown_mat = utils.create_observed_knockdown_mat(real_knockdown_mat, alpha, beta)
         self.U = self.get_node_lr_table(self.get_score_tables(self.observed_knockdown_mat))
-        
-        #computation of real score
-        row_sums = np.sum(real_knockdown_mat, axis=1)
-        sorted_indices = np.argsort(row_sums)[::-1]
-        real_parent_order = np.arange(num_s)[sorted_indices]
-        real_score_table_list = self.get_score_tables(real_knockdown_mat)
-        real_n_parents = np.empty(self.num_s, dtype=int)
-        real_parents_list = np.empty(self.num_s, dtype=object)
-        real_parent_weights = np.empty(self.num_s, dtype=object)
-        for index in range(self.num_s):
-            real_parents_list[index] = real_parent_order[index + 1:]
-            real_n_parents[index] = len(real_parents_list[index])
-            real_parent_weights[index] = []
-            for j in range(real_n_parents[index]):
-                real_parent_weights[index].append(real_knockdown_mat[index, real_parents_list[index][j]])
-        real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
-        real_cell_ratios = self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents)
-        self.real_ll = self.calculate_ll(real_cell_ratios)
+        self.real_ll = self.compute_real_score(real_knockdown_mat=real_knockdown_mat)
 
     def compute_scores(self, node, knockdown_mat):
         """
@@ -71,12 +54,12 @@ class NEM:
         numpy.ndarray: The computed scores.
         """
         # suppose only effect_nodes have an effect on E-genes upon perturbation i.e. we expect to see all 1
-        score = np.where(knockdown_mat[node, :] == 1, 0, self.B) # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
+        score = np.where(knockdown_mat[node, :] == 1, 0, self.B)  # real 1, observe 1 -> 0. real 1 observe 0, FN-> B
 
         # suppose the rest does not have an effect on E-genes, therefore if we perturb them we expect to see 0
         indices = {i for i in range(self.num_s) if i != node}
         for index in indices:
-            score += np.where(knockdown_mat[index, :] == 1, self.A, 0) #real 0, observe 0 -> 0. real 0 observe 1, FP-> A
+            score += np.where(knockdown_mat[index, :] == 1, self.A, 0)  # real 0, observe 0 -> 0. real 0 observe 1, FP-> A
 
         return score
     
@@ -133,7 +116,7 @@ class NEM:
         """
         l = []
         for i in range(self.num_s):
-            l.append(all_score_tables[i][i]) # return base row
+            l.append(all_score_tables[i][i])  # return base row
             
         res = np.vstack(l)
         res = np.vstack((res, np.where(self.observed_knockdown_mat == 0, 0, self.A).sum(axis=0)))
@@ -180,3 +163,32 @@ class NEM:
         cell_sums = np.log(np.sum(np.exp(cell_ratios - max_val), axis=0)) + max_val
         ll = sum(cell_sums)
         return ll
+    
+    def compute_real_score(self, real_knockdown_mat):
+        """
+        Computes the log-likelihood score of the given real knockdown matrix.
+
+        Args:
+            real_knockdown_mat (numpy.ndarray): A binary matrix of shape (num_s, num_p) where num_s is the number of
+                samples and num_p is the number of perturbations. A value of 1 in position (i, j) indicates that sample i
+                was knocked down for perturbation j.
+
+        Returns:
+            None. The method updates the `real_ll` attribute of the object with the computed log-likelihood score.
+        """
+        row_sums = np.sum(real_knockdown_mat, axis=1)
+        sorted_indices = np.argsort(row_sums)[::-1]
+        real_parent_order = np.arange(self.num_s)[sorted_indices]
+        real_score_table_list = self.get_score_tables(real_knockdown_mat)
+        real_n_parents = np.empty(self.num_s, dtype=int)
+        real_parents_list = np.empty(self.num_s, dtype=object)
+        real_parent_weights = np.empty(self.num_s, dtype=object)
+        for index in range(self.num_s):
+            real_parents_list[index] = real_parent_order[index + 1:]
+            real_n_parents[index] = len(real_parents_list[index])
+            real_parent_weights[index] = []
+            for j in range(real_n_parents[index]):
+                real_parent_weights[index].append(real_knockdown_mat[index, real_parents_list[index][j]])
+        real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
+        real_cell_ratios = self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents)
+        return self.calculate_ll(real_cell_ratios)

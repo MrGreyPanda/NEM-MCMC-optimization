@@ -111,11 +111,29 @@ def read_csv_to_adj(pathname):
         return adj_matrix, end_nodes, errors, num_s, num_e
     
 def transitive_reduction(adj_matrix):
-    adj_mat = adj_matrix.copy()
-    n = len(adj_mat[0])
-    for x in range(n):
-        for y in range(n):
-            for z in range(n):
-                if not x == y == z and (adj_mat[x][y] == 1 and adj_mat[y][z] == 1):
-                    adj_mat[x][z] = 0
+    n = adj_matrix.shape[0]
+    adj_mat = np.array(adj_matrix, copy=True)
+    
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if i != j and adj_mat[i][k] and adj_mat[k][j]:
+                    adj_mat[i][j] = 0
     return adj_mat
+
+def dag_or_nem(num_s, U, parent_weights, reduced_score_tables, parents_list, n_parents, is_dag=False):
+    dag_weights = parent_weights
+    dag = np.zeros((num_s, num_s))
+    for i in range(num_s):
+        for j in range(n_parents[i]):
+            dag_weights[i][j] = 1 * (parent_weights[i][j] > 0.5)
+            dag[i, parents_list[i][j]] = dag_weights[i][j]
+    if is_dag:
+        return dag, compute_ll(compute_ll_ratios(n_parents, U, dag_weights, reduced_score_tables))
+    nem = ancestor(dag)
+    nem_weights = parent_weights
+    for i in range(num_s):
+        for j in range(n_parents[i]):
+            nem_weights[i][j] = nem[i][parents_list[i][j]]
+    nem_ll = compute_ll(compute_ll_ratios(n_parents, U, nem_weights, reduced_score_tables))
+    return nem, nem_ll
