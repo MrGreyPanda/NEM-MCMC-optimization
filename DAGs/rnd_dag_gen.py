@@ -21,13 +21,38 @@ def transitive_closure(a):
         closure_until_now = closure | new_relations
 
         if closure_until_now == closure:
-            break
+            break 
 
         closure = closure_until_now
 
     return closure
 
-def gen_rnd_dag(min_per_rank=1, max_per_rank=5, min_ranks=2, max_ranks=5, percent=35, max_end_nodes=30):
+def transitive_reduction(a):
+    """
+    Computes the transitive reduction of a given set of relations.
+    Implementation from: https://stackoverflow.com/questions/8673482/transitive-closure-python-tuples
+
+    Args:
+        a (set): A set of relations.
+
+    Returns:
+        set: The transitive reduction of the input set of relations.
+    """
+    reduction = set(a)
+    while True:
+        new_relations = set((x,w) for x,y in reduction for q,w in reduction if q == y and (x,w)  in reduction)
+
+        reduction_until_now = reduction - new_relations
+
+        if reduction_until_now == reduction:
+            break 
+
+        reduction = reduction_until_now
+
+    return reduction
+
+# Bigger E!
+def gen_rnd_dag(i, output_file_path, min_per_rank=1, max_per_rank=5, min_ranks=2, max_ranks=5, percent=35):
     """
     Generates a random directed acyclic graph (DAG) and writes it to a CSV file.
     Implementation follows Algorithm from: https://stackoverflow.com/questions/12790337/generating-a-random-dag
@@ -46,11 +71,8 @@ def gen_rnd_dag(min_per_rank=1, max_per_rank=5, min_ranks=2, max_ranks=5, percen
     """
     nodes = 0
     ranks = min_ranks + random.randint(0, max_ranks - min_ranks + 1)
-    i = 1
-    output_file = f"csv/network{i}.csv"
-    while os.path.exists(output_file):
-        i += 1
-        output_file = f"csv/network{i}.csv"
+    output_file = output_file_path + f"network{i}.csv"
+    output_file_red = output_file_path + f"network{i}_red.csv"
     data = []
     for i in range(ranks):
         # New nodes of 'higher' rank than all nodes generated till now.
@@ -63,8 +85,11 @@ def gen_rnd_dag(min_per_rank=1, max_per_rank=5, min_ranks=2, max_ranks=5, percen
                     data.append((j, k + nodes)) # An Edge.
 
         nodes += new_nodes # Accumulate into old node set.
-    data = transitive_closure(data)
-    min_end_nodes = int(1.5 * nodes)
+    data_reduced = transitive_reduction(data)
+    for i in range(len(data)):
+        data = transitive_closure(data)
+    min_end_nodes = 3 * nodes
+    max_end_nodes = 12 * nodes
     num_end_nodes = random.randint(min_end_nodes, max_end_nodes)
     end_nodes = []
     probs = [0.05, 0.08]
@@ -77,5 +102,10 @@ def gen_rnd_dag(min_per_rank=1, max_per_rank=5, min_ranks=2, max_ranks=5, percen
         writer.writerows(data)
         writer.writerow(end_nodes)
         writer.writerow(probs)
+    with open(output_file_red, "w", newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(first_line)
+        writer.writerows(data_reduced)
+        writer.writerow(end_nodes)
+        writer.writerow(probs)
         
-gen_rnd_dag()

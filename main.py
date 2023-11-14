@@ -21,13 +21,13 @@ def get_initial_order(observed_knockdown_mat):
 
 
 def main():
-    adj_matrix, end_nodes, errors, num_s, num_e = utils.read_csv_to_adj("DAGs/csv/network10.csv")
+    adj_matrix, end_nodes, errors, num_s, num_e = utils.read_csv_to_adj("DAGs/networks/network19/network19.csv")
     my_nem = nem.NEM(adj_matrix, end_nodes, errors, num_s, num_e)
     permutation_order = get_initial_order(my_nem.observed_knockdown_mat)
     gamma = 2.0 * my_nem.num_s / my_nem.num_e
     mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
-    
-    score, best_nem = mcmc_nem.method(n_iterations=20, gamma=gamma)
+     
+    score, best_nem = mcmc_nem.method(n_iterations=100, gamma=gamma)
     if os.path.exists("/output/output.pdf"):
         os.remove("output.pdf")
     print(f"Final Score: {score}")

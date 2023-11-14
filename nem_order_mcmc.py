@@ -86,6 +86,12 @@ class NEMOrderMCMC:
                                             self.parent_weights[i][j] *
                                             np.exp(self.reduced_score_tables[i][j]))
         return cell_ratios
+        # cell_ratios = self.U.copy()
+        # for i in range(self.num_s):
+        #     parent_weights = np.array(self.parent_weights[i][:self.n_parents[i]])
+        #     reduced_score_tables = self.reduced_score_tables[i][:self.n_parents[i]]
+        #     cell_ratios[i, :] += np.log(1.0 - parent_weights + parent_weights * np.exp(reduced_score_tables))
+        # return cell_ratios
 
     def calculate_ll(self):
         """

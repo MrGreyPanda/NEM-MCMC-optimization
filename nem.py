@@ -176,6 +176,7 @@ class NEM:
         Returns:
             None. The method updates the `real_ll` attribute of the object with the computed log-likelihood score.
         """
+        # Implement the real nem Score, not only the order score ( Order is good for comparison)
         row_sums = np.sum(real_knockdown_mat, axis=1)
         sorted_indices = np.argsort(row_sums)[::-1]
         real_parent_order = np.arange(self.num_s)[sorted_indices]
@@ -191,4 +192,10 @@ class NEM:
                 real_parent_weights[index].append(real_knockdown_mat[index, real_parents_list[index][j]])
         real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
         real_cell_ratios = self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents)
+        real_parent_order = []
+        for i in range(self.num_s):
+            pass
         return self.calculate_ll(real_cell_ratios)
+    
+    # Include grandparents, grandgrandparents... into the optimization
+    # Run on multiple examples to see what to do next (what to optimize)
