@@ -36,8 +36,6 @@ def generate_dot_from_matrix(adj_matrix, output_file):
     # Close the DOT language string
     dot_string += '}'
     
-    dot_string += '}'
-    
     os.chdir('../')
     # Write the DOT language string to the output file
     with open(output_file, 'w') as file:

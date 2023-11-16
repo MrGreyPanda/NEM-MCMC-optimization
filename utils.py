@@ -81,10 +81,7 @@ def compute_ll(cell_ratios):
     float:
         The log-likelihood of the NEM model.
     """
-    
-    max_vec = np.max(cell_ratios, axis=0)
-    
-    return sum(np.log(np.sum(np.exp(cell_ratios - max_vec), axis=0)) + max_vec) # Make numerically stable by ...(np.exp(self.cell_ratios - max_val))) + max_val
+    return sum(np.logaddexp.reduce(cell_ratios, axis=0))
 
 def read_csv_to_adj(pathname):
     current_dir = os.getcwd()
@@ -137,3 +134,29 @@ def dag_or_nem(num_s, U, parent_weights, reduced_score_tables, parents_list, n_p
             nem_weights[i][j] = nem[i][parents_list[i][j]]
     nem_ll = compute_ll(compute_ll_ratios(n_parents, U, nem_weights, reduced_score_tables))
     return nem, nem_ll
+
+def hamming_distance(mat_a, mat_b):
+    return np.sum(np.abs(mat_a - mat_b))
+
+# Example of how to run R code from Python
+# import rpy2.robjects as robjects
+# def execute_R_code(n, permy):
+#     r = robjects.r
+#     rcode = f"""
+#         # your R code here
+#         # use n and permy as input variables
+#         n <- 4
+#         permy <- c(2, 3, 1, 4)
+#         parents <- vector("list", n)
+#         nparents <- rep(NA, n) 
+#         for (ii in 1:n) {{
+#             parents[[ii]] <- permy[-which(permy == ii):-1]
+#             nparents[ii] <- length(parents[[ii]]) # how many permissible parents it could have
+#         }}
+#     """
+#     r(rcode)
+#     permy = r['permy']
+#     parents = r['parents']
+#     nparents = r['nparents']
+#     print(permy, parents, nparents)
+

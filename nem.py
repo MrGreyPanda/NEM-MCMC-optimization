@@ -45,7 +45,7 @@ class NEM:
         self.B = np.log(beta / (1.0 - alpha))
         self.observed_knockdown_mat = utils.create_observed_knockdown_mat(real_knockdown_mat, alpha, beta)
         self.U = self.get_node_lr_table(self.get_score_tables(self.observed_knockdown_mat))
-        self.real_ll = self.compute_real_score(real_knockdown_mat=real_knockdown_mat)
+        self.real_order_ll, self.real_ll = self.compute_real_score(real_knockdown_mat=real_knockdown_mat, adj_mat=adj_matrix)
 
     def compute_scores(self, node, knockdown_mat):
         """
@@ -135,7 +135,7 @@ class NEM:
             reduced_score_tables.append(np.array([score_table_list[i][j] for j in parents_list[i]]))
         return reduced_score_tables
     
-    def compute_ll_ratios(self, parent_weights, reduced_score_tables, real_n_parents):
+    def compute_ll_ratios(self, parent_weights, reduced_score_tables, real_n_parents, U):
         """
         Computes the log-likelihood ratios for each cell in the NEM matrix.
         Equivalent to Equation 13 in the Abstract from Dr. Jack Kuipers.
@@ -143,7 +143,7 @@ class NEM:
         Returns:
         - numpy.ndarray: The log-likelihood ratios for each cell in the NEM matrix.
         """
-        cell_ratios = self.U.copy()
+        cell_ratios = U.copy()
         for i in range(self.num_s):        # iterate through all nodes
             for j in range(real_n_parents[i]):
                 cell_ratios[i, :] += np.log(1.0 - 
@@ -159,12 +159,11 @@ class NEM:
         Returns:
         - tuple: A tuple containing the order weights and the log-likelihood of the NEM model.
         """
-        max_val = np.max(cell_ratios, axis=0)
-        cell_sums = np.log(np.sum(np.exp(cell_ratios - max_val), axis=0)) + max_val
+        cell_sums = np.logaddexp.reduce(cell_ratios, axis=0)
         ll = sum(cell_sums)
         return ll
     
-    def compute_real_score(self, real_knockdown_mat):
+    def compute_real_score(self, real_knockdown_mat, adj_mat):
         """
         Computes the log-likelihood score of the given real knockdown matrix.
 
@@ -177,25 +176,44 @@ class NEM:
             None. The method updates the `real_ll` attribute of the object with the computed log-likelihood score.
         """
         # Implement the real nem Score, not only the order score ( Order is good for comparison)
+        for i in range(self.num_s):
+            adj_mat[i][i] = 0
         row_sums = np.sum(real_knockdown_mat, axis=1)
         sorted_indices = np.argsort(row_sums)[::-1]
         real_parent_order = np.arange(self.num_s)[sorted_indices]
         real_score_table_list = self.get_score_tables(real_knockdown_mat)
+        real_U = self.get_node_lr_table(real_score_table_list)
         real_n_parents = np.empty(self.num_s, dtype=int)
         real_parents_list = np.empty(self.num_s, dtype=object)
         real_parent_weights = np.empty(self.num_s, dtype=object)
-        for index in range(self.num_s):
-            real_parents_list[index] = real_parent_order[index + 1:]
-            real_n_parents[index] = len(real_parents_list[index])
-            real_parent_weights[index] = []
-            for j in range(real_n_parents[index]):
-                real_parent_weights[index].append(real_knockdown_mat[index, real_parents_list[index][j]])
-        real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
-        real_cell_ratios = self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents)
-        real_parent_order = []
         for i in range(self.num_s):
-            pass
-        return self.calculate_ll(real_cell_ratios)
+            index = np.where(real_parent_order == i)[0][0]
+            real_parents_list[i] = real_parent_order[index + 1:]
+            real_n_parents[i] = len(real_parents_list[i])
+            real_parent_weights[i] = []
+            for j in real_parents_list[i]:
+                real_parent_weights[i].append(adj_mat[j][i])
+                
+        real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
+        real_order_ll = self.calculate_ll(self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents, real_U))
+        
+        real_parents_list = [[] for _ in range(self.num_s)]
+        real_parent_weights =[[] for _ in range(self.num_s)]
+        real_n_parents = np.zeros(self.num_s, dtype=int)
+        for i in range(self.num_s):
+            for j in range(self.num_s):
+                if adj_mat[i][j] == 1:
+                    real_parents_list[j].append(i)
+                    real_n_parents[j] += 1
+        for i in range(self.num_s):
+            for j in real_parents_list[i]:
+                # real_parent_weights[i].append(adj_mat[j][i])
+                real_parent_weights[i].append(1.0)
+        real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
+        real_ll = self.calculate_ll(self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents, real_U))
+                    
+        return real_order_ll, real_ll
     
     # Include grandparents, grandgrandparents... into the optimization
     # Run on multiple examples to see what to do next (what to optimize)
+    
