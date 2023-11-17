@@ -2,6 +2,7 @@ import numpy as np
 from scipy.optimize import minimize, fmin_l_bfgs_b
 import random
 import utils
+import copy
 
 
 def local_ll_sum(x, c):
@@ -20,7 +21,7 @@ class NEMOrderMCMC:
         """
         self.nem = nem
         self.num_s = nem.num_s
-        self.U = nem.U
+        self.U = nem.U.copy()
         self.score_table_list = nem.get_score_tables(nem.observed_knockdown_mat)
         self.get_permissible_parents(perm_order)
         self.reduced_score_tables = self.get_reduced_score_tables(self.score_table_list, self.parents_list)
@@ -52,7 +53,7 @@ class NEMOrderMCMC:
         n_parents = np.empty(self.num_s, dtype=int)
         for i in range(self.num_s):
             index = np.where(perm_order == i)[0][0]
-            parents_list[i] = perm_order[index + 1:]
+            parents_list[i] = perm_order[:index]
             n_parents[i] = len(parents_list[i])
             parent_weights[i] = [0.5] * n_parents[i]
         self.parents_list, self.n_parents, self.parent_weights = parents_list, n_parents, parent_weights
@@ -66,6 +67,11 @@ class NEMOrderMCMC:
         """
         reduced_score_tables = []
         for i in range(self.num_s):
+            # print(parents_list[i], i)
+            # for j in parents_list[i]:
+            #     if i == j:
+            #         print("ERROR!!!")
+            #     reduced_score_tables[i].append(score_table_list[i][j])
             reduced_score_tables.append(np.array([score_table_list[i][j] for j in parents_list[i]]))
         return reduced_score_tables
 
@@ -145,7 +151,28 @@ class NEMOrderMCMC:
             old_ll = self.ll
             iter_count += 1
 
-        
+        _, ll = self.calculate_ll()
+        curr_ll = -float('inf')
+        run = True
+        iter_count = 0
+        while(run and iter_count < 100):
+            run = False
+            for i in range(self.num_s):
+                    for j in range(self.n_parents[i]):
+                        new_parent_weights = self.parent_weights
+                        new_parent_weights[i][j] = 1 if self.parent_weights[i][j] == 0 else 0
+                        _, curr_ll = self.calculate_ll()
+                        if curr_ll > ll:
+                            self.parent_weights = new_parent_weights
+                            ll = curr_ll
+                            run = True
+            
+            if run:
+                self.parent_weights = new_parent_weights
+            iter_count += 1
+        return ll
+                    
+                    
 
     def get_optimal_weights(self, abs_diff=0.01, max_iter=100, use_dag=True):
         """
@@ -179,35 +206,30 @@ class NEMOrderMCMC:
             old_ll = self.ll
             iter_count += 1
 
-        print(f"Number of iterations: {iter_count}")
-        dag_weights = self.parent_weights
+        _, dag_weights = self.create_dag(self.parent_weights)
+        
+        dag_ll = utils.compute_ll(self.compute_ll_ratios(dag_weights, self.reduced_score_tables))
+        return dag_ll
+    
+    def create_dag(self, weights):
+        dag_weights = weights
         dag = np.zeros((self.num_s, self.num_s))
         for i in range(self.num_s):
                 for j in range(self.n_parents[i]):
                     dag_weights[i][j] = 1 * (self.parent_weights[i][j] > 0.5)
                     dag[self.parents_list[i][j], i] = dag_weights[i][j]
+        return dag, dag_weights
         
-        dag_ll = utils.compute_ll(self.compute_ll_ratios(dag_weights, self.reduced_score_tables))
-        return dag_ll
-    
-        
-    def accepting(self, score, curr_score, gamma, dag, perm_order, curr_perm_order):
+    def accepting(self, score, curr_score, gamma, dag, curr_dag, perm_order, curr_perm_order):
         acceptance_rate = np.exp(gamma * (score - curr_score))
-        dag_weights = self.parent_weights
         if random.random() < acceptance_rate:
-            dag = np.zeros((self.num_s, self.num_s))
-            
-            for i in range(self.num_s):
-                for j in range(self.n_parents[i]):
-                    dag_weights[i][j] = 1 * (self.parent_weights[i][j] > 0.5)
-                    dag[self.parents_list[i][j], i] = dag_weights[i][j]
-            return score, dag, perm_order
+            return True, score, dag, perm_order
         else:
-            return curr_score, dag, curr_perm_order
+            return False, curr_score, curr_dag, curr_perm_order
 
         
 
-    def method(self, swap_prob=0.95, gamma=1, seed=1234, n_iterations=500, is_dag=True):
+    def method(self, swap_prob=0.95, gamma=1, seed=1234, n_iterations=500):
         """
         Runs the MCMC algorithm to find the optimal permutation order for the NEM model.
 
@@ -216,7 +238,6 @@ class NEMOrderMCMC:
         - gamma (float): Scaling factor for the acceptance rate calculation.
         - seed (int): Seed for the random number generator.
         - n_iterations (int): Number of iterations to run the MCMC algorithm.
-        - is_dag (bool): Whether the graph is a directed acyclic graph (DAG).
 
         Returns:
         - best_score (float): The highest score achieved during the MCMC iterations.
@@ -228,10 +249,12 @@ class NEMOrderMCMC:
         best_score = curr_score
         perm_order = curr_perm_order
         best_dag = np.zeros((self.num_s, self.num_s))
-        
+        best_order = np.zeros(self.num_s)
         dag = np.zeros((self.num_s, self.num_s))
+        curr_dag = np.zeros((self.num_s, self.num_s))
+        curr_score_list = [curr_score]
+        best_score_list = [best_score]
         for i in range(n_iterations):
-            print(f"Starting MCMC iteration {i}")
             is_swap = random.random() < swap_prob
 
             if is_swap:
@@ -243,12 +266,74 @@ class NEMOrderMCMC:
                 i = random.randint(0, self.num_s - 2)
                 perm_order[i], perm_order[i + 1] = curr_perm_order[i + 1], curr_perm_order[i]
             self.reset(perm_order=perm_order)
-            self.get_optimal_weights()
-            curr_score, dag, curr_perm_order= self.accepting(self.ll, curr_score, gamma, dag, perm_order, curr_perm_order)
-            print(f"Score: {self.ll}, Current Score: {curr_score}")
-            
-            if curr_score > best_score:
-                best_score = curr_score
-                best_dag = dag
-            
+            ll = self.get_optimal_weights()
+            dag, _ = self.create_dag(self.parent_weights)
+            curr_score_list.append(curr_score)
+            acc, curr_score, curr_dag, curr_perm_order = self.accepting(ll, curr_score, gamma, dag, curr_dag, perm_order, curr_perm_order)
+            if acc:
+                if curr_score > best_score:
+                    best_score = curr_score
+                    best_dag = dag
+                    best_order = curr_perm_order.copy()
+                    best_score_list.append(best_score)
+        self.best_score = best_score
+        self.best_dag = best_dag
+        self.best_order = best_order
+        self.curr_score_list = curr_score_list
+        self.best_score_list = best_score_list
         return best_score, best_dag
+
+def replica_exchange_step(replicas, gammas, n_replicas, n_iters, scores):
+    """
+    Runs the replica exchange MCMC algorithm to find the optimal permutation order for the NEM model.
+
+    Args:
+    - gammas (list): List of scaling factors for the acceptance rate calculation for each replica.
+    - n_replicas (int): Number of replicas to run the replica exchange MCMC algorithm.
+    - n_steps (int): Number of steps to run the replica exchange MCMC algorithm.
+
+    Returns:
+    - best_score (float): The highest score achieved during the MCMC iterations.
+    - best_nem (NEMOrderMCMC): The optimal NEM model found during the MCMC iterations.
+    """
+    n_exchanges = 0
+
+    for i in range(n_replicas):
+        replicas[i].method(n_iterations=n_iters, gamma=gammas[i])
+        scores[i] = replicas[i].best_score
+    best_score = np.max(scores)
+    print(f"Best scoring nem {np.argmax(scores)}")
+    best_nem = replicas[np.argmax(scores)]
+    for i in range(n_replicas):
+        gamma = gammas[i]
+        for j in range(i + 1, n_replicas):
+            delta = gamma * scores[j] - gamma * scores[i] + gammas[j] * scores[i] - gammas[j] * scores[j]
+            if random.random() < np.exp(-delta):
+                replicas[i], replicas[j] = replicas[j], replicas[i]
+                scores[i], scores[j] = scores[j], scores[i]
+                n_exchanges += 1
+                if scores[i] > best_score:
+                    best_score = scores[i]
+                    best_nem = replicas[i]
+    return best_score, best_nem, replicas, scores, n_exchanges
+
+def replica_exchange_method(nem, n_exchange, n_iter, init_order_guess):
+    n_replicas = 10
+    perm_order = init_order_guess
+    gammas = []
+    replicas = []
+    n_replicas = 10
+    for i in range(n_replicas):
+        gammas.append((1.0 + i * 0.2) * nem.num_s / nem.num_e)
+        replicas.append(NEMOrderMCMC(nem, perm_order))
+    scores = np.zeros(n_replicas)
+    n_exchanges = 0
+    for i in range(n_exchange):
+        print(f"i-th exchanges: {i}")
+        best_score, best_nem, replicas, scores, exchanges = replica_exchange_step(replicas, gammas, n_replicas, n_iter, scores)
+        n_exchanges += exchanges
+        print(f"Best score: {best_score}")
+        print(best_nem.best_dag)
+    print(f"Number of exchanges: {n_exchanges}")
+    print(f"Best DAG: {best_nem.best_dag}")
+    return best_score, best_nem

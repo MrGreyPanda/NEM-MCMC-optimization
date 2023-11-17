@@ -4,7 +4,7 @@ import os
 
 def create_connection_mat(s_mat):
     dim_s = len(s_mat[0])
-    connection_mat = s_mat
+    connection_mat = s_mat.copy()
     for i in range(dim_s):
         connection_mat[i][i] = 1
         for j in range(dim_s):
@@ -18,19 +18,20 @@ def create_real_knockdown_mat(s_mat, e_arr):
     knockdown_mat = np.zeros((dim_s, len(e_arr)))
     for k, s_gene in enumerate(e_arr):
         for i in range(dim_s):
-            if connection_mat[s_gene-1][i] == 1:
+            if connection_mat[s_gene][i] == 1:
                 knockdown_mat[i][k] = 1
     return knockdown_mat
 
 def create_observed_knockdown_mat(knockdown_mat, alpha, beta, seed=42):
     random.seed(seed)
-    pertubed_data = knockdown_mat
-    for indices, kd_observation in np.ndenumerate(knockdown_mat):
-        rnd_num = random.random()
-        if kd_observation == 1 and rnd_num < beta:
-            pertubed_data[indices] = 0
-        elif kd_observation == 0 and rnd_num < alpha:
-            pertubed_data[indices] = 1
+    pertubed_data = knockdown_mat.copy()
+    for i in range(len(knockdown_mat)):
+        for j in range(len(knockdown_mat[0])):
+            rnd_num = random.random()
+            if knockdown_mat [i][j] == 0 and rnd_num < alpha:
+                pertubed_data[i][j] = 1
+            elif knockdown_mat [i][j] == 1 and rnd_num < beta:
+                pertubed_data[i][j] = 0
     return pertubed_data
 
 def ancestor(incidence):

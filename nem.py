@@ -39,13 +39,13 @@ class NEM:
         
         alpha = errors[0]
         beta = errors[1]
-        real_knockdown_mat = utils.create_real_knockdown_mat(adj_matrix, end_nodes)
+        self.real_knockdown_mat = utils.create_real_knockdown_mat(adj_matrix, end_nodes)
         
         self.A = np.log(alpha / (1.0 - beta))
         self.B = np.log(beta / (1.0 - alpha))
-        self.observed_knockdown_mat = utils.create_observed_knockdown_mat(real_knockdown_mat, alpha, beta)
+        self.observed_knockdown_mat = utils.create_observed_knockdown_mat(self.real_knockdown_mat, alpha, beta)
         self.U = self.get_node_lr_table(self.get_score_tables(self.observed_knockdown_mat))
-        self.real_order_ll, self.real_ll = self.compute_real_score(real_knockdown_mat=real_knockdown_mat, adj_mat=adj_matrix)
+        self.real_order_ll, self.real_ll = self.compute_real_score(real_knockdown_mat=self.real_knockdown_mat, adj_mat=adj_matrix)
 
     def compute_scores(self, node, knockdown_mat):
         """
@@ -178,17 +178,17 @@ class NEM:
         # Implement the real nem Score, not only the order score ( Order is good for comparison)
         for i in range(self.num_s):
             adj_mat[i][i] = 0
-        row_sums = np.sum(real_knockdown_mat, axis=1)
+        row_sums = np.sum(adj_mat, axis=1)
         sorted_indices = np.argsort(row_sums)[::-1]
-        real_parent_order = np.arange(self.num_s)[sorted_indices]
+        self.real_parent_order = sorted_indices
         real_score_table_list = self.get_score_tables(real_knockdown_mat)
         real_U = self.get_node_lr_table(real_score_table_list)
         real_n_parents = np.empty(self.num_s, dtype=int)
         real_parents_list = np.empty(self.num_s, dtype=object)
         real_parent_weights = np.empty(self.num_s, dtype=object)
         for i in range(self.num_s):
-            index = np.where(real_parent_order == i)[0][0]
-            real_parents_list[i] = real_parent_order[index + 1:]
+            index = np.where(self.real_parent_order == i)[0][0]
+            real_parents_list[i] = self.real_parent_order[:index]
             real_n_parents[i] = len(real_parents_list[i])
             real_parent_weights[i] = []
             for j in real_parents_list[i]:
@@ -207,7 +207,6 @@ class NEM:
                     real_n_parents[j] += 1
         for i in range(self.num_s):
             for j in real_parents_list[i]:
-                # real_parent_weights[i].append(adj_mat[j][i])
                 real_parent_weights[i].append(1.0)
         real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
         real_ll = self.calculate_ll(self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents, real_U))
@@ -217,3 +216,8 @@ class NEM:
     # Include grandparents, grandgrandparents... into the optimization
     # Run on multiple examples to see what to do next (what to optimize)
     
+    
+    # Possible optimizations:
+    # - use some sort of clustering on w to find similarities, as some measurements should be linked
+    #   Use the clustering for shared probablity between clusters for the error rates
+    #   use that as a latent variable
