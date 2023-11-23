@@ -4,7 +4,7 @@ import os
 
 def create_connection_mat(s_mat):
     dim_s = len(s_mat[0])
-    connection_mat = s_mat.copy()
+    connection_mat = np.zeros((dim_s, dim_s))
     for i in range(dim_s):
         connection_mat[i][i] = 1
         for j in range(dim_s):
@@ -14,11 +14,11 @@ def create_connection_mat(s_mat):
 
 def create_real_knockdown_mat(s_mat, e_arr):
     dim_s = len(s_mat[0])
-    connection_mat = create_connection_mat(s_mat)
+    conn_mat = create_connection_mat(s_mat)
     knockdown_mat = np.zeros((dim_s, len(e_arr)))
     for k, s_gene in enumerate(e_arr):
         for i in range(dim_s):
-            if connection_mat[s_gene][i] == 1:
+            if conn_mat[s_gene][i] == 1:
                 knockdown_mat[i][k] = 1
     return knockdown_mat
 

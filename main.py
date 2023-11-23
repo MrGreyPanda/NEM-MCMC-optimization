@@ -6,6 +6,7 @@ from DAGs import dot
 from DAGs import graph
 import os
 import shutil
+import random
 import matplotlib.pyplot as plt
 
 def initial_order_guess(observed_knockdown_mat):
@@ -54,29 +55,36 @@ def output_handling(best_dag, adj_matrix, network_path, curr_dir):
 
 def main():
     curr_dir = os.getcwd()
-    network_nr = 11
+    network_nr = 2
     network_path = f"{curr_dir}/DAGs/networks/network{network_nr}/network{network_nr}"
     adj_matrix, end_nodes, errors, num_s, num_e = utils.read_csv_to_adj(network_path + ".csv")
     my_nem = nem.NEM(adj_matrix, end_nodes, errors, num_s, num_e)
     permutation_order = initial_order_guess(my_nem.observed_knockdown_mat)
+    #### MCMC METHOD ####
     gamma = 2.0 * float(my_nem.num_s) / float(my_nem.num_e)
     mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
-    score, best_dag = mcmc_nem.method(n_iterations=100000, gamma=gamma)
+    score, best_dag = mcmc_nem.method(n_iterations=520, gamma=gamma, seed=42)
     score_list = mcmc_nem.curr_score_list
+    best_order = mcmc_nem.best_order
     # #### REPLICA EXCHANGE METHOD ####
-    # # score, best_mcmc_dag = replica_exchange_method(nem=my_nem, init_order_guess=initial_order_guess(my_nem.observed_knockdown_mat), n_iter=50, n_exchange=10)
-    # # best_dag = best_mcmc_dag.best_dag
-    print(f"Best order: {mcmc_nem.best_order}, Real order: {my_nem.real_parent_order}")
-    print(f"Infered Order Score: {score}, Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
+    # score, best_mcmc_dag = replica_exchange_method(nem=my_nem, init_order_guess=permutation_order, n_iter=300, n_exchange=20)
+    # best_dag = best_mcmc_dag.best_dag
+    # best_order = best_mcmc_dag.best_order
+    #####
+    print(f"Best order: {best_order}\nReal order: {my_nem.real_parent_order}\nObserved order: {my_nem.obs_parent_order}")
+    print(f"Infered Order Score: {score}")
+    print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
+    print(f"Observed Order Score: {my_nem.obs_order_ll}, Observed Score: {my_nem.obs_ll}")
+    
     # # print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
     output_handling(best_dag, adj_matrix, network_path, curr_dir)
     
     # plot the score_list
-    plt.plot(score_list)
-    plt.xlabel('Iteration')
-    plt.ylabel('Score')
-    plt.title('Score vs. Iteration')
-    plt.show()
+    # plt.plot(score_list)
+    # plt.xlabel('Iteration')
+    # plt.ylabel('Score')
+    # plt.title('Score vs. Iteration')
+    # plt.show()
     
 if __name__ == "__main__":
     main()

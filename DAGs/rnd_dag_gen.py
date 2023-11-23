@@ -52,7 +52,7 @@ def transitive_reduction(a):
     return reduction
 
 # Bigger E!
-def gen_rnd_dag(i, output_file_path, min_per_rank=1, max_per_rank=5, min_ranks=2, max_ranks=5, percent=35):
+def gen_rnd_dag(i, output_file_path, min_per_rank=1, max_per_rank=3, min_ranks=2, max_ranks=5, percent=40):
     """
     Generates a random directed acyclic graph (DAG) and writes it to a CSV file.
     Implementation follows Algorithm from: https://stackoverflow.com/questions/12790337/generating-a-random-dag
@@ -81,21 +81,23 @@ def gen_rnd_dag(i, output_file_path, min_per_rank=1, max_per_rank=5, min_ranks=2
         # Edges from old nodes ('nodes') to new ones ('new_nodes').
         for j in range(nodes):
             for k in range(new_nodes):
-                if random.randint(0, 99) < percent:
+                if random.randint(0, 100) < percent:
                     data.append((j, k + nodes)) # An Edge.
 
         nodes += new_nodes # Accumulate into old node set.
     data_reduced = transitive_reduction(data)
     for i in range(len(data)):
         data = transitive_closure(data)
-    min_end_nodes = 3 * nodes
-    max_end_nodes = 12 * nodes
+    min_end_nodes = 10 * nodes
+    max_end_nodes = 20 * nodes
     num_end_nodes = random.randint(min_end_nodes, max_end_nodes)
     end_nodes = []
     probs = [0.05, 0.08]
     first_line = [nodes, num_end_nodes]
-    for i in range(num_end_nodes):
+    i = 0
+    for _ in range(num_end_nodes):
         end_nodes.append(random.randint(0, nodes-1))
+                
     with open(output_file, "w", newline='') as f:
         writer = csv.writer(f)
         writer.writerow(first_line)

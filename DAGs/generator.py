@@ -13,11 +13,11 @@ def graph_gen(i, input_file, output_file):
         
 if __name__ == "__main__":
     curr_dir = os.getcwd()
-    for i in range(20):
+    for i in range(10):
         print(f"Creating data {i}")
         if not os.path.exists(curr_dir + f"/networks/network{i}"):
             os.makedirs(curr_dir + f"/networks/network{i}", exist_ok=True)
-            rnd_dag_gen.gen_rnd_dag(i, output_file_path=f"networks/network{i}/")
+            rnd_dag_gen.gen_rnd_dag(i, output_file_path=f"networks/network{i}/", min_ranks = 4, max_ranks=8)
             dot_gen(i, input_file=f"networks/network{i}/network{i}.csv", output_file=f"networks/network{i}/network{i}.dot")
             graph_gen(i, input_file=f"networks/network{i}/network{i}.dot", output_file=f"networks/network{i}/network{i}.pdf")
             # transitively reduced networks
