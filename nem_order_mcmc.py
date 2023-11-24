@@ -4,12 +4,13 @@ import random
 import utils
 import copy
 from itertools import cycle
+from multiprocessing import Pool
+import wandb
 
 
 def local_ll_sum(x, c):
     res = -np.sum(np.log(c * x + 1.0))
     return res
-
 
 class NEMOrderMCMC:
     def __init__(self, nem, perm_order):
@@ -55,9 +56,9 @@ class NEMOrderMCMC:
         parents_list = np.empty(self.num_s, dtype=object)
         n_parents = np.empty(self.num_s, dtype=int)
         for i in range(self.num_s):
-            index = np.where(perm_order == i)
-            if len(index[0]) > 0:
-                index = index[0][0]
+            index = np.where(perm_order == i)[0]
+            if len(index) > 0:
+                index = index[0]
                 parents_list[i] = perm_order[:index]
                 n_parents[i] = len(parents_list[i])
                 parent_weights[i] = [0.5] * n_parents[i]
@@ -76,11 +77,6 @@ class NEMOrderMCMC:
         """
         reduced_score_tables = []
         for i in range(self.num_s):
-            # print(parents_list[i], i)
-            # for j in parents_list[i]:
-            #     if i == j:
-            #         print("ERROR!!!")
-            #     reduced_score_tables[i].append(score_table_list[i][j])
             reduced_score_tables.append(np.array([score_table_list[i][j] for j in parents_list[i]]))
         return reduced_score_tables
 
@@ -132,6 +128,7 @@ class NEMOrderMCMC:
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         return res.x
+
     
     def calculate_optimum_greedy(self, i, j):
         local_vec = np.exp(self.reduced_score_tables[i][j]) - 1.0
@@ -180,8 +177,7 @@ class NEMOrderMCMC:
                 self.parent_weights = new_parent_weights
             iter_count += 1
         return ll
-                    
-                    
+    
 
     def get_optimal_weights(self, abs_diff=0.001, max_iter=1000, use_dag=True):
         """
@@ -259,7 +255,7 @@ class NEMOrderMCMC:
                 i = random.randint(0, self.num_s - 2)
                 perm_order[i], perm_order[i + 1] = perm_order[i + 1], perm_order[i]
                 counter += 1
-                
+        wandb.log({"perm_order_counter": counter})
         self.perm_orders.append(perm_order)
         return perm_order
 
@@ -279,21 +275,21 @@ class NEMOrderMCMC:
         - best_score (float): The highest score achieved during the MCMC iterations.
         - best_nem (list): The optimal NEM model found during the MCMC iterations.
         """
-        random.seed(seed)
-        curr_perm_order = self.perm_order
         curr_score = self.get_optimal_weights()
         best_score = curr_score
+        dag, _ = self.create_dag(self.parent_weights)
+        best_dag = dag
+        curr_perm_order = self.perm_order
         perm_order = curr_perm_order
-        best_dag = np.zeros((self.num_s, self.num_s))
         best_order = perm_order
-        dag = np.zeros((self.num_s, self.num_s))
+        best_order_list = [best_order]
         curr_dag = np.zeros((self.num_s, self.num_s))
         curr_score_list = [curr_score]
         best_score_list = [best_score]
         all_score_list = [curr_score]
         for i in range(n_iterations):
-            if verbose and i % 100 == 0:
-                print(f"i-th iteration: {i}")
+            if verbose and i % 50 == 0:
+                print(f"{i}-th iteration")
             perm_order = self.get_new_order(curr_perm_order, swap_prob=swap_prob)
             self.reset(perm_order=perm_order)
             ll = self.get_optimal_weights()
@@ -301,13 +297,16 @@ class NEMOrderMCMC:
             dag, _ = self.create_dag(self.parent_weights)
             curr_score_list.append(curr_score)
             acc, curr_score, curr_dag, curr_perm_order = self.accepting(ll, curr_score, gamma, dag, curr_dag, perm_order, curr_perm_order)
+            perm_order = curr_perm_order
             if acc:
-                perm_order = curr_perm_order
+                wandb.log({"curr_score": curr_score})
                 if curr_score > best_score:
                     best_score = curr_score
                     best_dag = dag
                     best_order = curr_perm_order.copy()
                     best_score_list.append(best_score)
+                    best_order_list.append(best_order)
+                    wandb.log({"best_score": best_score})
         self.best_score = best_score
         self.best_dag = best_dag
         self.best_order = best_order
@@ -315,6 +314,7 @@ class NEMOrderMCMC:
         self.curr_score_list = curr_score_list
         self.best_score_list = best_score_list
         return best_score, best_dag
+
 
 def replica_exchange_step(replicas, gammas, n_replicas, n_iters, scores, upwards_cylce):
     """
@@ -376,3 +376,7 @@ def replica_exchange_method(nem, n_exchange, n_iter, init_order_guess):
     print(f"Number of exchanges: {n_exchanges}")
     print(f"Best DAG: {best_nem.best_dag}")
     return best_score, best_nem
+
+
+
+

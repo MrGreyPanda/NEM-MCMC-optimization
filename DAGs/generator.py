@@ -1,19 +1,27 @@
 import os
 import dot
-import graph
 import rnd_dag_gen
+import graphviz
+import os
+
+def create_graph_from_dot(input_file, output_file):
+    graph = graphviz.Source.from_file(input_file)
+    # Render the graph and save it as a PDF
+    if os.path.exists(output_file):
+        os.remove(output_file)
+    graph.render(outfile=output_file, view=False, format="pdf")
 
 def dot_gen(i, input_file, output_file):
     if not os.path.exists(output_file):
         dot.generate_dot_language(input_file, output_file)
             
 def graph_gen(i, input_file, output_file):
-    graph.create_graph_from_dot(input_file, output_file)
+    create_graph_from_dot(input_file, output_file)
     print("Done!")
         
 if __name__ == "__main__":
     curr_dir = os.getcwd()
-    for i in range(10):
+    for i in range(20):
         print(f"Creating data {i}")
         if not os.path.exists(curr_dir + f"/networks/network{i}"):
             os.makedirs(curr_dir + f"/networks/network{i}", exist_ok=True)

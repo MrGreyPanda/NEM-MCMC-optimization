@@ -17,12 +17,9 @@ def transitive_closure(a):
     closure = set(a)
     while True:
         new_relations = set((x,w) for x,y in closure for q,w in closure if q == y)
-
         closure_until_now = closure | new_relations
-
         if closure_until_now == closure:
             break 
-
         closure = closure_until_now
 
     return closure
@@ -41,18 +38,14 @@ def transitive_reduction(a):
     reduction = set(a)
     while True:
         new_relations = set((x,w) for x,y in reduction for q,w in reduction if q == y and (x,w)  in reduction)
-
         reduction_until_now = reduction - new_relations
-
         if reduction_until_now == reduction:
             break 
-
         reduction = reduction_until_now
-
     return reduction
 
 # Bigger E!
-def gen_rnd_dag(i, output_file_path, min_per_rank=1, max_per_rank=3, min_ranks=2, max_ranks=5, percent=40):
+def gen_rnd_dag(i, output_file_path, min_per_rank=2, max_per_rank=4, min_ranks=3, max_ranks=5, percent=40, probs=[0.05, 0.1]):
     """
     Generates a random directed acyclic graph (DAG) and writes it to a CSV file.
     Implementation follows Algorithm from: https://stackoverflow.com/questions/12790337/generating-a-random-dag
@@ -88,11 +81,10 @@ def gen_rnd_dag(i, output_file_path, min_per_rank=1, max_per_rank=3, min_ranks=2
     data_reduced = transitive_reduction(data)
     for i in range(len(data)):
         data = transitive_closure(data)
-    min_end_nodes = 10 * nodes
-    max_end_nodes = 20 * nodes
+    min_end_nodes = 8 * nodes
+    max_end_nodes = 12 * nodes
     num_end_nodes = random.randint(min_end_nodes, max_end_nodes)
     end_nodes = []
-    probs = [0.05, 0.08]
     first_line = [nodes, num_end_nodes]
     i = 0
     for _ in range(num_end_nodes):

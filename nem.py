@@ -181,17 +181,17 @@ class NEM:
         row_sums = np.sum(adj_mat, axis=1)
         sorted_indices = np.argsort(row_sums)[::-1]
         parent_order = sorted_indices
-        real_score_table_list = self.get_score_tables(real_knockdown_mat)
-        real_U = self.get_node_lr_table(real_score_table_list)
-        real_n_parents = np.empty(self.num_s, dtype=int)
-        real_parents_list = np.empty(self.num_s, dtype=object)
+        score_table_list = self.get_score_tables(real_knockdown_mat)
+        real_U = self.get_node_lr_table(score_table_list)
+        n_parents = np.empty(self.num_s, dtype=int)
+        parents_list = np.empty(self.num_s, dtype=object)
         real_parent_weights = np.empty(self.num_s, dtype=object)
         for i in range(self.num_s):
             index = np.where(parent_order == i)[0][0]
-            real_parents_list[i] = parent_order[:index]
-            real_n_parents[i] = len(real_parents_list[i])
-            real_parent_weights[i] = [0.5] * real_n_parents[i]
-        real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
+            parents_list[i] = parent_order[:index]
+            n_parents[i] = len(parents_list[i])
+            real_parent_weights[i] = [0.5] * n_parents[i]
+        reduced_score_table = self.get_reduced_score_tables(score_table_list, parents_list)
         ll_diff = float('inf')
         old_ll = -float('inf')
         abs_diff = 0.0001
@@ -199,10 +199,10 @@ class NEM:
         max_iter = 1000
         parent_weights = real_parent_weights.copy()
         while ll_diff > abs_diff and iter_count < max_iter:
-            order_weights, ll = self.calculate_ll(self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents, real_U))
+            order_weights, ll = self.calculate_ll(self.compute_ll_ratios(real_parent_weights, reduced_score_table, n_parents, real_U))
             for i in range(self.num_s):
-                for j in range(real_n_parents[i]):
-                    local_vec = np.exp(real_reduced_score_tables[i][j])
+                for j in range(n_parents[i]):
+                    local_vec = np.exp(reduced_score_table[i][j])
                     a = (local_vec - 1.0) * order_weights
                     b = 1.0 - real_parent_weights[i][j] * a + real_parent_weights[i][j] * (local_vec - 1.0)
                     c = a / b
@@ -214,22 +214,21 @@ class NEM:
             iter_count += 1
         
         for i in range(self.num_s):
-            for j in range(real_n_parents[i]):
+            for j in range(n_parents[i]):
                 real_parent_weights[i][j] = 1 * (real_parent_weights[i][j] > 0.5)
-        _, real_order_ll = self.calculate_ll(self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents, real_U))
-        real_parents_list = [[] for _ in range(self.num_s)]
+        _, real_order_ll = self.calculate_ll(self.compute_ll_ratios(real_parent_weights, reduced_score_table, n_parents, real_U))
+        
+        parents_list = [[] for _ in range(self.num_s)]
         real_parent_weights =[[] for _ in range(self.num_s)]
-        real_n_parents = np.zeros(self.num_s, dtype=int)
+        n_parents = np.zeros(self.num_s, dtype=int)
         for i in range(self.num_s):
             for j in range(self.num_s):
                 if adj_mat[i][j] == 1:
-                    real_parents_list[j].append(i)
-                    real_n_parents[j] += 1
+                    parents_list[j].append(i)
+                    n_parents[j] += 1
                     real_parent_weights[j].append(1.0)
-        # for i in range(self.num_s):
-        #     for j in real_parents_list[i]:
-        real_reduced_score_tables = self.get_reduced_score_tables(real_score_table_list, real_parents_list)
-        _, real_ll = self.calculate_ll(self.compute_ll_ratios(real_parent_weights, real_reduced_score_tables, real_n_parents, real_U))
+        reduced_score_table = self.get_reduced_score_tables(score_table_list, parents_list)
+        _, real_ll = self.calculate_ll(self.compute_ll_ratios(real_parent_weights, reduced_score_table, n_parents, real_U))
                     
         return real_order_ll, real_ll, parent_order
     
