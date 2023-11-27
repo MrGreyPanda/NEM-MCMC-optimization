@@ -246,6 +246,9 @@ class NEMOrderMCMC:
     def create_dag(self, weights):
         dag_weights = weights.copy()
         dag_weights = 1 * (weights > 0.5)
+        dag = dag_weights.T
+        return dag, dag_weights
+
         
     def accepting(self, score, curr_score, gamma, dag, curr_dag, perm_order, curr_perm_order):
         acceptance_rate = np.exp(gamma * (score - curr_score))
