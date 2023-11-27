@@ -63,7 +63,7 @@ def main():
     my_nem = nem.NEM(adj_matrix, end_nodes, errors, num_s, num_e)
     permutation_order = initial_order_guess(my_nem.observed_knockdown_mat)
     gamma = 2.0 * float(my_nem.num_s) / float(my_nem.num_e)
-    n_iterations = 850
+    n_iterations = 800
     seed = 42
     # run = wandb.init(
     # # Set the project where this run will be logged
