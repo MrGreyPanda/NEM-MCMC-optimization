@@ -1,0 +1,36 @@
+
+0-th iteration
+50-th iteration
+100-th iteration
+150-th iteration
+200-th iteration
+250-th iteration
+300-th iteration
+350-th iteration
+400-th iteration
+450-th iteration
+500-th iteration
+550-th iteration
+600-th iteration
+650-th iteration
+700-th iteration
+750-th iteration
+Time elapsed: 140.0846266746521
+Best order: [ 3  2  1  0  6  4  7 14  5 11  9  8 10 13 12 17 16 18 19 15 20 21 27 23
+ 24 29 22 25 26 28 33 32 34 30 36 31 37 35 38]
+Real order: [ 3  0  1  2  4  6  7 14  9 11  8  5 10 12 13 16 17 18 15 19 20 21 23 24
+ 27 26 29 22 25 28 32 33 34 30 31 36 37 35 38]
+Observed order: [ 3  0  1  2  4  6  7 14  9 11  8  5 10 12 13 16 17 18 15 19 20 21 23 24
+ 27 26 29 22 25 28 32 33 34 30 31 36 37 35 38]
+Infered Order Score: -3213.2045347549247
+Real Order Score: -8127.402348487823, Real Score: 14.426982994013327
+Observed Order Score: -11435.801518029686, Observed Score: -2827.208922329671
+Best DAG:
+[[0 0 0 ... 1 1 1]
+ [0 0 0 ... 1 1 1]
+ [0 0 0 ... 0 1 1]
+ ...
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]]
+Hamming Distance: 86

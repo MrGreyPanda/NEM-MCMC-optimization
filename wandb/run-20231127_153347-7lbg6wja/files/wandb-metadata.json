@@ -1,0 +1,45 @@
+{
+    "os": "Windows-10-10.0.19045-SP0",
+    "python": "3.11.6",
+    "heartbeatAt": "2023-11-27T14:33:48.567783",
+    "startedAt": "2023-11-27T14:33:47.461654",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "C:\\Users\\SimonMenzi\\Documents\\GitHub\\NEM-MCMC-optimization\\main.py",
+    "codePathLocal": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/MrGreyPanda/NEM-MCMC-optimization.git",
+        "commit": "8138deaab1850a2681ccb9b7646e5f419d0c7d48"
+    },
+    "email": "104424568+MrGreyPanda@users.noreply.github.com",
+    "root": "C:/Users/SimonMenzi/Documents/GitHub/NEM-MCMC-optimization",
+    "host": "LAPTOP-41OV257N",
+    "username": "SimonMenzi",
+    "executable": "C:\\Users\\SimonMenzi\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+    "cpu_count": 12,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 1696.0,
+        "min": 0.0,
+        "max": 2100.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1696.0,
+            "min": 0.0,
+            "max": 2100.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 951.6455039978027,
+            "used": 151.50598907470703
+        }
+    },
+    "memory": {
+        "total": 31.70494842529297
+    }
+}
