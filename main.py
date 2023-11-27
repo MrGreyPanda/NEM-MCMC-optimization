@@ -55,7 +55,7 @@ def output_handling(best_dag, network_path, curr_dir):
     
 
 def main():
-    wandb.login()
+    # wandb.login()
     curr_dir = os.getcwd()
     network_nr = 11
     network_path = f"{curr_dir}/DAGs/networks/network{network_nr}/network{network_nr}"
@@ -63,22 +63,22 @@ def main():
     my_nem = nem.NEM(adj_matrix, end_nodes, errors, num_s, num_e)
     permutation_order = initial_order_guess(my_nem.observed_knockdown_mat)
     gamma = 2.0 * float(my_nem.num_s) / float(my_nem.num_e)
-    n_iterations = 1000
+    n_iterations = 850
     seed = 42
-    run = wandb.init(
-    # Set the project where this run will be logged
-    project="MCMC-NEM",
-    # Track hyperparameters and run metadata
-    config={
-        "gamma": gamma,
-        "n_iterations": n_iterations,
-        "seed": seed,
-        "adj_matrix": adj_matrix,
-        "observed_order_score": my_nem.obs_order_ll,
-        "observed_score": my_nem.obs_ll,
-        "real_order_score": my_nem.real_order_ll,
-        "real_score": my_nem.real_ll
-    })
+    # run = wandb.init(
+    # # Set the project where this run will be logged
+    # project="MCMC-NEM",
+    # # Track hyperparameters and run metadata
+    # config={
+    #     "gamma": gamma,
+    #     "n_iterations": n_iterations,
+    #     "seed": seed,
+    #     "adj_matrix": adj_matrix,
+    #     "observed_order_score": my_nem.obs_order_ll,
+    #     "observed_score": my_nem.obs_ll,
+    #     "real_order_score": my_nem.real_order_ll,
+    #     "real_score": my_nem.real_ll
+    # })
     #### MCMC METHOD ####
     mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
     start_time = time.time()
@@ -99,7 +99,7 @@ def main():
     print(f"Best DAG:\n{best_dag}")
     print(f"Hamming Distance: {utils.hamming_distance(best_dag, adj_matrix)}")
     # # print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
-    output_handling(best_dag, network_path, curr_dir)
+    # output_handling(best_dag, network_path, curr_dir)
     
     # plot the score_list
     # plt.plot(score_list)
