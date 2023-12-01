@@ -1,0 +1,37 @@
+
+0-th iteration
+50-th iteration
+100-th iteration
+150-th iteration
+200-th iteration
+250-th iteration
+300-th iteration
+350-th iteration
+400-th iteration
+450-th iteration
+500-th iteration
+550-th iteration
+600-th iteration
+650-th iteration
+700-th iteration
+750-th iteration
+800-th iteration
+850-th iteration
+900-th iteration
+950-th iteration
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/main.py", line 115, in <module>
+    main()
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/main.py", line 87, in main
+    score, best_dag = mcmc_nem.method(n_iterations=n_iterations, gamma=gamma, seed=seed, swap_prob=swap_prob, verbose=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 327, in method
+    ll = self.get_optimal_weights(i1=i1, i2=i2, init=False)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 222, in get_optimal_weights
+    self.cell_ratios = self.compute_ll_ratios(self.parent_weights, self.score_tables)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 96, in compute_ll_ratios
+    cell_ratios[i, :] += np.log(1.0 -
+                         ^^^^^^^^^^^^
+KeyboardInterrupt

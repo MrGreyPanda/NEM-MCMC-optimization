@@ -6,6 +6,7 @@ import copy
 from itertools import cycle
 from multiprocessing import Pool
 import wandb
+from scipy.linalg import solve_triangular
 
 
 def local_ll_sum(x, c):
@@ -65,12 +66,12 @@ class NEMOrderMCMC:
                 n_parents[i] = len(parents_list[i])
                 if init:
                     for j in parents_list[i]:
-                        self.parent_weights[j][i] = 0.5
+                        self.parent_weights[i][j] = 0.5
                 else:
                     if i1 in parents_list[i]:
-                        self.parent_weights[i1][i] = 0.5
+                        self.parent_weights[i][i1] = 0.5
                     elif i2 in parents_list[i]:
-                        self.parent_weights[i2][i] = 0.5
+                        self.parent_weights[i][i2] = 0.5
                     elif i == i1 or i == i2:
                         for j in parents_list[i]:
                             self.parent_weights[j][i] = 0.5
@@ -94,8 +95,8 @@ class NEMOrderMCMC:
         for i in range(self.num_s): 
             for j in self.parents_list[i]:
                 cell_ratios[i, :] += np.log(1.0 -
-                                            weights[j][i] +
-                                            weights[j][i] *
+                                            weights[i][j] +
+                                            weights[i][j] *
                                             np.exp(score_tables[i][j]))
         return cell_ratios
 
@@ -111,19 +112,18 @@ class NEMOrderMCMC:
         ll = sum(cell_sums)
         return order_weights, ll
     
-    # def optimize_ll(self, W):
-    #     W_matrix = W.reshape((self.num_s, self.num_s))
-    #     cell_ratios = self.U.copy()
-    #     for i in range(self.num_s):
-    #         for j in self.parents_list[i]:
-    #             cell_ratios[i, :] += np.log(1.0 -
-    #                                         W_matrix[j][i] +
-    #                                         W_matrix[j][i] *
-    #                                         np.exp(self.score_tables[i][j]))
-        
-    #     cell_sums = np.logaddexp.reduce(cell_ratios, axis=0)
-    #     ll = sum(cell_sums)
-    #     return -ll
+    def optimize_ll(self, W):
+        W_matrix = W.reshape((self.num_s, self.num_s))
+        cell_ratios = self.U.copy()
+        for i in range(self.num_s):
+            for j in self.parents_list[i]:
+                cell_ratios[i, :] += np.log(1.0 -
+                                            W_matrix[i][j] +
+                                            W_matrix[i][j] *
+                                            np.exp(self.score_tables[i][j]))
+        cell_sums = np.logaddexp.reduce(cell_ratios, axis=0)
+        ll = sum(cell_sums) 
+        return -ll
 
 
     def calculate_local_optimum(self, i, j):
@@ -150,13 +150,13 @@ class NEMOrderMCMC:
     def calculate_optimum_greedy(self, i, j):
         local_vec = np.exp(self.score_tables[i][j]) - 1.0
         a = local_vec * self.order_weights[i]
-        b = 1.0 - self.parent_weights[j][i] * a + self.parent_weights[j][i] * local_vec
+        b = 1.0 - self.parent_weights[i][j] * a + self.parent_weights[i][j] * local_vec
         c = a / b
-        grad = -np.sum(c / (c * self.parent_weights[j][i] + 1.0))
+        grad = -np.sum(c / (c * self.parent_weights[i][j] + 1.0))
         
         return 0 if grad > 0 else 1
     
-    def get_optimal_weights_greedy(self, abs_diff=0.01, max_iter=100, use_dag=True, i1=None, i2=None):
+    def get_optimal_weights_greedy(self, abs_diff=0.01, max_iter=100, use_dag=True, i1=None, i2=None, init=False):
         old_ll = -float('inf')
         ll_diff = float('inf')
         iter_count = 0
@@ -168,8 +168,8 @@ class NEMOrderMCMC:
             new_parent_weights = self.parent_weights
             for i in range(self.num_s):
                 for j in self.parents_list[i]:
-                    if i1 == j or i2 == j:
-                        new_parent_weights[j][i] = self.calculate_optimum_greedy(i, j)
+                    if i1 == j or i2 == j or i == i1 or i == i2:
+                        new_parent_weights[i][j] = self.calculate_optimum_greedy(i, j)
             self.parent_weights = new_parent_weights
             ll_diff = self.ll - old_ll
             old_ll = self.ll
@@ -185,7 +185,7 @@ class NEMOrderMCMC:
             for i in range(self.num_s):
                     for j in self.parents_list[i]:
                         if i1 == j or i2 == j:
-                            new_parent_weights[j][i] = 1 if self.parent_weights[j][i] == 0 else 0
+                            new_parent_weights[i][j] = 1 if self.parent_weights[i][j] == 0 else 0
                             _, curr_ll = self.calculate_ll()
                             if curr_ll > ll:
                                 self.parent_weights = new_parent_weights
@@ -198,7 +198,7 @@ class NEMOrderMCMC:
         return ll
     
 
-    def get_optimal_weights(self, abs_diff=0.001, max_iter=1000, use_dag=True, i1=None, i2=None, init=False):
+    def get_optimal_weights(self, abs_diff=0.1, max_iter=40, use_nem=False, i1=None, i2=None, init=False, ultra_verbose=False):
         """
             Calculates the optimal weights for the NEM model using the specified relative error and maximum number of iterations.
 
@@ -217,45 +217,56 @@ class NEMOrderMCMC:
         ll_diff = float('inf')
         iter_count = 0
         self.ll = 0.0
+        bounds = [(0.0, 1.0)] * self.num_s * self.num_s
         # abs_diff could be varied
         while ll_diff > abs_diff and iter_count < max_iter:
             self.cell_ratios = self.compute_ll_ratios(self.parent_weights, self.score_tables)
             self.order_weights, self.ll = self.calculate_ll()
             new_parent_weights = self.parent_weights.copy()
             if init:
-                for i in range(self.num_s):
-                    for j in self.parents_list[i]:
-                        new_parent_weights[j][i] = self.calculate_local_optimum(i, j)
+                # for i in range(self.num_s):
+                #     for j in self.parents_list[i]:
+                #         new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
+                if ultra_verbose:
+                    print(f"Iteration of weight optimization: {iter_count}")
+                new_parent_weights = minimize(self.optimize_ll, x0=new_parent_weights.flatten(), method='L-BFGS-B', tol=0.1, bounds=bounds).x.reshape((self.num_s, self.num_s))
             else:
                 for i in range(self.num_s):
                     for j in self.parents_list[i]:
-                        if i1 == j or i2 == j:
-                            new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
-                        elif i == i1 or i == i2:
-                            if i == j or i1 == j or i2 == j:
-                                print("ERROR, something went wrong during permutation order update")
+                        if i1 == j or i2 == j or i == i1 or i == i2:
                             new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
             self.parent_weights = new_parent_weights
             ll_diff = self.ll - old_ll
             old_ll = self.ll
+            print(f"LL: {self.ll}")
             iter_count += 1
-        dag_weights = self.create_dag(self.parent_weights)
+        if use_nem:
+            _, dag_weights = self.create_nem(self.parent_weights)
+        else:
+            _, dag_weights = self.create_dag(self.parent_weights)
         dag_ll = utils.compute_ll(self.compute_ll_ratios(dag_weights, self.score_tables))
         return dag_ll
     
     def create_dag(self, weights):
         dag_weights = weights.copy()
         dag_weights = 1 * (weights > 0.5)
-        dag = dag_weights.T
+        dag = dag_weights.T     # transpose to get the correct dag (Doing it that way because of access efficiency)
         return dag, dag_weights
+    
+    def create_nem(self, weights):
+        nem_weights = weights.copy()
+        nem_weights = 1 * (weights > 0.5)
+        nem_weights = utils.ancestor(nem_weights)
+        nem = nem_weights.T
+        return nem, nem_weights
 
         
-    def accepting(self, score, curr_score, gamma, dag, curr_dag, perm_order, curr_perm_order):
+    def accepting(self, score, curr_score, gamma, net, curr_net, perm_order, curr_perm_order):
         acceptance_rate = np.exp(gamma * (score - curr_score))
         if random.random() < acceptance_rate:
-            return True, score, dag, perm_order
+            return True, score, net, perm_order
         else:
-            return False, curr_score, curr_dag, curr_perm_order
+            return False, curr_score, curr_net, curr_perm_order
         
     def get_new_order(self, curr_perm_order, swap_prob=0.95):
         """
@@ -267,32 +278,32 @@ class NEMOrderMCMC:
         Returns:
         - perm_order (numpy.ndarray): A 1D numpy array representing the permutation order of the nodes in the network.
         """
-        counter = 0
+        # counter = 0
         perm_order = curr_perm_order.copy()
         
-        while np.any(np.all(perm_order == self.perm_orders, axis=1)):
-            if counter < self.num_s * 5:
-                perm_order = curr_perm_order.copy()
-            is_swap = random.random() < swap_prob
-            if is_swap:
-                # swap two random nodes
-                i, j = random.sample(range(self.num_s), 2)
-                i1 = np.where(perm_order == i)[0][0]
-                i2 = np.where(perm_order == j)[0][0]
-                perm_order[i], perm_order[j] = perm_order[j], perm_order[i]
-            else:
-                # swap two adjacent nodes
-                i = random.randint(0, self.num_s - 2)
-                j = i + 1
-                i1 = np.where(perm_order == i)[0][0]
-                i2 = np.where(perm_order == j)[0][0]
-                perm_order[i], perm_order[j] = perm_order[j], perm_order[i]
-                counter += 1
-        wandb.log({"perm_order_counter": counter})
-        self.perm_orders.append(perm_order)
+        # while np.any(np.all(perm_order == self.perm_orders, axis=1)):
+        # if counter < self.num_s * 5:
+        #     perm_order = curr_perm_order.copy()
+        is_swap = random.random() < swap_prob
+        if is_swap:
+            # swap two random nodes
+            i, j = random.sample(range(self.num_s), 2)
+            i1 = np.where(perm_order == i)[0][0]
+            i2 = np.where(perm_order == j)[0][0]
+            perm_order[i], perm_order[j] = perm_order[j], perm_order[i]
+        else:
+            # swap two adjacent nodes
+            i = random.randint(0, self.num_s - 2)
+            j = i + 1
+            i1 = np.where(perm_order == i)[0][0]
+            i2 = np.where(perm_order == j)[0][0]
+            perm_order[i], perm_order[j] = perm_order[j], perm_order[i]
+            # counter += 1
+        # wandb.log({"perm_order_counter": counter})
+        # self.perm_orders.append(perm_order)
         return perm_order, i1, i2
    
-    def method(self, swap_prob=0.95, gamma=1, seed=1234, n_iterations=500, verbose=True):
+    def method(self, swap_prob=0.95, gamma=1, seed=1234, n_iterations=500, verbose=True, ultra_verbose=False, use_nem=False):
         """
         Runs the MCMC algorithm to find the optimal permutation order for the NEM model.
 
@@ -306,9 +317,9 @@ class NEMOrderMCMC:
         - best_score (float): The highest score achieved during the MCMC iterations.
         - best_nem (list): The optimal NEM model found during the MCMC iterations.
         """
-        curr_score = self.get_optimal_weights(init=True)
+        curr_score = self.get_optimal_weights(init=True, ultra_verbose=ultra_verbose, use_nem=use_nem)
         best_score = curr_score
-        dag = self.parent_weights.copy()
+        dag, _ = self.create_dag(self.parent_weights)
         best_dag = dag
         curr_perm_order = self.perm_order
         perm_order = curr_perm_order
@@ -324,12 +335,15 @@ class NEMOrderMCMC:
                 print(f"{i}-th iteration")
             perm_order, i1, i2 = self.get_new_order(curr_perm_order, swap_prob=swap_prob)
             self.reset(perm_order=perm_order, i1=i1, i2=i2)
-            ll = self.get_optimal_weights(i1=i1, i2=i2, init=False)
+            ll = self.get_optimal_weights(init=True, use_nem=use_nem, ultra_verbose=ultra_verbose)
             wandb.log({"ll-score": ll})
             # self.reset(perm_order=perm_order, i1=i1, i2=i2, init=False)
             # ll = self.get_optimal_weights_greedy(i1=i1, i2=i2)
             all_score_list.append(ll)
-            dag = self.create_dag(self.parent_weights)
+            if use_nem:
+                dag, _ = self.create_nem(self.parent_weights)
+            else:
+                dag, _ = self.create_dag(self.parent_weights)
             curr_score_list.append(curr_score)
             acc, curr_score, curr_dag, curr_perm_order = self.accepting(ll, curr_score, gamma, dag, curr_dag, perm_order, curr_perm_order)
             perm_order = curr_perm_order

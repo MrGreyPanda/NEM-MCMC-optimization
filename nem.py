@@ -36,7 +36,7 @@ class NEM:
         """
         self.num_s = num_s
         self.num_e = num_e
-        
+        self.adj_matrix = adj_matrix
         alpha = errors[0]
         beta = errors[1]
         self.real_knockdown_mat = utils.create_real_knockdown_mat(adj_matrix, end_nodes)
