@@ -32,6 +32,7 @@ class NEMOrderMCMC:
         self.get_permissible_parents(perm_order, init=True)
         self.cell_ratios = self.compute_ll_ratios(self.parent_weights, self.score_tables)
         self.perm_order = perm_order
+        self.I = np.identity(self.num_s)
 
     def reset(self, perm_order, i1=None, i2=None, init=False):
         """
@@ -124,7 +125,37 @@ class NEMOrderMCMC:
         cell_sums = np.logaddexp.reduce(cell_ratios, axis=0)
         ll = sum(cell_sums) 
         return -ll
-
+    
+    def optimize_beta(self):
+        K = 1.0 - self.Beta
+        K_inverse = np.zeros_like(K)
+        for i in range(K.shape[0]):
+            K_inverse[:, i] = solve_triangular(K, self.I[:, i], lower=False)  # Set lower=True for lower triangular Frederic Wester (Das Drama des Begabten Kindes)
+        local_mat = np.zeros_like(self.Beta)
+        A = np.zeros_like(self.Beta)
+        B = np.zeros_like(self.Beta)
+        C = np.zeros_like(self.Beta)
+        for i in range(self.num_s):
+            for j in self.parents_list[i]:
+                local_vec = np.exp(self.score_tables[i][j])
+                A = self.order_weights[i] * (1.0 - local_vec)
+                B = 1.0 - A * K_inverse + K_inverse * (1.0 - local_vec)
+    
+    # def optimize_ll_beta(self, beta):
+    #     beta_matrix = beta.reshape((self.num_s, self.num_s))
+    #     K = 1.0 - beta_matrix
+    #     K_inverse = np.zeros_like(K)
+    #     for i in range(K.shape[0]):
+    #         K_inverse[:, i] = solve_triangular(K, self.I[:, i], lower=False)
+            
+    #     cell_ratios = self.U.copy()
+    #     for i in range(self.num_s):
+    #         for j in self.parents_list[i]:
+    #             cell_ratios[i, :] += np.log(1.0 - K_inverse[i][j] +
+    #                                         K_inverse[i][j] * np.exp(self.score_tables[i][j]))
+    #     cell_sums = np.logaddexp.reduce(cell_ratios, axis=0)
+    #     ll = sum(cell_sums)
+    #     return -ll
 
     def calculate_local_optimum(self, i, j):
         """
@@ -229,7 +260,7 @@ class NEMOrderMCMC:
                 #         new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
                 if ultra_verbose:
                     print(f"Iteration of weight optimization: {iter_count}")
-                new_parent_weights = minimize(self.optimize_ll, x0=new_parent_weights.flatten(), method='L-BFGS-B', tol=0.1, bounds=bounds).x.reshape((self.num_s, self.num_s))
+                new_parent_weights = minimize(self.optimize_ll_beta, x0=new_parent_weights.flatten(), method='L-BFGS-B', tol=0.1, bounds=bounds).x.reshape((self.num_s, self.num_s))
             else:
                 for i in range(self.num_s):
                     for j in self.parents_list[i]:

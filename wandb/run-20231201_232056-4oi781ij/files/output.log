@@ -1,0 +1,77 @@
+
+Iteration of weight optimization: 0
+LL: -5728.618149797269
+Iteration of weight optimization: 1
+LL: -3189.6186450973883
+Iteration of weight optimization: 2
+LL: -3150.948107207152
+Iteration of weight optimization: 3
+LL: -3098.789005441737
+Iteration of weight optimization: 4
+LL: -3097.617645853019
+Iteration of weight optimization: 5
+LL: -3071.7744582774108
+Iteration of weight optimization: 6
+LL: -3060.094730911855
+Iteration of weight optimization: 7
+LL: -3044.237447554019
+Iteration of weight optimization: 8
+LL: -3034.4492634375138
+Iteration of weight optimization: 9
+LL: -3019.2739324421404
+Iteration of weight optimization: 10
+LL: -3012.9004825816783
+Iteration of weight optimization: 11
+LL: -3003.52711297979
+Iteration of weight optimization: 12
+LL: -2997.9436963421385
+Iteration of weight optimization: 13
+LL: -2993.2678801607044
+Iteration of weight optimization: 14
+LL: -2992.90433379915
+Iteration of weight optimization: 15
+LL: -2985.0284601923936
+Iteration of weight optimization: 16
+LL: -2979.2114901794303
+Iteration of weight optimization: 17
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/main.py", line 118, in <module>
+    main()
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/main.py", line 89, in main
+    score, best_dag = mcmc_nem.method(n_iterations=n_iterations, gamma=gamma, seed=seed, swap_prob=swap_prob, verbose=True, use_nem=use_nem, ultra_verbose=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 335, in method
+    curr_score = self.get_optimal_weights(init=True, ultra_verbose=ultra_verbose, use_nem=use_nem)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 247, in get_optimal_weights
+    new_parent_weights = minimize(self.optimize_ll, x0=new_parent_weights.flatten(), method='L-BFGS-B', tol=0.1, bounds=bounds).x.reshape((self.num_s, self.num_s))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_minimize.py", line 710, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py", line 365, in _minimize_lbfgsb
+    f, g = func_and_grad(x)
+           ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 286, in fun_and_grad
+    self._update_grad()
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 256, in _update_grad
+    self._update_grad_impl()
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 173, in update_grad
+    self.g = approx_derivative(fun_wrapped, self.x, f0=self.f,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_numdiff.py", line 505, in approx_derivative
+    return _dense_difference(fun_wrapped, x0, f0, h,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_numdiff.py", line 576, in _dense_difference
+    df = fun(x) - f0
+         ^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_numdiff.py", line 456, in fun_wrapped
+    f = np.atleast_1d(fun(x, *args, **kwargs))
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 124, in optimize_ll
+    np.exp(self.score_tables[i][j]))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
