@@ -1,0 +1,37 @@
+{
+    "os": "macOS-14.1.2-arm64-arm-64bit",
+    "python": "3.11.4",
+    "heartbeatAt": "2023-12-08T13:25:47.232778",
+    "startedAt": "2023-12-08T13:25:46.496319",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/main.py",
+    "codePathLocal": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/MrGreyPanda/NEM-MCMC-optimization",
+        "commit": "9b71532b6288eb3d42993bf1f4ec5b8b547b0531"
+    },
+    "email": "simon.aaron.menzi@gmail.com",
+    "root": "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython",
+    "host": "MacBook-Pro-von-Simon.local",
+    "username": "simonmenzi",
+    "executable": "/opt/homebrew/opt/python@3.11/bin/python3.11",
+    "cpu_count": 8,
+    "cpu_count_logical": 8,
+    "disk": {
+        "/": {
+            "total": 460.4317207336426,
+            "used": 9.218879699707031
+        }
+    },
+    "gpuapple": {
+        "type": "arm",
+        "vendor": "Apple"
+    },
+    "memory": {
+        "total": 16.0
+    }
+}

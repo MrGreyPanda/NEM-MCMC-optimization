@@ -6,11 +6,12 @@ import copy
 from itertools import cycle
 from multiprocessing import Pool
 import wandb
-from scipy.linalg import solve_triangular
+from scipy.linalg import solve_triangular, inv
+from scipy.special import expit
 
 
 def local_ll_sum(x, c):
-    res = -np.sum(np.log(c * x + 1.0))
+    res = -np.sum(c * x + 1.0)
     return res
 
 class NEMOrderMCMC:
@@ -126,36 +127,21 @@ class NEMOrderMCMC:
         ll = sum(cell_sums) 
         return -ll
     
-    def optimize_beta(self):
-        K = 1.0 - self.Beta
-        K_inverse = np.zeros_like(K)
-        for i in range(K.shape[0]):
-            K_inverse[:, i] = solve_triangular(K, self.I[:, i], lower=False)  # Set lower=True for lower triangular Frederic Wester (Das Drama des Begabten Kindes)
-        local_mat = np.zeros_like(self.Beta)
-        A = np.zeros_like(self.Beta)
-        B = np.zeros_like(self.Beta)
-        C = np.zeros_like(self.Beta)
-        for i in range(self.num_s):
-            for j in self.parents_list[i]:
-                local_vec = np.exp(self.score_tables[i][j])
-                A = self.order_weights[i] * (1.0 - local_vec)
-                B = 1.0 - A * K_inverse + K_inverse * (1.0 - local_vec)
-    
-    # def optimize_ll_beta(self, beta):
-    #     beta_matrix = beta.reshape((self.num_s, self.num_s))
-    #     K = 1.0 - beta_matrix
+    # def optimize_beta(self):
+    #     K = 1.0 - self.Beta
     #     K_inverse = np.zeros_like(K)
     #     for i in range(K.shape[0]):
-    #         K_inverse[:, i] = solve_triangular(K, self.I[:, i], lower=False)
-            
-    #     cell_ratios = self.U.copy()
+    #         K_inverse[:, i] = solve_triangular(K, self.I[:, i], lower=False)  # Set lower=True for lower triangular Frederic Wester (Das Drama des Begabten Kindes)
+    #     local_mat = np.zeros_like(self.Beta)
+    #     A = np.zeros_like(self.Beta)
+    #     B = np.zeros_like(self.Beta)
+    #     C = np.zeros_like(self.Beta)
     #     for i in range(self.num_s):
     #         for j in self.parents_list[i]:
-    #             cell_ratios[i, :] += np.log(1.0 - K_inverse[i][j] +
-    #                                         K_inverse[i][j] * np.exp(self.score_tables[i][j]))
-    #     cell_sums = np.logaddexp.reduce(cell_ratios, axis=0)
-    #     ll = sum(cell_sums)
-    #     return -ll
+    #             local_vec = np.exp(self.score_tables[i][j])
+    #             A = self.order_weights[i] * (1.0 - local_vec)
+    #             B = 1.0 - A * K_inverse + K_inverse * (1.0 - local_vec)
+    
 
     def calculate_local_optimum(self, i, j):
         """
@@ -172,7 +158,7 @@ class NEMOrderMCMC:
         b = 1.0 - self.parent_weights[i][j] * a + self.parent_weights[i][j] * (local_vec - 1.0)
         c = a / b
 
-        res = minimize(local_ll_sum, x0=0.5, bounds=[(0.0, 1.0)], args=(c,), method='L-BFGS-B', tol=0.1)
+        res = minimize(local_ll_sum, x0=0.5, bounds=[(0, 1)], args=(c,), method='L-BFGS-B', tol=0.01)
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         return res.x
@@ -229,7 +215,7 @@ class NEMOrderMCMC:
         return ll
     
 
-    def get_optimal_weights(self, abs_diff=0.1, max_iter=40, use_nem=False, i1=None, i2=None, init=False, ultra_verbose=False):
+    def get_optimal_weights(self, abs_diff=0.001, max_iter=40, use_nem=False, i1=None, i2=None, init=False, ultra_verbose=False):
         """
             Calculates the optimal weights for the NEM model using the specified relative error and maximum number of iterations.
 
@@ -250,27 +236,30 @@ class NEMOrderMCMC:
         self.ll = 0.0
         bounds = [(0.0, 1.0)] * self.num_s * self.num_s
         # abs_diff could be varied
-        while ll_diff > abs_diff and iter_count < max_iter:
+        while iter_count < max_iter:
             self.cell_ratios = self.compute_ll_ratios(self.parent_weights, self.score_tables)
             self.order_weights, self.ll = self.calculate_ll()
             new_parent_weights = self.parent_weights.copy()
             if init:
-                # for i in range(self.num_s):
-                #     for j in self.parents_list[i]:
-                #         new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
+                for i in range(self.num_s):
+                    for j in self.parents_list[i]:
+                        new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
                 if ultra_verbose:
                     print(f"Iteration of weight optimization: {iter_count}")
-                new_parent_weights = minimize(self.optimize_ll_beta, x0=new_parent_weights.flatten(), method='L-BFGS-B', tol=0.1, bounds=bounds).x.reshape((self.num_s, self.num_s))
+                # new_parent_weights = minimize(self.optimize_ll_beta, x0=new_parent_weights.flatten(), method='L-BFGS-B', tol=0.1, bounds=bounds).x.reshape((self.num_s, self.num_s))
             else:
                 for i in range(self.num_s):
                     for j in self.parents_list[i]:
                         if i1 == j or i2 == j or i == i1 or i == i2:
                             new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
-            self.parent_weights = new_parent_weights
+            self.parent_weights = expit(inv(np.identity(self.num_s) - new_parent_weights))
+            # self.parent_weights = new_parent_weights
+            
             ll_diff = self.ll - old_ll
             old_ll = self.ll
             print(f"LL: {self.ll}")
             iter_count += 1
+            print(f"Iteration of weight optimization: {iter_count}")
         if use_nem:
             _, dag_weights = self.create_nem(self.parent_weights)
         else:

@@ -1,0 +1,141 @@
+Iteration of weight optimization: 0
+LL: -5728.618149797269
+Iteration of weight optimization: 1
+Iteration of weight optimization: 1
+LL: -3890.830981954312
+Iteration of weight optimization: 2
+Iteration of weight optimization: 2
+LL: -6073.263661708467
+Iteration of weight optimization: 3
+Iteration of weight optimization: 3
+LL: -5761.857358106969
+Iteration of weight optimization: 4
+Iteration of weight optimization: 4
+LL: -5922.24427703572
+Iteration of weight optimization: 5
+Iteration of weight optimization: 5
+LL: -6024.934193064284
+Iteration of weight optimization: 6
+Iteration of weight optimization: 6
+LL: -6415.135831061822
+Iteration of weight optimization: 7
+Iteration of weight optimization: 7
+LL: -5836.556944198706
+Iteration of weight optimization: 8
+Iteration of weight optimization: 8
+LL: -6251.710283349332
+Iteration of weight optimization: 9
+Iteration of weight optimization: 9
+LL: -5903.369714981314
+Iteration of weight optimization: 10
+Iteration of weight optimization: 10
+LL: -5883.366933292096
+Iteration of weight optimization: 11
+Iteration of weight optimization: 11
+LL: -6025.690914281623
+Iteration of weight optimization: 12
+Iteration of weight optimization: 12
+LL: -5968.422911836678
+Iteration of weight optimization: 13
+Iteration of weight optimization: 13
+LL: -6246.503624449514
+Iteration of weight optimization: 14
+Iteration of weight optimization: 14
+LL: -5758.085123614811
+Iteration of weight optimization: 15
+Iteration of weight optimization: 15
+LL: -5640.938764819995
+Iteration of weight optimization: 16
+Iteration of weight optimization: 16
+LL: -5812.19340014697
+Iteration of weight optimization: 17
+Iteration of weight optimization: 17
+LL: -5963.9555578982145
+Iteration of weight optimization: 18
+Iteration of weight optimization: 18
+LL: -6052.42990590623
+Iteration of weight optimization: 19
+Iteration of weight optimization: 19
+LL: -5960.660446437115
+Iteration of weight optimization: 20
+Iteration of weight optimization: 20
+LL: -6378.453830456858
+Iteration of weight optimization: 21
+Iteration of weight optimization: 21
+LL: -6015.414093177257
+Iteration of weight optimization: 22
+Iteration of weight optimization: 22
+LL: -5961.226357843468
+Iteration of weight optimization: 23
+Iteration of weight optimization: 23
+LL: -5887.763133451469
+Iteration of weight optimization: 24
+Iteration of weight optimization: 24
+LL: -6136.313843456604
+Iteration of weight optimization: 25
+Iteration of weight optimization: 25
+LL: -5844.48116081248
+Iteration of weight optimization: 26
+Iteration of weight optimization: 26
+LL: -6265.272458253184
+Iteration of weight optimization: 27
+Iteration of weight optimization: 27
+LL: -5731.225926101404
+Iteration of weight optimization: 28
+Iteration of weight optimization: 28
+LL: -5807.030409421198
+Iteration of weight optimization: 29
+Iteration of weight optimization: 29
+LL: -5737.683369678516
+Iteration of weight optimization: 30
+Iteration of weight optimization: 30
+LL: -5877.994225704151
+Iteration of weight optimization: 31
+Iteration of weight optimization: 31
+LL: -5815.32370482768
+Iteration of weight optimization: 32
+Iteration of weight optimization: 32
+LL: -5656.536272796413
+Iteration of weight optimization: 33
+Iteration of weight optimization: 33
+LL: -6016.534156588911
+Iteration of weight optimization: 34
+Iteration of weight optimization: 34
+LL: -6208.180694155874
+Iteration of weight optimization: 35
+Iteration of weight optimization: 35
+LL: -6167.082355149827
+Iteration of weight optimization: 36
+Iteration of weight optimization: 36
+LL: -5841.726843146005
+Iteration of weight optimization: 37
+Iteration of weight optimization: 37
+LL: -6466.810034527977
+Iteration of weight optimization: 38
+Iteration of weight optimization: 38
+LL: -9615.107998226593
+Iteration of weight optimization: 39
+Iteration of weight optimization: 39
+LL: -5974.5196028238615
+Iteration of weight optimization: 40
+Time elapsed: 6.6286940574646
+Best order: [ 3  2  1  0  6  4  7 14  5 11  9  8 10 13 12 17 16 18 19 15 20 21 27 23
+ 24 29 22 25 26 28 33 32 34 30 36 31 37 35 38]
+Real order: [ 3  0  1  2  4  6  7 14  9 11  8  5 10 12 13 16 17 18 15 19 20 21 23 24
+ 27 26 29 22 25 28 32 33 34 30 31 36 37 35 38]
+Observed order: [ 3  0  1  2  4  6  7 14  9 11  8  5 10 12 13 16 17 18 15 19 20 21 23 24
+ 27 26 29 22 25 28 32 33 34 30 31 36 37 35 38]
+Infered Order Score: -8291.121646753167
+Observed Score: -2827.208922329671
+Best DAG:
+[[1 0 1 ... 0 1 0]
+ [1 1 0 ... 0 0 1]
+ [1 1 1 ... 0 0 1]
+ ...
+ [0 0 1 ... 1 1 0]
+ [1 1 0 ... 0 1 1]
+ [1 1 0 ... 0 0 1]]
+Hamming Distance: 723
+Hamming Distance to Ancestor: 761
+Generated /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/output/infer_closed.dot
+Generated /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/output/infer_red.dot
