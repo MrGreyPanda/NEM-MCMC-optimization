@@ -11,12 +11,12 @@ from scipy.special import expit
 
 
 def local_ll_sum(x, c):
-    res = -np.sum(c * x + 1.0)
+    res = -np.sum(np.log(c * x + 1.0))
+    
     return res
 
 def local_ll_sum_beta(x, c):
-    beta = expit(1.0 / (1.0 - x))
-    res = -np.sum(c * beta + 1.0)
+    res = -np.sum(np.log(c * x + 1.0))
     return res
 
 class NEMOrderMCMC:
@@ -82,12 +82,9 @@ class NEMOrderMCMC:
                     elif i == i1 or i == i2:
                         for j in parents_list[i]:
                             self.parent_weights[j][i] = 0.5
-
             else:
                 parents_list[i] = np.array([])
                 n_parents[i] = 0
-
-        
         self.parents_list, self.n_parents = parents_list, n_parents
 
     def compute_ll_ratios(self, weights, score_tables):
@@ -119,19 +116,6 @@ class NEMOrderMCMC:
         ll = sum(cell_sums)
         return order_weights, ll
     
-    def optimize_ll(self, W):
-        W_matrix = W.reshape((self.num_s, self.num_s))
-        cell_ratios = self.U.copy()
-        for i in range(self.num_s):
-            for j in self.parents_list[i]:
-                cell_ratios[i, :] += np.log(1.0 -
-                                            W_matrix[i][j] +
-                                            W_matrix[i][j] *
-                                            np.exp(self.score_tables[i][j]))
-        cell_sums = np.logaddexp.reduce(cell_ratios, axis=0)
-        ll = sum(cell_sums) 
-        return -ll
-    
     # def optimize_beta(self):
     #     K = 1.0 - self.Beta
     #     K_inverse = np.zeros_like(K)
@@ -147,8 +131,19 @@ class NEMOrderMCMC:
     #             A = self.order_weights[i] * (1.0 - local_vec)
     #             B = 1.0 - A * K_inverse + K_inverse * (1.0 - local_vec)
     
+    def opt_weights(self, weights):
+        new_parent_weights = weights.copy()
+        Beta = expit(inv(np.identity(self.num_s) - new_parent_weights))
+        for i in range(self.num_s):
+            for k in self.parents_list[i]:
+                local_vec = np.exp(self.score_tables[i][k])
+                a_ik = (local_vec - 1.0) * self.order_weights[k]
+                b_ik = 1.0 - new_parent_weights[i][k] * a + new_parent_weights[i][k] * (local_vec - 1.0)
+                c_ik = a_ik / b_ik
+                
+                
 
-    def calculate_local_optimum(self, i, j):
+    def calculate_local_optimum(self, i, k):
         """
         Calculates the local optimum for the given old and new weights.
         Equivalent to equation 19in the Abstract from Dr. Jack Kuipers.
@@ -158,67 +153,15 @@ class NEMOrderMCMC:
         Returns:
             numpy.ndarray: The local optimum.
         """
-        local_vec = np.exp(self.score_tables[i][j])
-        a = (local_vec - 1.0) * self.order_weights[i]
-        b = 1.0 - self.parent_weights[i][j] * a + self.parent_weights[i][j] * (local_vec - 1.0)
+        local_vec = np.exp(self.score_tables[i][k])
+        a = (local_vec - 1.0) * self.order_weights[k]
+        b = 1.0 - self.parent_weights[i][k] * a + self.parent_weights[i][k] * (local_vec - 1.0)
         c = a / b
 
-        res = minimize(local_ll_sum_beta, x0=0.5, bounds=[(0, 1)], args=(c,), method='L-BFGS-B', tol=0.01)
+        res = minimize(local_ll_sum_beta, x0=0.5, args=(c,), method='L-BFGS-B', tol=0.01)
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         return res.x
-
-    
-    def calculate_optimum_greedy(self, i, j):
-        local_vec = np.exp(self.score_tables[i][j]) - 1.0
-        a = local_vec * self.order_weights[i]
-        b = 1.0 - self.parent_weights[i][j] * a + self.parent_weights[i][j] * local_vec
-        c = a / b
-        grad = -np.sum(c / (c * self.parent_weights[i][j] + 1.0))
-        
-        return 0 if grad > 0 else 1
-    
-    def get_optimal_weights_greedy(self, abs_diff=0.01, max_iter=100, use_dag=True, i1=None, i2=None, init=False):
-        old_ll = -float('inf')
-        ll_diff = float('inf')
-        iter_count = 0
-        self.ll = 0.0
-        # abs_diff could be varied
-        while ll_diff > abs_diff and iter_count < max_iter:
-            self.cell_ratios = self.compute_ll_ratios(self.parent_weights, self.score_tables)
-            self.order_weights, self.ll = self.calculate_ll()
-            new_parent_weights = self.parent_weights
-            for i in range(self.num_s):
-                for j in self.parents_list[i]:
-                    if i1 == j or i2 == j or i == i1 or i == i2:
-                        new_parent_weights[i][j] = self.calculate_optimum_greedy(i, j)
-            self.parent_weights = new_parent_weights
-            ll_diff = self.ll - old_ll
-            old_ll = self.ll
-            iter_count += 1
-
-        _, ll = self.calculate_ll()
-        curr_ll = -float('inf')
-        run = True
-        iter_count = 0
-        while(run and iter_count < 100):
-            run = False
-            new_parent_weights = self.parent_weights
-            for i in range(self.num_s):
-                    for j in self.parents_list[i]:
-                        if i1 == j or i2 == j:
-                            new_parent_weights[i][j] = 1 if self.parent_weights[i][j] == 0 else 0
-                            _, curr_ll = self.calculate_ll()
-                            if curr_ll > ll:
-                                self.parent_weights = new_parent_weights
-                                ll = curr_ll
-                                run = True
-            
-            if run:
-                self.parent_weights = new_parent_weights
-            iter_count += 1
-        return ll
-    
 
     def get_optimal_weights(self, abs_diff=0.001, max_iter=40, use_nem=False, i1=None, i2=None, init=False, ultra_verbose=False):
         """
@@ -247,19 +190,15 @@ class NEMOrderMCMC:
             new_parent_weights = self.parent_weights.copy()
             if init:
                 for i in range(self.num_s):
-                    for j in self.parents_list[i]:
-                        new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
+                    for k in self.parents_list[i]:
+                        new_parent_weights[i][k] = self.calculate_local_optimum(i, k)
                 if ultra_verbose:
                     print(f"Iteration of weight optimization: {iter_count}")
-                # new_parent_weights = minimize(self.optimize_ll_beta, x0=new_parent_weights.flatten(), method='L-BFGS-B', tol=0.1, bounds=bounds).x.reshape((self.num_s, self.num_s))
             else:
                 for i in range(self.num_s):
-                    for j in self.parents_list[i]:
-                        if i1 == j or i2 == j or i == i1 or i == i2:
-                            new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
-            # self.parent_weights = expit(inv(np.identity(self.num_s) - new_parent_weights))
-            # self.parent_weights = new_parent_weights
-            
+                    for k in self.parents_list[i]:
+                        if i1 == k or i2 == k or i == i1 or i == i2:
+                            new_parent_weights[i][k] = self.calculate_local_optimum(i, k)
             ll_diff = self.ll - old_ll
             old_ll = self.ll
             print(f"LL: {self.ll}")
