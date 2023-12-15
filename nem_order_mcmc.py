@@ -14,6 +14,11 @@ def local_ll_sum(x, c):
     res = -np.sum(c * x + 1.0)
     return res
 
+def local_ll_sum_beta(x, c):
+    beta = expit(1.0 / (1.0 - x))
+    res = -np.sum(c * beta + 1.0)
+    return res
+
 class NEMOrderMCMC:
     def __init__(self, nem, perm_order):
         """
@@ -158,7 +163,7 @@ class NEMOrderMCMC:
         b = 1.0 - self.parent_weights[i][j] * a + self.parent_weights[i][j] * (local_vec - 1.0)
         c = a / b
 
-        res = minimize(local_ll_sum, x0=0.5, bounds=[(0, 1)], args=(c,), method='L-BFGS-B', tol=0.01)
+        res = minimize(local_ll_sum_beta, x0=0.5, bounds=[(0, 1)], args=(c,), method='L-BFGS-B', tol=0.01)
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         return res.x
@@ -252,7 +257,7 @@ class NEMOrderMCMC:
                     for j in self.parents_list[i]:
                         if i1 == j or i2 == j or i == i1 or i == i2:
                             new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
-            self.parent_weights = expit(inv(np.identity(self.num_s) - new_parent_weights))
+            # self.parent_weights = expit(inv(np.identity(self.num_s) - new_parent_weights))
             # self.parent_weights = new_parent_weights
             
             ll_diff = self.ll - old_ll
