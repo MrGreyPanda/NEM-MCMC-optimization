@@ -7,7 +7,7 @@ from itertools import cycle
 from multiprocessing import Pool
 import wandb
 from scipy.linalg import solve_triangular, inv
-from scipy.special import expit
+from scipy.special import expit, logit
 
 
 def local_ll_sum(x, c):
@@ -17,7 +17,7 @@ def local_ll_sum(x, c):
 
 def local_ll_sum_beta(x, c):
     res = -np.sum(np.log(c * x + 1.0))
-    return res
+    return res    
 
 class NEMOrderMCMC:
     def __init__(self, nem, perm_order):
@@ -30,13 +30,14 @@ class NEMOrderMCMC:
         """
         self.nem = nem
         self.num_s = nem.num_s
+        self.num_e = nem.num_e
         self.U = nem.U.copy()
         self.perm_orders = []
         self.perm_orders.append(perm_order)
         self.parent_weights = np.zeros((self.num_s, self.num_s))
         self.score_tables = nem.get_score_tables(nem.observed_knockdown_mat)
         self.get_permissible_parents(perm_order, init=True)
-        self.cell_ratios = self.compute_ll_ratios(self.parent_weights, self.score_tables)
+        self.cell_ratios = self.compute_cell_ratios(self.parent_weights, self.score_tables)
         self.perm_order = perm_order
         self.I = np.identity(self.num_s)
 
@@ -87,7 +88,7 @@ class NEMOrderMCMC:
                 n_parents[i] = 0
         self.parents_list, self.n_parents = parents_list, n_parents
 
-    def compute_ll_ratios(self, weights, score_tables):
+    def compute_cell_ratios(self, weights, score_tables):
         """
         Computes the log-likelihood ratios for each cell in the NEM matrix.
         Equivalent to Equation 13 in the Abstract from Dr. Jack Kuipers.
@@ -116,33 +117,81 @@ class NEMOrderMCMC:
         ll = sum(cell_sums)
         return order_weights, ll
     
-    # def optimize_beta(self):
-    #     K = 1.0 - self.Beta
-    #     K_inverse = np.zeros_like(K)
-    #     for i in range(K.shape[0]):
-    #         K_inverse[:, i] = solve_triangular(K, self.I[:, i], lower=False)  # Set lower=True for lower triangular Frederic Wester (Das Drama des Begabten Kindes)
-    #     local_mat = np.zeros_like(self.Beta)
-    #     A = np.zeros_like(self.Beta)
-    #     B = np.zeros_like(self.Beta)
-    #     C = np.zeros_like(self.Beta)
-    #     for i in range(self.num_s):
-    #         for j in self.parents_list[i]:
-    #             local_vec = np.exp(self.score_tables[i][j])
-    #             A = self.order_weights[i] * (1.0 - local_vec)
-    #             B = 1.0 - A * K_inverse + K_inverse * (1.0 - local_vec)
-    
-    def opt_weights(self, weights):
-        new_parent_weights = weights.copy()
-        Beta = expit(inv(np.identity(self.num_s) - new_parent_weights))
+    def get_unordered_weights(self, weights, order):
+        unordered_weights = np.zeros_like(weights)
+        for i in range(self.num_s):
+                index = np.where(order == i)[0]
+                unordered_weights[i] = weights[index]
+        return unordered_weights
+        
+    def get_ordered_weigths(self, weights, order):
+        ordered_weights = np.zeros_like(weights)
+        for i in range(self.num_s):
+            ordered_weights[order[i]] = weights[i]
+        return ordered_weights
+        
+    def local_opt_fun(self, x):
+        self.cell_ratios = self.compute_cell_ratios(self.Beta_tilde, self.score_tables)
+        self.order_weights, _ = self.calculate_ll()
         for i in range(self.num_s):
             for k in self.parents_list[i]:
                 local_vec = np.exp(self.score_tables[i][k])
                 a_ik = (local_vec - 1.0) * self.order_weights[k]
-                b_ik = 1.0 - new_parent_weights[i][k] * a + new_parent_weights[i][k] * (local_vec - 1.0)
-                c_ik = a_ik / b_ik
-                
-                
+                self.C[i][k] = a_ik 
+        self.C_tilde = self.get_unordered_weights(self.C, self.perm_order)
+        x = x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1])
+        x = expit(inv(self.I - x))
+        return -np.sum(np.log(x[:,:, np.newaxis]*self.C_tilde + 1.0))
 
+    def opt_weights(self, max_iter=50):
+        old_ll = -float('inf')
+        ll_diff = float('inf')
+        iter_count = 0
+        self.ll = 0.0
+        self.Beta_tilde = self.parent_weights = np.zeros((self.num_s, self.num_s))
+        self.C = np.zeros((self.num_s, self.num_s, self.num_e))
+        # self.cell_ratios = self.compute_cell_ratios(self.Beta_tilde, self.score_tables)
+        # self.order_weights, _ = self.calculate_ll()
+        # for i in range(self.num_s):
+        #     for k in self.parents_list[i]:
+        #         local_vec = np.exp(self.score_tables[i][k])
+        #         a_ik = (local_vec - 1.0) * self.order_weights[k]
+        #         C[i][k] = a_ik 
+        # self.C_tilde = self.get_unordered_weights(C, self.perm_order)
+        self.Beta_tilde = minimize(self.local_opt_fun, x0=self.Beta_tilde.flatten(), args=(), method='L-BFGS-B', tol=0.01).x.reshape((self.num_s, self.num_s))
+        self.W_tilde = expit(inv(self.I - Beta_tilde))
+        print(f"W_tilde: {W_tilde}")
+        self.W = self.get_ordered_weigths(W_tilde, self.perm_order)
+        self.W = 1 * (W > 0.5)
+        self.parent_weights = W
+        self.cell_ratios = self.compute_cell_ratios(W, self.score_tables)
+        self.order_weights, self.ll = self.calculate_ll()
+        ll_diff = self.ll - old_ll
+        old_ll = self.ll
+        while iter_count < max_iter or ll_diff < 0.01:
+            print(f"Iteration of weight optimization: {iter_count}")
+            # for i in range(self.num_s):
+            #     for k in self.parents_list[i]:
+            #         local_vec = np.exp(self.score_tables[i][k])
+            #         a_ik = (local_vec - 1.0) * self.order_weights[k]
+            #         b_ik = 1.0 - W[i][k] * a_ik + W[i][k] * (local_vec - 1.0)
+            #         C[i][k] = a_ik/b_ik
+            # C_tilde = self.get_unordered_weights(C, self.perm_order)
+            self.Beta_tilde = minimize(local_opt_fun, x0=Beta_tilde.flatten(), args=(C_tilde, self.I,), method='L-BFGS-B', tol=0.01).x.reshape((self.num_s, self.num_s))
+            self.W_tilde = expit(inv(self.I - Beta_tilde))
+            self.W = self.get_ordered_weigths(W_tilde, self.perm_order)
+            self.W = 1 * (W > 0.5)
+            self.parent_weights = W
+            print(f"W:\n{W}")
+            self.cell_ratios = self.compute_cell_ratios(self.parent_weights, self.score_tables)
+            self.order_weights, self.ll = self.calculate_ll()
+            ll_diff = self.ll - old_ll
+            old_ll = self.ll
+            print(f"LL: {self.ll}")
+            iter_count += 1
+        
+        return self.ll
+   
     def calculate_local_optimum(self, i, k):
         """
         Calculates the local optimum for the given old and new weights.
@@ -158,7 +207,7 @@ class NEMOrderMCMC:
         b = 1.0 - self.parent_weights[i][k] * a + self.parent_weights[i][k] * (local_vec - 1.0)
         c = a / b
 
-        res = minimize(local_ll_sum_beta, x0=0.5, args=(c,), method='L-BFGS-B', tol=0.01)
+        res = minimize(local_ll_sum, x0=0.5, args=(c,), method='L-BFGS-B', tol=0.01)
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         return res.x
@@ -185,7 +234,7 @@ class NEMOrderMCMC:
         bounds = [(0.0, 1.0)] * self.num_s * self.num_s
         # abs_diff could be varied
         while iter_count < max_iter:
-            self.cell_ratios = self.compute_ll_ratios(self.parent_weights, self.score_tables)
+            self.cell_ratios = self.compute_cell_ratios(self.parent_weights, self.score_tables)
             self.order_weights, self.ll = self.calculate_ll()
             new_parent_weights = self.parent_weights.copy()
             if init:
@@ -208,7 +257,7 @@ class NEMOrderMCMC:
             _, dag_weights = self.create_nem(self.parent_weights)
         else:
             _, dag_weights = self.create_dag(self.parent_weights)
-        dag_ll = utils.compute_ll(self.compute_ll_ratios(dag_weights, self.score_tables))
+        dag_ll = utils.compute_ll(self.compute_cell_ratios(dag_weights, self.score_tables))
         return dag_ll
     
     def create_dag(self, weights):
@@ -281,7 +330,8 @@ class NEMOrderMCMC:
         - best_score (float): The highest score achieved during the MCMC iterations.
         - best_nem (list): The optimal NEM model found during the MCMC iterations.
         """
-        curr_score = self.get_optimal_weights(init=True, ultra_verbose=ultra_verbose, use_nem=use_nem)
+        # curr_score = self.get_optimal_weights(init=True, ultra_verbose=ultra_verbose, use_nem=use_nem)
+        curr_score = self.opt_weights()
         best_score = curr_score
         dag, _ = self.create_dag(self.parent_weights)
         best_dag = dag
@@ -299,8 +349,9 @@ class NEMOrderMCMC:
                 print(f"{i}-th iteration")
             perm_order, i1, i2 = self.get_new_order(curr_perm_order, swap_prob=swap_prob)
             self.reset(perm_order=perm_order, i1=i1, i2=i2)
-            ll = self.get_optimal_weights(init=True, use_nem=use_nem, ultra_verbose=ultra_verbose)
-            wandb.log({"ll-score": ll})
+            # ll = self.get_optimal_weights(init=True, use_nem=use_nem, ultra_verbose=ultra_verbose)
+            ll = self.opt_weights()
+            # wandb.log({"ll-score": ll})
             # self.reset(perm_order=perm_order, i1=i1, i2=i2, init=False)
             # ll = self.get_optimal_weights_greedy(i1=i1, i2=i2)
             all_score_list.append(ll)
@@ -312,18 +363,18 @@ class NEMOrderMCMC:
             acc, curr_score, curr_dag, curr_perm_order = self.accepting(ll, curr_score, gamma, dag, curr_dag, perm_order, curr_perm_order)
             perm_order = curr_perm_order
             if acc:
-                wandb.log({"curr_score": curr_score})
-                wandb.log({"Current Score - Real Score": self.nem.obs_ll - curr_score})
+                # wandb.log({"curr_score": curr_score})
+                # wandb.log({"Current Score - Real Score": self.nem.obs_ll - curr_score})
                 if curr_score > best_score:
                     best_score = curr_score
                     best_dag = dag
-                    wandb.log({"Hamming Distance": utils.hamming_distance(best_dag, self.nem.adj_matrix)})
+                    # wandb.log({"Hamming Distance": utils.hamming_distance(best_dag, self.nem.adj_matrix)})
                     best_order = curr_perm_order.copy()
                     best_parents_list = self.parents_list.copy()
                     best_score_list.append(best_score)
                     best_order_list.append(best_order)
-                    wandb.log({"best_score": best_score})
-                    wandb.log({"Best Score - Real Score": self.nem.obs_ll - best_score})
+                    # wandb.log({"best_score": best_score})
+                    # wandb.log({"Best Score - Real Score": self.nem.obs_ll - best_score})
         self.best_score = best_score
         self.best_dag = best_dag
         self.best_order = best_order
