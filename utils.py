@@ -161,3 +161,47 @@ def hamming_distance(mat_a, mat_b):
 #     nparents = r['nparents']
 #     print(permy, parents, nparents)
 
+def order_arr(arr1, unsorted_array):
+    # Get the indices that would sort arr1
+    sort_indices = np.argsort(arr1)
+
+    # Sort the array along each axis, except the first one
+    sorted_array = unsorted_array.copy()
+    for axis in range(1, sorted_array.ndim):
+        # Reshape sort_indices to be broadcastable over the required axis
+        expanded_indices = np.expand_dims(sort_indices, tuple(range(axis)) + tuple(range(axis + 1, sorted_array.ndim)))
+        # Applying the sort operation along the current axis
+        sorted_array = np.take_along_axis(sorted_array, expanded_indices, axis=axis)
+
+    # Sort along the first axis
+    sorted_array = sorted_array[sort_indices]
+
+    return sorted_array
+
+def unorder_arr(perm_order, sorted_array):
+    """
+    Reorders the rows and columns of a matrix based on a given permutation order.
+
+    Args:
+        perm_order (array-like): The permutation order.
+        sorted_matrix (array-like): The matrix to be reordered.
+
+    Returns:
+        array-like: The reordered matrix.
+    """
+    # Get the indices that would sort perm_order
+    sort_indices = np.argsort(perm_order)
+
+    # Get the indices to unsort (inverse of sorting)
+    unsort_indices = np.argsort(sort_indices)
+
+    # Unsort the array along each axis, except the first one
+    original_array = sorted_array
+    for axis in range(1, original_array.ndim):
+        # Applying the unsort operation along the current axis
+        original_array = np.take_along_axis(original_array, np.expand_dims(unsort_indices, axis=0), axis=axis)
+
+    # Unsort along the first axis
+    original_array = original_array[unsort_indices]
+
+    return original_array

@@ -17,7 +17,7 @@ def local_ll_sum(x, c):
 
 def local_ll_sum_beta(x, c):
     res = -np.sum(np.log(c * x + 1.0))
-    return res    
+    return res   
 
 class NEMOrderMCMC:
     def __init__(self, nem, perm_order):
@@ -117,78 +117,81 @@ class NEMOrderMCMC:
         ll = sum(cell_sums)
         return order_weights, ll
     
-    def get_unordered_weights(self, weights, order):
-        unordered_weights = np.zeros_like(weights)
-        for i in range(self.num_s):
-                index = np.where(order == i)[0]
-                unordered_weights[i] = weights[index]
-        return unordered_weights
-        
-    def get_ordered_weigths(self, weights, order):
-        ordered_weights = np.zeros_like(weights)
-        for i in range(self.num_s):
-            ordered_weights[order[i]] = weights[i]
-        return ordered_weights
+    def jac(self, x):
+        temp0 = expit(solve_triangular((self.I - x.reshape(self.C.shape[0], self.C.shape[1])), self.I))
+        temp1 = self.W[:,:,np.newaxis] * self.C
+        temp2 = temp1 + 1.0
+        return np.sum(temp1 / temp2)*(1.0 - self.W) * np.matmul(temp0, temp0)
+       
+    def hess(self, x):
+        pass 
+    
+    def isuppertriangular(self, M):
+        for i in range(1, len(M)):
+            for j in range(0, i):
+                if(M[i][j] != 0): 
+                        return False
+        return True
         
     def local_opt_fun(self, x):
-        self.cell_ratios = self.compute_cell_ratios(self.Beta_tilde, self.score_tables)
-        self.order_weights, _ = self.calculate_ll()
+        self.cell_ratios = self.compute_cell_ratios(self.W, self.score_tables)
+        self.order_weights, ll = self.calculate_ll()
+        self.C = np.zeros((self.num_s, self.num_s, self.num_e))
         for i in range(self.num_s):
             for k in self.parents_list[i]:
                 local_vec = np.exp(self.score_tables[i][k])
                 a_ik = (local_vec - 1.0) * self.order_weights[k]
-                self.C[i][k] = a_ik 
-        self.C_tilde = self.get_unordered_weights(self.C, self.perm_order)
-        x = x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1])
-        x = expit(inv(self.I - x))
-        return -np.sum(np.log(x[:,:, np.newaxis]*self.C_tilde + 1.0))
+                b_ik = 1.0 - self.parent_weights[i][k] * a_ik + self.parent_weights[i][k] * (local_vec - 1.0)
+                c_ik = a_ik / b_ik
+                self.C[i][k] = c_ik
+        self.C_tilde = utils.order_arr(self.perm_order, self.C)
+        temp0 = solve_triangular(self.I - x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1]), self.I, lower=True)
+        self.W_tilde = activation_fun(temp0)
+        print(self.W_tilde)
+        ###
+        # self.C_tilde = utils.order_mat(self.perm_order, self.C)
+        # x = x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1])
+        # x = expit(inv(self.I - x))
+        # return -np.sum(np.log(x[:,:, np.newaxis]*self.C_tilde + 1.0))
+        # self.W = expit(inv(self.I - x.reshape(self.num_s, self.num_s)))
+        # self.parent_weights = self.W
+        print(ll)
+        self.W = utils.unorder_arr(self.perm_order, self.W_tilde)
+        temp1 = self.W[:,:,np.newaxis] * self.C
+        # temp2 = temp1 + 1.0
+        # return (-np.sum(np.log(temp2)), np.sum(temp1 / temp2)*(1.0 - self.W) * np.matmul(temp0, temp0))
+        res = -np.sum(np.log(self.W[:,:,np.newaxis] * self.C + 1.0))
+        return res
 
     def opt_weights(self, max_iter=50):
-        old_ll = -float('inf')
-        ll_diff = float('inf')
         iter_count = 0
         self.ll = 0.0
-        self.Beta_tilde = self.parent_weights = np.zeros((self.num_s, self.num_s))
-        self.C = np.zeros((self.num_s, self.num_s, self.num_e))
-        # self.cell_ratios = self.compute_cell_ratios(self.Beta_tilde, self.score_tables)
-        # self.order_weights, _ = self.calculate_ll()
-        # for i in range(self.num_s):
-        #     for k in self.parents_list[i]:
-        #         local_vec = np.exp(self.score_tables[i][k])
-        #         a_ik = (local_vec - 1.0) * self.order_weights[k]
-        #         C[i][k] = a_ik 
-        # self.C_tilde = self.get_unordered_weights(C, self.perm_order)
-        self.Beta_tilde = minimize(self.local_opt_fun, x0=self.Beta_tilde.flatten(), args=(), method='L-BFGS-B', tol=0.01).x.reshape((self.num_s, self.num_s))
-        self.W_tilde = expit(inv(self.I - Beta_tilde))
-        print(f"W_tilde: {W_tilde}")
-        self.W = self.get_ordered_weigths(W_tilde, self.perm_order)
-        self.W = 1 * (W > 0.5)
-        self.parent_weights = W
-        self.cell_ratios = self.compute_cell_ratios(W, self.score_tables)
+        counter = 0
+        self.Beta = self.W = np.zeros((self.num_s, self.num_s))
+        self.get_permissible_parents(self.perm_order, init=True)
+        self.Beta = minimize(self.local_opt_fun, x0=self.Beta.flatten(), args=(), method='L-BFGS-B', tol=0.1, options={'maxiter': 1}).x.reshape((self.num_s, self.num_s))
+        self.W = expit(inv(self.I - self.Beta))
+        # print(f"W_tilde: {W_tilde}")
+        # self.W = utils.unorder_mat(self.perm_order, self.W_tilde)
+        # self.W = 1 * (W > 0.5)
+        self.parent_weights = self.W
+        self.cell_ratios = self.compute_cell_ratios(self.W, self.score_tables)
         self.order_weights, self.ll = self.calculate_ll()
         ll_diff = self.ll - old_ll
         old_ll = self.ll
         while iter_count < max_iter or ll_diff < 0.01:
             print(f"Iteration of weight optimization: {iter_count}")
-            # for i in range(self.num_s):
-            #     for k in self.parents_list[i]:
-            #         local_vec = np.exp(self.score_tables[i][k])
-            #         a_ik = (local_vec - 1.0) * self.order_weights[k]
-            #         b_ik = 1.0 - W[i][k] * a_ik + W[i][k] * (local_vec - 1.0)
-            #         C[i][k] = a_ik/b_ik
-            # C_tilde = self.get_unordered_weights(C, self.perm_order)
-            self.Beta_tilde = minimize(local_opt_fun, x0=Beta_tilde.flatten(), args=(C_tilde, self.I,), method='L-BFGS-B', tol=0.01).x.reshape((self.num_s, self.num_s))
-            self.W_tilde = expit(inv(self.I - Beta_tilde))
-            self.W = self.get_ordered_weigths(W_tilde, self.perm_order)
-            self.W = 1 * (W > 0.5)
-            self.parent_weights = W
-            print(f"W:\n{W}")
+            self.Beta = minimize(self.local_opt_fun, x0=self.parent_weights.flatten(), args=(), method='L-BFGS-B', tol=0.1, options={'maxiter': 1}).x.reshape((self.num_s, self.num_s))
+            self.W = expit(inv(self.I - self.Beta))
+            # self.W = utils.unorder_mat(self.perm_order, self.W_tilde)
+            # self.W = 1 * (W > 0.5)
+            self.parent_weights = 1 * (self.W > 0.5)
             self.cell_ratios = self.compute_cell_ratios(self.parent_weights, self.score_tables)
             self.order_weights, self.ll = self.calculate_ll()
             ll_diff = self.ll - old_ll
             old_ll = self.ll
             print(f"LL: {self.ll}")
-            iter_count += 1
+            iter_count += 1     
         
         return self.ll
    
