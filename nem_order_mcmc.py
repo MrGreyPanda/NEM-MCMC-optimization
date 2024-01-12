@@ -8,7 +8,9 @@ from multiprocessing import Pool
 import wandb
 from scipy.linalg import solve_triangular, inv
 from scipy.special import expit, logit
+from enum import Enum
 
+Method = Enum('Method', ['DAG', 'NEM', 'Weighted_DAG'])
 
 def local_ll_sum(x, c):
     res = -np.sum(np.log(c * x + 1.0))
@@ -67,25 +69,25 @@ class NEMOrderMCMC:
             self.parent_weights[:, i1] = 0
             self.parent_weights[:, i2] = 0
         for i in range(self.num_s):
-            index = np.where(perm_order == i)[0]
-            if len(index) > 0:
-                index = index[0]
-                parents_list[i] = perm_order[:index]
-                n_parents[i] = len(parents_list[i])
-                if init:
-                    for j in parents_list[i]:
-                        self.parent_weights[i][j] = 0.5
-                else:
-                    if i1 in parents_list[i]:
-                        self.parent_weights[i][i1] = 0.5
-                    elif i2 in parents_list[i]:
-                        self.parent_weights[i][i2] = 0.5
-                    elif i == i1 or i == i2:
-                        for j in parents_list[i]:
-                            self.parent_weights[j][i] = 0.5
+            index = np.where(perm_order == i)[0][0]
+            # if len(index) > 0:
+            # index = index[0]
+            parents_list[i] = perm_order[:index]
+            n_parents[i] = len(parents_list[i])
+            if init:
+                for j in parents_list[i]:
+                    self.parent_weights[i][j] = 0.5
             else:
-                parents_list[i] = np.array([])
-                n_parents[i] = 0
+                if i1 in parents_list[i]:
+                    self.parent_weights[i][i1] = 0.5
+                elif i2 in parents_list[i]:
+                    self.parent_weights[i][i2] = 0.5
+                elif i == i1 or i == i2:
+                    for j in parents_list[i]:
+                        self.parent_weights[j][i] = 0.5
+            # else:
+                # parents_list[i] = np.array([])
+                # n_parents[i] = 0
         self.parents_list, self.n_parents = parents_list, n_parents
 
     def compute_cell_ratios(self, weights, score_tables):
@@ -145,21 +147,14 @@ class NEMOrderMCMC:
                 c_ik = a_ik / b_ik
                 self.C[i][k] = c_ik
         self.C_tilde = utils.order_arr(self.perm_order, self.C)
+        # print(x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1]))
         temp0 = solve_triangular(self.I - x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1]), self.I, lower=True)
-        self.W_tilde = activation_fun(temp0)
+        self.W_tilde = temp0 - self.I
         print(self.W_tilde)
-        ###
-        # self.C_tilde = utils.order_mat(self.perm_order, self.C)
-        # x = x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1])
-        # x = expit(inv(self.I - x))
-        # return -np.sum(np.log(x[:,:, np.newaxis]*self.C_tilde + 1.0))
-        # self.W = expit(inv(self.I - x.reshape(self.num_s, self.num_s)))
-        # self.parent_weights = self.W
         print(ll)
-        self.W = utils.unorder_arr(self.perm_order, self.W_tilde)
+        self.W  = utils.unorder_arr(self.perm_order, self.W_tilde)
         temp1 = self.W[:,:,np.newaxis] * self.C
-        # temp2 = temp1 + 1.0
-        # return (-np.sum(np.log(temp2)), np.sum(temp1 / temp2)*(1.0 - self.W) * np.matmul(temp0, temp0))
+        self.parent_weights = self.W = np.clip(self.W, 0.0, 1.0)
         res = -np.sum(np.log(self.W[:,:,np.newaxis] * self.C + 1.0))
         return res
 
@@ -168,8 +163,8 @@ class NEMOrderMCMC:
         self.ll = 0.0
         counter = 0
         self.Beta = self.W = np.zeros((self.num_s, self.num_s))
-        self.get_permissible_parents(self.perm_order, init=True)
-        self.Beta = minimize(self.local_opt_fun, x0=self.Beta.flatten(), args=(), method='L-BFGS-B', tol=0.1, options={'maxiter': 1}).x.reshape((self.num_s, self.num_s))
+        self.Beta = utils.order_arr(self.perm_order, self.parent_weights)
+        self.Beta = minimize(self.local_opt_fun, x0=self.Beta.flatten(), args=(), method='L-BFGS-B', tol=0.001).x.reshape((self.num_s, self.num_s))
         self.W = expit(inv(self.I - self.Beta))
         # print(f"W_tilde: {W_tilde}")
         # self.W = utils.unorder_mat(self.perm_order, self.W_tilde)
@@ -182,7 +177,7 @@ class NEMOrderMCMC:
         while iter_count < max_iter or ll_diff < 0.01:
             print(f"Iteration of weight optimization: {iter_count}")
             self.Beta = minimize(self.local_opt_fun, x0=self.parent_weights.flatten(), args=(), method='L-BFGS-B', tol=0.1, options={'maxiter': 1}).x.reshape((self.num_s, self.num_s))
-            self.W = expit(inv(self.I - self.Beta))
+            self.W = logit(inv(self.I - self.Beta))
             # self.W = utils.unorder_mat(self.perm_order, self.W_tilde)
             # self.W = 1 * (W > 0.5)
             self.parent_weights = 1 * (self.W > 0.5)
