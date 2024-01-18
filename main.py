@@ -10,6 +10,7 @@ import random
 import matplotlib.pyplot as plt
 import time
 import wandb
+from comp import Comp
 
 def initial_order_guess(observed_knockdown_mat):
     """
@@ -84,28 +85,30 @@ def main():
     #     # "real_score": my_nem.real_ll
     # })
     #### MCMC METHOD ####
-    mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
-    start_time = time.time()
-    score, best_dag = mcmc_nem.method(n_iterations=n_iterations, gamma=gamma, seed=seed, swap_prob=swap_prob, verbose=True, use_nem=use_nem, ultra_verbose=True)
-    end_time = time.time()
-    print(f"Time elapsed: {end_time-start_time}")
-    score_list = mcmc_nem.curr_score_list
-    best_order = mcmc_nem.best_order
+    # start_time = time.time()
+    ###
+    # mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
+    # score, best_dag = mcmc_nem.method(n_iterations=n_iterations, gamma=gamma, seed=seed, swap_prob=swap_prob, verbose=True, use_nem=use_nem, ultra_verbose=True)
+    ##
+    # end_time = time.time()
+    # print(f"Time elapsed: {end_time-start_time}")
+    # score_list = mcmc_nem.curr_score_list
+    # best_order = mcmc_nem.best_order
     # #### REPLICA EXCHANGE METHOD ####
     # score, best_mcmc_dag = replica_exchange_method(nem=my_nem, init_order_guess=permutation_order, n_iter=300, n_exchange=20)
     # best_dag = best_mcmc_dag.best_dag
     # best_order = best_mcmc_dag.best_order
     #####
     # wandb.log({"Time elapsed (s)": end_time-start_time})
-    print(f"Best order: {best_order}\nReal order: {my_nem.real_parent_order}\nObserved order: {my_nem.obs_parent_order}")
-    print(f"Infered Order Score: {score}")
-    # print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
-    print(f"Observed Score: {my_nem.obs_ll}")
-    print(f"Best DAG:\n{best_dag}")
-    print(f"Hamming Distance: {utils.hamming_distance(best_dag, adj_matrix)}")
-    print(f"Hamming Distance to Ancestor: {utils.hamming_distance(utils.ancestor(best_dag), adj_matrix)}")
+    # print(f"Best order: {best_order}\nReal order: {my_nem.real_parent_order}\nObserved order: {my_nem.obs_parent_order}")
+    # print(f"Infered Order Score: {score}")
     # # print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
-    output_handling(best_dag, network_path, curr_dir)
+    # print(f"Observed Score: {my_nem.obs_ll}")
+    # print(f"Best DAG:\n{best_dag}")
+    # print(f"Hamming Distance: {utils.hamming_distance(best_dag, adj_matrix)}")
+    # print(f"Hamming Distance to Ancestor: {utils.hamming_distance(utils.ancestor(best_dag), adj_matrix)}")
+    # # print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
+    # output_handling(best_dag, network_path, curr_dir)
     
     # plot the score_list
     # plt.plot(score_list)
@@ -113,6 +116,8 @@ def main():
     # plt.ylabel('Score')
     # plt.title('Score vs. Iteration')
     # plt.show()
+    comparator = Comp(permutation_order, num_s, num_e, my_nem.U, my_nem.get_score_tables(my_nem.observed_knockdown_mat))
+    comparator.compare(100)
     
 if __name__ == "__main__":
     main()

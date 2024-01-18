@@ -10,16 +10,16 @@ from scipy.linalg import solve_triangular, inv
 from scipy.special import expit, logit
 from enum import Enum
 
-Method = Enum('Method', ['DAG', 'NEM', 'Weighted_DAG'])
-
 def local_ll_sum(x, c):
     res = -np.sum(np.log(c * x + 1.0))
-    
     return res
 
-def local_ll_sum_beta(x, c):
-    res = -np.sum(np.log(c * x + 1.0))
-    return res   
+# def local_ll_sum_beta(x, c):
+#     res = -np.sum(np.log(c * x + 1.0))
+#     return res  
+
+def d_expit(x):
+    return expit(x) * (1.0 - expit(x))
 
 class NEMOrderMCMC:
     def __init__(self, nem, perm_order):
@@ -119,25 +119,26 @@ class NEMOrderMCMC:
         ll = sum(cell_sums)
         return order_weights, ll
     
-    def jac(self, x):
-        temp0 = expit(solve_triangular((self.I - x.reshape(self.C.shape[0], self.C.shape[1])), self.I))
-        temp1 = self.W[:,:,np.newaxis] * self.C
-        temp2 = temp1 + 1.0
-        return np.sum(temp1 / temp2)*(1.0 - self.W) * np.matmul(temp0, temp0)
+    # def jac(self, x):
+    #     # jacobian when using expit
+    #     # temp0 = expit(solve_triangular((self.I - x.reshape(self.C.shape[0], self.C.shape[1])), self.I))
+    #     # temp1 = self.W[:,:,np.newaxis] * self.C
+    #     # temp2 = temp1 + 1.0
+    #     # return np.sum(temp1 / temp2)*(1.0 - self.W) * np.matmul(temp0, temp0)
        
     def hess(self, x):
         pass 
     
-    def isuppertriangular(self, M):
-        for i in range(1, len(M)):
-            for j in range(0, i):
-                if(M[i][j] != 0): 
-                        return False
-        return True
+    def expit_parent_weights(self, weights):
+        new_weights = weights.copy()
+        for i in range(self.num_s):
+            for j in self.parents_list[i]:
+                new_weights[i][j] = expit(new_weights[i][j])
+        return new_weights
         
-    def local_opt_fun(self, x):
+    def global_opt_fun(self, x):
         self.cell_ratios = self.compute_cell_ratios(self.W, self.score_tables)
-        self.order_weights, ll = self.calculate_ll()
+        self.order_weights, self.ll = self.calculate_ll()
         self.C = np.zeros((self.num_s, self.num_s, self.num_e))
         for i in range(self.num_s):
             for k in self.parents_list[i]:
@@ -146,41 +147,46 @@ class NEMOrderMCMC:
                 b_ik = 1.0 - self.parent_weights[i][k] * a_ik + self.parent_weights[i][k] * (local_vec - 1.0)
                 c_ik = a_ik / b_ik
                 self.C[i][k] = c_ik
-        self.C_tilde = utils.order_arr(self.perm_order, self.C)
-        # print(x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1]))
-        temp0 = solve_triangular(self.I - x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1]), self.I, lower=True)
-        self.W_tilde = temp0 - self.I
-        print(self.W_tilde)
-        print(ll)
-        self.W  = utils.unorder_arr(self.perm_order, self.W_tilde)
-        temp1 = self.W[:,:,np.newaxis] * self.C
-        self.parent_weights = self.W = np.clip(self.W, 0.0, 1.0)
-        res = -np.sum(np.log(self.W[:,:,np.newaxis] * self.C + 1.0))
-        return res
+        ex_B = expit(np.tril(x.reshape(self.C.shape[0], self.C.shape[1]), -1))
+        print(ex_B)
+        temp0 = solve_triangular(self.I - ex_B, self.I, lower=True)
+        res = -np.sum(np.log(temp0[:,:,np.newaxis] * self.C + 1.0))
+        jac = -np.sum(np.matmul(np.matmul(temp0, ex_B*expit(1.0-x.reshape(self.C.shape[0], self.C.shape[1]))), temp0)[:,:,np.newaxis] * self.C / (temp0[:,:,np.newaxis] * self.C + 1.0), axis=2)
+        return (res, jac)
+        # temp0 = solve_triangular(self.I - x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1]), self.I, lower=True)
+        # self.W_tilde = temp0 - self.I
+        # # print(self.ll)
+        # self.W  = self.expit_parent_weights(utils.unorder_arr(self.perm_order, self.W_tilde))
+        # temp1 = self.W[:,:,np.newaxis] * self.C
+        # # self.W = np.clip(self.W, 0.0, 1.0)
+        # # self.parent_weights = 1 * (self.W > 0.5)
+        # self.parent_weights = self.W
+        # temp2 = temp1 + 1.0
+        # res = -np.sum(np.log(temp2))
+        # # print(f"Shape temp2: {temp2.shape}, Shape temp0: {temp0.shape}")
+        # matmul = np.matmul(temp0, temp0)
+        # jac = np.sum(matmul[:,:,np.newaxis] *  d_expit(temp0)[:,:,np.newaxis] * self.C / temp2)
+        # return (res, jac)
+        # return res
 
     def opt_weights(self, max_iter=50):
+        ll_diff = float('inf')
         iter_count = 0
         self.ll = 0.0
         counter = 0
-        self.Beta = self.W = np.zeros((self.num_s, self.num_s))
+        self.Beta = np.zeros((self.num_s, self.num_s))
+        self.W = np.zeros((self.num_s, self.num_s))
         self.Beta = utils.order_arr(self.perm_order, self.parent_weights)
-        self.Beta = minimize(self.local_opt_fun, x0=self.Beta.flatten(), args=(), method='L-BFGS-B', tol=0.001).x.reshape((self.num_s, self.num_s))
-        self.W = expit(inv(self.I - self.Beta))
-        # print(f"W_tilde: {W_tilde}")
-        # self.W = utils.unorder_mat(self.perm_order, self.W_tilde)
-        # self.W = 1 * (W > 0.5)
-        self.parent_weights = self.W
-        self.cell_ratios = self.compute_cell_ratios(self.W, self.score_tables)
-        self.order_weights, self.ll = self.calculate_ll()
-        ll_diff = self.ll - old_ll
+        # self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, method='L-BFGS-B').x.reshape((self.num_s, self.num_s))
+        self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, jac=True, method='Newton-CG').x.reshape((self.num_s, self.num_s))
         old_ll = self.ll
-        while iter_count < max_iter or ll_diff < 0.01:
+        while not(iter_count > 100 or ll_diff < 0.1):
             print(f"Iteration of weight optimization: {iter_count}")
-            self.Beta = minimize(self.local_opt_fun, x0=self.parent_weights.flatten(), args=(), method='L-BFGS-B', tol=0.1, options={'maxiter': 1}).x.reshape((self.num_s, self.num_s))
-            self.W = logit(inv(self.I - self.Beta))
+            # self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, jac=True, method='Newton-CG').x.reshape((self.num_s, self.num_s))
+            self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, jac=True, method='Newton-CG').x.reshape((self.num_s, self.num_s))
+            self.W = modified_logistic(inv(self.I - self.Beta) - self.I)
             # self.W = utils.unorder_mat(self.perm_order, self.W_tilde)
-            # self.W = 1 * (W > 0.5)
-            self.parent_weights = 1 * (self.W > 0.5)
+            self.parent_weights = 1* (self.W > 0.5)
             self.cell_ratios = self.compute_cell_ratios(self.parent_weights, self.score_tables)
             self.order_weights, self.ll = self.calculate_ll()
             ll_diff = self.ll - old_ll
@@ -205,7 +211,7 @@ class NEMOrderMCMC:
         b = 1.0 - self.parent_weights[i][k] * a + self.parent_weights[i][k] * (local_vec - 1.0)
         c = a / b
 
-        res = minimize(local_ll_sum, x0=0.5, args=(c,), method='L-BFGS-B', tol=0.01)
+        res = minimize(local_ll_sum, x0=0.5, bounds=[(0.0, 1.0)], args=(c,), method='L-BFGS-B', tol=0.01)
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         return res.x
@@ -251,6 +257,7 @@ class NEMOrderMCMC:
             print(f"LL: {self.ll}")
             iter_count += 1
             print(f"Iteration of weight optimization: {iter_count}")
+            self.parent_weights = new_parent_weights.copy()
         if use_nem:
             _, dag_weights = self.create_nem(self.parent_weights)
         else:
