@@ -47,6 +47,8 @@ class NEM:
         self.U = self.get_node_lr_table(self.get_score_tables(self.observed_knockdown_mat))
         self.real_order_ll, self.real_ll, self.real_parent_order = self.compute_real_score(real_knockdown_mat=self.real_knockdown_mat, adj_mat=adj_matrix)
         self.obs_order_ll, self.obs_ll, self.obs_parent_order = self.compute_real_score(real_knockdown_mat=self.observed_knockdown_mat, adj_mat=adj_matrix)
+        
+        
     def compute_scores(self, node, knockdown_mat):
         """
         Computes the scores for a given set of effect nodes, data, and parameters A and B.

@@ -11,12 +11,19 @@ from scipy.special import expit, logit
 from enum import Enum
 
 def local_ll_sum(x, c):
-    res = -np.sum(np.log(c * x + 1.0))
+    res = -np.sum(np.log(c * expit(x) + 1.0))
     return res
 
 # def local_ll_sum_beta(x, c):
 #     res = -np.sum(np.log(c * x + 1.0))
 #     return res  
+
+def local_ll_sum_penalized(x, c, x_ancestor):
+    ex_x = expit(x)
+    temp1 = -np.sum(np.log(c * ex_x + 1.0))
+    temp2 =  np.abs(ex_x - x_ancestor) # To enforce transitivety
+    res = temp1 + temp2 + ex_x*(1.0 - ex_x) # To enforce 0 - 1 weights
+    return res
 
 def d_expit(x):
     return expit(x) * (1.0 - expit(x))
@@ -38,7 +45,7 @@ class NEMOrderMCMC:
         self.perm_orders.append(perm_order)
         self.parent_weights = np.zeros((self.num_s, self.num_s))
         self.score_tables = nem.get_score_tables(nem.observed_knockdown_mat)
-        self.get_permissible_parents(perm_order, init=True)
+        self.get_permissible_parents(perm_order, init=True, init_value=1.0)
         self.cell_ratios = self.compute_cell_ratios(self.parent_weights, self.score_tables)
         self.perm_order = perm_order
         self.I = np.identity(self.num_s)
@@ -53,7 +60,7 @@ class NEMOrderMCMC:
         self.ll = 0.0
         self.get_permissible_parents(perm_order, i1, i2, init=init)
 
-    def get_permissible_parents(self, perm_order, i1=None, i2=None, init=False):
+    def get_permissible_parents(self, perm_order, i1=None, i2=None, init=False, init_value= 0.5):
         """
         Initializes the permissible parents and their weights for each node in the network given a permutation order.
 
@@ -76,15 +83,15 @@ class NEMOrderMCMC:
             n_parents[i] = len(parents_list[i])
             if init:
                 for j in parents_list[i]:
-                    self.parent_weights[i][j] = 0.5
+                    self.parent_weights[i][j] = init_value
             else:
                 if i1 in parents_list[i]:
-                    self.parent_weights[i][i1] = 0.5
+                    self.parent_weights[i][i1] = init_value
                 elif i2 in parents_list[i]:
-                    self.parent_weights[i][i2] = 0.5
+                    self.parent_weights[i][i2] = init_value
                 elif i == i1 or i == i2:
                     for j in parents_list[i]:
-                        self.parent_weights[j][i] = 0.5
+                        self.parent_weights[j][i] = init_value
             # else:
                 # parents_list[i] = np.array([])
                 # n_parents[i] = 0
@@ -102,8 +109,8 @@ class NEMOrderMCMC:
         for i in range(self.num_s): 
             for j in self.parents_list[i]:
                 cell_ratios[i, :] += np.log(1.0 -
-                                            weights[i][j] +
-                                            weights[i][j] *
+                                            expit(weights[i][j]) +
+                                            expit(weights[i][j]) *
                                             np.exp(score_tables[i][j]))
         return cell_ratios
 
@@ -195,6 +202,14 @@ class NEMOrderMCMC:
             iter_count += 1     
         
         return self.ll
+    
+    def expit_parent_weights(self, weights):
+        new_weights = weights.copy()
+        for i in range(self.num_s):
+            for j in self.parents_list[i]:
+                new_weights[i][j] = expit(new_weights[i][j])
+        return new_weights
+    
    
     def calculate_local_optimum(self, i, k):
         """
@@ -208,15 +223,16 @@ class NEMOrderMCMC:
         """
         local_vec = np.exp(self.score_tables[i][k])
         a = (local_vec - 1.0) * self.order_weights[k]
-        b = 1.0 - self.parent_weights[i][k] * a + self.parent_weights[i][k] * (local_vec - 1.0)
+        b = 1.0 - expit(self.parent_weights[i][k]) * a + expit(self.parent_weights[i][k]) * (local_vec - 1.0)
         c = a / b
 
-        res = minimize(local_ll_sum, x0=0.5, bounds=[(0.0, 1.0)], args=(c,), method='L-BFGS-B', tol=0.01)
+        # res = minimize(local_ll_sum, x0=0.5, bounds=[(0.0, 1.0)], args=(c), method='L-BFGS-B', tol=0.01)
+        res = minimize(local_ll_sum_penalized, x0=expit(self.parent_weights[i][k]), bounds=[(-float('inf'), float('inf'))], args=(c, self.ancestor_x[i][k]), method='L-BFGS-B', tol=0.01)
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
-        return res.x
+        return expit(res.x)
 
-    def get_optimal_weights(self, abs_diff=0.001, max_iter=40, use_nem=False, i1=None, i2=None, init=False, ultra_verbose=False):
+    def get_optimal_weights(self, abs_diff=1e-6, max_iter=1, use_nem=False, i1=None, i2=None, init=False, ultra_verbose=False):
         """
             Calculates the optimal weights for the NEM model using the specified relative error and maximum number of iterations.
 
@@ -233,14 +249,17 @@ class NEMOrderMCMC:
         """
         old_ll = -float('inf')
         ll_diff = float('inf')
-        iter_count = 0
+        iter_count = 1
+        
         self.ll = 0.0
-        bounds = [(0.0, 1.0)] * self.num_s * self.num_s
         # abs_diff could be varied
-        while iter_count < max_iter:
+        while iter_count <= max_iter and ll_diff > abs_diff:
+            self.ratio = iter_count / max_iter
             self.cell_ratios = self.compute_cell_ratios(self.parent_weights, self.score_tables)
             self.order_weights, self.ll = self.calculate_ll()
             new_parent_weights = self.parent_weights.copy()
+            # new_parent_weights = np.clip(inv(self.I - self.parent_weights) - self.I, 0, 1)
+            self.ancestor_x = np.clip(inv(self.I - self.expit_parent_weights(self.parent_weights)) - self.I, 0, 1)
             if init:
                 for i in range(self.num_s):
                     for k in self.parents_list[i]:
@@ -252,7 +271,7 @@ class NEMOrderMCMC:
                     for k in self.parents_list[i]:
                         if i1 == k or i2 == k or i == i1 or i == i2:
                             new_parent_weights[i][k] = self.calculate_local_optimum(i, k)
-            ll_diff = self.ll - old_ll
+            ll_diff = np.abs(self.ll - old_ll)
             old_ll = self.ll
             print(f"LL: {self.ll}")
             iter_count += 1
@@ -335,8 +354,8 @@ class NEMOrderMCMC:
         - best_score (float): The highest score achieved during the MCMC iterations.
         - best_nem (list): The optimal NEM model found during the MCMC iterations.
         """
-        # curr_score = self.get_optimal_weights(init=True, ultra_verbose=ultra_verbose, use_nem=use_nem)
-        curr_score = self.opt_weights()
+        curr_score = self.get_optimal_weights(init=True, ultra_verbose=ultra_verbose, use_nem=use_nem)
+        # curr_score = self.opt_weights()
         best_score = curr_score
         dag, _ = self.create_dag(self.parent_weights)
         best_dag = dag
@@ -354,8 +373,8 @@ class NEMOrderMCMC:
                 print(f"{i}-th iteration")
             perm_order, i1, i2 = self.get_new_order(curr_perm_order, swap_prob=swap_prob)
             self.reset(perm_order=perm_order, i1=i1, i2=i2)
-            # ll = self.get_optimal_weights(init=True, use_nem=use_nem, ultra_verbose=ultra_verbose)
-            ll = self.opt_weights()
+            ll = self.get_optimal_weights(init=True, use_nem=use_nem, ultra_verbose=ultra_verbose)
+            # ll = self.opt_weights()
             # wandb.log({"ll-score": ll})
             # self.reset(perm_order=perm_order, i1=i1, i2=i2, init=False)
             # ll = self.get_optimal_weights_greedy(i1=i1, i2=i2)

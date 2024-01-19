@@ -102,7 +102,7 @@ def main():
     # wandb.log({"Time elapsed (s)": end_time-start_time})
     # print(f"Best order: {best_order}\nReal order: {my_nem.real_parent_order}\nObserved order: {my_nem.obs_parent_order}")
     # print(f"Infered Order Score: {score}")
-    # # print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
+    # print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
     # print(f"Observed Score: {my_nem.obs_ll}")
     # print(f"Best DAG:\n{best_dag}")
     # print(f"Hamming Distance: {utils.hamming_distance(best_dag, adj_matrix)}")
@@ -117,7 +117,10 @@ def main():
     # plt.title('Score vs. Iteration')
     # plt.show()
     comparator = Comp(permutation_order, num_s, num_e, my_nem.U, my_nem.get_score_tables(my_nem.observed_knockdown_mat))
-    comparator.compare(100)
+    # weights, ll = comparator.optimize()
+    weights, ll = comparator.opt_with_torch()
+    print(f"Hamming Distance: {utils.hamming_distance(weights, adj_matrix)}")
+    print(f"Hamming Distance to Ancestor: {utils.hamming_distance(utils.ancestor(weights), adj_matrix)}")
     
 if __name__ == "__main__":
     main()

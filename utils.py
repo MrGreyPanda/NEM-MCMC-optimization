@@ -205,3 +205,22 @@ def unorder_arr(perm_order, sorted_array):
     original_array = original_array[unsort_indices]
 
     return original_array
+
+def min_swaps_to_match(arr1, arr2):
+    # Create a mapping from elements to their indices in arr2
+    index_map = {element: i for i, element in enumerate(arr2)}
+    
+    visited = set()  # Keep track of visited elements to avoid cycles
+    swaps = 0  # Count the number of swaps
+    
+    for i in range(len(arr1)):
+        while i not in visited and arr1[i] != arr2[i]:
+            # Swap arr1[i] with the element that should be at the current position
+            correct_idx = index_map[arr1[i]]
+            arr1[i], arr1[correct_idx] = arr1[correct_idx], arr1[i]
+            visited.add(i)
+            swaps += 1
+            i = correct_idx  # Continue with the new index
+            
+    return swaps
+
