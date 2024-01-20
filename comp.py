@@ -2,8 +2,6 @@ from scipy.optimize import minimize
 from scipy.special import expit, logit
 from scipy.linalg import solve_triangular, inv
 import utils
-import torch
-from torch import optim
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -38,9 +36,6 @@ class Comp:
         self.U = U
         self.score_tables = score_tables
         self.I = np.eye(self.num_s)
-        self.mask = np.zeros((self.num_s, self.num_s))
-        self.mask = self.get_permissible_parents(order, self.mask, init_val=1.0, init=True)
-        
         
     def get_permissible_parents(self, perm_order, weights, init_val=0.5, i1=None, i2=None, init=False):
         parents_list = np.empty(self.num_s, dtype=object)
@@ -84,7 +79,7 @@ class Comp:
     def calculate_ll(self, cell_ratios):
         cell_sums = np.logaddexp.reduce(cell_ratios, axis=0)
         order_weights = np.exp(cell_ratios - cell_sums)
-        ll = np.sum(cell_sums)
+        ll = sum(cell_sums)
         return order_weights, ll
     
     def expit_parent_weights(self, weights):
@@ -96,7 +91,7 @@ class Comp:
     
     def calculate_local_optimum_γ(self, i, k, order_weights, weights, bounds):
         local_vec = np.exp(self.score_tables[i][k])
-        a = (local_vec - 1.0) * order_weights[i]
+        a = (local_vec - 1.0) * order_weights[k]
         b = 1.0 - weights[i][k] * a + weights[i][k] * (local_vec - 1.0)
         c = a / b
         res = minimize(local_ll_sum_γ, x0=weights[i][k], bounds=bounds, args=(c,), jac=True, method='L-BFGS-B', tol=0.01)
@@ -149,7 +144,6 @@ class Comp:
         res = minimize(local_ll_sum_w, x0=weights[i][k], bounds=bounds, args=(c,), method='L-BFGS-B', tol=0.01)
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
-        
         return res.x
     
     def opt_w(self, weights, bounds):
@@ -159,7 +153,6 @@ class Comp:
         for i in range(self.num_s):
             for k in self.parents_list[i]:
                 new_parent_weights[i][k] = self.calculate_local_optimum_w(i, k, order_weights, new_parent_weights, bounds)
-                
         weights = new_parent_weights.copy()
             
         return ll, weights
@@ -175,47 +168,50 @@ class Comp:
         new_weights = weights.copy()
         for i in range(self.num_s):
             for j in self.parents_list[i]:
-                new_weights[i, j] = np.exp(new_weights[i, j])
+                new_weights[i][j] = np.exp(new_weights[i][j])
                 
         return new_weights
     
     def local_ll_sum_b_inv(self, x, weights, i, k, local_vec, a_vec):
         weights[i][k] = x
-        B = inv(self.I - self.exp_parent_weights(weights))
+        B = inv(np.eye(self.num_s) - self.exp_parent_weights(weights))
         B = B / (1.0 + B)
+        # order_weights, _ = self.calculate_ll(self.compute_cell_ratios(B, self.score_tables))
+        # a_vec = (local_vec - 1.0) * order_weights[k]
         b_vec = 1.0 - B[i][k] * a_vec + B[i][k] * (local_vec - 1.0)
         c_vec = a_vec / b_vec
         res = -np.sum(np.log(B[i][k] * c_vec + 1.0))
         return res
     
-    def calculate_local_optimum_b_inv(self, i, k, order_weights, weights):
+    def calculate_local_optimum_b_inv(self, i, k, order_weights, bounds, expit_weights, weights):
         local_vec = np.exp(self.score_tables[i][k])
-        a_vec = (local_vec - 1.0) * order_weights[k]
-        # b_vec = 1.0 - expit_weights[i][k] * a_vec + expit_weights[i][k] * (local_vec - 1.0)
-        # c_vec = a_vec / b_vec
-        res = minimize(self.local_ll_sum_b_inv, x0=weights[i][k], bounds=[(-1000, 1000)], options={'eps': 1e-6}, args=(weights, i, k, local_vec, a_vec), method='L-BFGS-B', tol=0.001)
+        a_vec = (local_vec - 1.0) * order_weights[i]
+        # b = 1.0 - expit_weights[i][k] * a + expit_weights[i][k] * (local_vec - 1.0)
+        # c = a / b
+        res = minimize(self.local_ll_sum_b_inv, x0=expit_weights[i][k], bounds=bounds, options={'eps': 1e-6}, args=(weights, i, k, local_vec, a_vec), method='L-BFGS-B', tol=0.01)
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         
         return res.x
     
-    def opt_b(self, weights):
+    def opt_b(self, weights, bounds):
         new_parent_weights = weights.copy()
-        inv_weights = inv(self.I - self.exp_parent_weights(new_parent_weights))
-        # expit_weights = inv_weights / (1.0 + inv_weights)
-        cell_ratios = self.compute_cell_ratios(inv_weights / (1.0 + inv_weights), self.score_tables)
+        inv_weights = inv(np.eye(self.num_s) - self.exp_parent_weights(weights))
+        expit_weights = inv_weights / (1.0 + inv_weights)
+        cell_ratios = self.compute_cell_ratios(expit_weights, self.score_tables)
         order_weights, ll = self.calculate_ll(cell_ratios)
         for i in range(self.num_s):
             for k in self.parents_list[i]:
-                new_parent_weights[i][k] = self.calculate_local_optimum_b_inv(i, k, order_weights, new_parent_weights)
+                new_parent_weights[i][k] = self.calculate_local_optimum_b_inv(i, k, order_weights, bounds, expit_weights, new_parent_weights)
+        
         weights = new_parent_weights.copy()
         return ll, weights
     
     def optimize(self):
         bounds = [(-1000, 1000)]
         weights = np.zeros((self.num_s, self.num_s))
-        weights = self.get_permissible_parents(perm_order=self.order, weights=weights, init=True, init_val=-0.6931471806)
-        max_iter = 30
+        weights = self.get_permissible_parents(perm_order=self.order, weights=weights, init=True, init_val=-0.6)
+        max_iter = 1000
         ll_diff = float('inf')
         ll_old = -float('inf')
         ll_list = []
@@ -224,7 +220,7 @@ class Comp:
         best_index = 0
         iter_count = 0
         while iter_count < max_iter and ll_diff > 0.0001:
-            ll, weights = self.opt_b(weights)
+            ll, weights = self.opt_b(weights, bounds)
             ll_list.append(ll)
             if ll > best_ll:
                 best_ll = ll
@@ -234,57 +230,15 @@ class Comp:
             ll_old = ll
             iter_count += 1
             print(f"LL: {ll}, ll_diff: {ll_diff}")
-        
+            
         weights = weight_list[best_index]
-        B_tilde = inv(self.I - np.exp(weights)) - np.eye(self.num_s)
+        print(f"Best index: {best_index}")
+        B_tilde = inv(np.eye(self.num_s) - self.exp_parent_weights(weights)) - np.eye(self.num_s)
         B_tilde = B_tilde / (1.0 + B_tilde)
         B_tilde = 1 * (B_tilde > 0.5)
         _, real_ll = self.calculate_ll(self.compute_cell_ratios(B_tilde, self.score_tables))
         print(f"Real LL: {real_ll}")
         return B_tilde.T, real_ll
-    
-    
-    def optimize_weights_with_expit(self, weights, bounds):
-        i = 0
-        max_iter = 1000
-        ll_diff = float('inf')
-        ll_old = -float('inf')
-        while i < max_iter and ll_diff > 0.1:
-            cell_ratios = self.compute_cell_ratios(self.expit_parent_weights(weights), self.score_tables)
-            order_weights, ll = self.calculate_ll(cell_ratios)
-            new_parent_weights = weights.copy()
-            for i in range(self.num_s):
-                for k in self.parents_list[i]:
-                    new_parent_weights[i][k] = self.calculate_local_optimum_w(i, k, order_weights, new_parent_weights, bounds)
-            weights = new_parent_weights.copy()
-            ll_diff = np.abs(ll - ll_old)
-            ll_old = ll
-            i += 1
-            print(f"LL: {ll}, ll_diff: {ll_diff}")
-        return ll, weights 
-    
-    def optimize_weights_normal(self, weights, bounds):
-        weights_list = []
-        ll_list = []
-        i = 0
-        max_iter = 1000
-        ll_diff = float('inf')
-        ll_old = -float('inf')
-        while i < max_iter and ll_diff > 0.1:
-            cell_ratios = self.compute_cell_ratios(weights, self.score_tables)
-            order_weights, ll = self.calculate_ll(cell_ratios)
-            new_parent_weights = weights.copy()
-            for i in range(self.num_s):
-                for k in self.parents_list[i]:
-                    new_parent_weights[i][k] = self.calculate_local_optimum_γ(i, k, order_weights, new_parent_weights, bounds)
-            weights = new_parent_weights.copy()
-            ll_diff = ll - ll_old
-            ll_old = ll
-            weights_list.append(weights)
-            ll_list.append(ll)
-            i += 1
-            print(f"LL: {ll}, ll_diff: {ll_diff}")
-        return ll, weights, weights_list, ll_list
     
     def compare(self, n_iters):
         # scr_lst_γ, scr_lst_β, scr_lst_w, scr_lst = [], [], [], []
@@ -324,71 +278,5 @@ class Comp:
             print("---------------------------------")
             iter_count += 1
             
-        
-    # def opt_with_torch(self):
-    #     weights = np.zeros((self.num_s, self.num_s))
-    #     weights = self.get_permissible_parents(perm_order=self.order, weights=weights, init=True, init_val=-0.6931471806)
-    #     weights = torch.tensor(weights, requires_grad=True)
-    #     weight_list = []
-    #     inv_weights = torch.inverse(torch.eye(self.num_s) - self.exp_parent_weights(weights))
-    #     expit_weights = inv_weights / (1.0 + inv_weights)
-    #     order_weights, ll = self.calculate_ll(self.compute_cell_ratios(expit_weights, self.score_tables))
-    #     weight_list.append(weights)
-    #     best_ll = -float('inf')
-    #     best_weights = weights
-    #     max_iter = 100
-    #     bounds = [(0.0, 1.0)] * self.num_s * self.num_s
-    #     # optimizer = optim.Adam([weights], lr=0.01, betas=(0.9, 0.999), eps=1e-08)
-    #     optimizer = optim.SGD([weights], lr=0.01, momentum=0.9, nesterov=True)
-    #     mask = torch.zeros((self.num_s, self.num_s))
-    #     for i in range(self.num_s):
-    #         for j in self.parents_list[i]:
-    #             mask[i][j] = 1
-    #     for i in range(max_iter):
-    #         print(f"Iteration: {i}")
-    #         with torch.enable_grad():
-    #             loss = self.loss_fun(weights, order_weights)
-    #             loss.backward()
-    #             weights.grad *= mask
-    #             optimizer.step()
-    #             weight_list.append(weights.detach().numpy())
-    #         with torch.no_grad():
-    #             # for ind in range(self.num_s):
-    #             #     for j in range(self.num_s):
-    #             #         if j not in self.parents_list[ind]:
-    #             #             weights[ind][j] = 0
-                    
-    #             inv_weights = torch.inverse(torch.eye(self.num_s) - self.exp_parent_weights(weights))
-    #             expit_weights = inv_weights / (1.0 + inv_weights)
-    #             mini = float('inf')
-    #             maxi = -float('inf')
-    #             for ind in range(self.num_s):
-    #                 for jnd in self.parents_list[ind]:
-    #                     if weights[ind][jnd] > maxi:
-    #                         maxi = inv_weights[ind][jnd]
-    #                     if weights[ind][jnd] < mini:
-    #                         mini = inv_weights[ind][jnd]
-    #             print(f"Max: {maxi}, Min: {mini}")
-    #             order_weights, ll = self.calculate_ll(self.compute_cell_ratios(expit_weights, self.score_tables))
-    #             print(f"LL: {ll}")
-    #             if ll > best_ll:
-    #                 best_ll = ll
-    #                 best_weights = weights.detach().numpy()
-    #     inv_weights = inv(np.eye(self.num_s) - self.exp_parent_weights(weights))
-    #     expit_weights = inv_weights / (1.0 + inv_weights)
-    #     B = 1.0 * (expit_weights > 0.5)
-    #     return B.T, best_ll
     
-    # def loss_fun(self, weights, order_weights):
-    #     res = 0
-    #     for i in range(self.num_s):
-    #         for k in self.parents_list[i]:
-    #             local_vec = torch.exp(torch.tensor(self.score_tables[i][k]))
-    #             a_vec = (local_vec - 1.0) * order_weights[k]
-    #             B = torch.inverse(torch.eye(self.num_s) - self.exp_parent_weights(weights))
-    #             B = B / (1.0 + B)
-    #             b_vec = 1.0 - B[i][k] * a_vec + B[i][k] * (local_vec - 1.0)
-    #             c_vec = a_vec / b_vec
-    #             res += -torch.sum(torch.log(B[i][k] * c_vec + 1.0))
-    #     return res
-                
+        
