@@ -117,8 +117,8 @@ def main():
     # plt.title('Score vs. Iteration')
     # plt.show()
     comparator = Comp(permutation_order, num_s, num_e, my_nem.U, my_nem.get_score_tables(my_nem.observed_knockdown_mat))
-    # weights, ll = comparator.optimize()
-    weights, ll = comparator.opt_with_torch()
+    weights, ll = comparator.optimize()
+    # weights, ll = comparator.opt_with_torch()
     print(f"Hamming Distance: {utils.hamming_distance(weights, adj_matrix)}")
     print(f"Hamming Distance to Ancestor: {utils.hamming_distance(utils.ancestor(weights), adj_matrix)}")
     
