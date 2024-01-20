@@ -86,7 +86,7 @@ def main():
     # })
     #### MCMC METHOD ####
     # start_time = time.time()
-    ###
+    ##
     # mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
     # score, best_dag = mcmc_nem.method(n_iterations=n_iterations, gamma=gamma, seed=seed, swap_prob=swap_prob, verbose=True, use_nem=use_nem, ultra_verbose=True)
     ##
