@@ -14,10 +14,6 @@ def local_ll_sum(x, c):
     res = -np.sum(np.log(c * expit(x) + 1.0))
     return res
 
-# def local_ll_sum_beta(x, c):
-#     res = -np.sum(np.log(c * x + 1.0))
-#     return res  
-
 def local_ll_sum_penalized(x, c, x_ancestor):
     ex_x = expit(x)
     temp1 = -np.sum(np.log(c * ex_x + 1.0))
@@ -51,23 +47,10 @@ class NEMOrderMCMC:
         self.I = np.identity(self.num_s)
 
     def reset(self, perm_order, i1=None, i2=None, init=False):
-        """
-        Resets the instance of the NEMOrderMCMC class.
-
-        Args:
-        - perm_order (numpy.ndarray): A 1D numpy array representing the permutation order of the nodes in the network.
-        """
         self.ll = 0.0
         self.get_permissible_parents(perm_order, i1, i2, init=init)
 
     def get_permissible_parents(self, perm_order, i1=None, i2=None, init=False, init_value= 0.5):
-        """
-        Initializes the permissible parents and their weights for each node in the network given a permutation order.
-
-        Args:
-        - perm_order (numpy.ndarray): A 1D numpy array representing the permutation order of the nodes in the network.
-
-        """
         parents_list = np.empty(self.num_s, dtype=object)
         n_parents = np.empty(self.num_s, dtype=int)
         if not init:
@@ -77,8 +60,6 @@ class NEMOrderMCMC:
             self.parent_weights[:, i2] = 0
         for i in range(self.num_s):
             index = np.where(perm_order == i)[0][0]
-            # if len(index) > 0:
-            # index = index[0]
             parents_list[i] = perm_order[:index]
             n_parents[i] = len(parents_list[i])
             if init:
@@ -92,19 +73,9 @@ class NEMOrderMCMC:
                 elif i == i1 or i == i2:
                     for j in parents_list[i]:
                         self.parent_weights[j][i] = init_value
-            # else:
-                # parents_list[i] = np.array([])
-                # n_parents[i] = 0
         self.parents_list, self.n_parents = parents_list, n_parents
 
     def compute_cell_ratios(self, weights, score_tables):
-        """
-        Computes the log-likelihood ratios for each cell in the NEM matrix.
-        Equivalent to Equation 13 in the Abstract from Dr. Jack Kuipers.
-
-        Returns:
-        - numpy.ndarray: The log-likelihood ratios for each cell in the NEM matrix.
-        """
         cell_ratios = self.U.copy()
         for i in range(self.num_s): 
             for j in self.parents_list[i]:
@@ -115,24 +86,11 @@ class NEMOrderMCMC:
         return cell_ratios
 
     def calculate_ll(self):
-        """
-        Calculates the log-likelihood of the NEM model.
-
-        Returns:
-        - tuple: A tuple containing the order weights and the log-likelihood of the NEM model.
-        """
         cell_sums = np.logaddexp.reduce(self.cell_ratios, axis=0)
         order_weights = np.exp(self.cell_ratios - cell_sums)
         ll = sum(cell_sums)
         return order_weights, ll
     
-    # def jac(self, x):
-    #     # jacobian when using expit
-    #     # temp0 = expit(solve_triangular((self.I - x.reshape(self.C.shape[0], self.C.shape[1])), self.I))
-    #     # temp1 = self.W[:,:,np.newaxis] * self.C
-    #     # temp2 = temp1 + 1.0
-    #     # return np.sum(temp1 / temp2)*(1.0 - self.W) * np.matmul(temp0, temp0)
-       
     def hess(self, x):
         pass 
     
@@ -154,27 +112,12 @@ class NEMOrderMCMC:
                 b_ik = 1.0 - self.parent_weights[i][k] * a_ik + self.parent_weights[i][k] * (local_vec - 1.0)
                 c_ik = a_ik / b_ik
                 self.C[i][k] = c_ik
-        ex_B = expit(np.tril(x.reshape(self.C.shape[0], self.C.shape[1]), -1))
-        print(ex_B)
+        ex_B = expit(np.tril(x.reshape(self.C.shape[0], self.C.shape[1]), -1)) # Thats wrong, as x is not lower triangular
         temp0 = solve_triangular(self.I - ex_B, self.I, lower=True)
         res = -np.sum(np.log(temp0[:,:,np.newaxis] * self.C + 1.0))
-        jac = -np.sum(np.matmul(np.matmul(temp0, ex_B*expit(1.0-x.reshape(self.C.shape[0], self.C.shape[1]))), temp0)[:,:,np.newaxis] * self.C / (temp0[:,:,np.newaxis] * self.C + 1.0), axis=2)
-        return (res, jac)
-        # temp0 = solve_triangular(self.I - x.reshape(self.C_tilde.shape[0], self.C_tilde.shape[1]), self.I, lower=True)
-        # self.W_tilde = temp0 - self.I
-        # # print(self.ll)
-        # self.W  = self.expit_parent_weights(utils.unorder_arr(self.perm_order, self.W_tilde))
-        # temp1 = self.W[:,:,np.newaxis] * self.C
-        # # self.W = np.clip(self.W, 0.0, 1.0)
-        # # self.parent_weights = 1 * (self.W > 0.5)
-        # self.parent_weights = self.W
-        # temp2 = temp1 + 1.0
-        # res = -np.sum(np.log(temp2))
-        # # print(f"Shape temp2: {temp2.shape}, Shape temp0: {temp0.shape}")
-        # matmul = np.matmul(temp0, temp0)
-        # jac = np.sum(matmul[:,:,np.newaxis] *  d_expit(temp0)[:,:,np.newaxis] * self.C / temp2)
+        # jac = -np.sum(np.matmul(np.matmul(temp0, ex_B*expit(1.0-x.reshape(self.C.shape[0], self.C.shape[1]))), temp0)[:,:,np.newaxis] * self.C / (temp0[:,:,np.newaxis] * self.C + 1.0), axis=2)
         # return (res, jac)
-        # return res
+        return res
 
     def opt_weights(self, max_iter=50):
         ll_diff = float('inf')
@@ -185,12 +128,14 @@ class NEMOrderMCMC:
         self.W = np.zeros((self.num_s, self.num_s))
         self.Beta = utils.order_arr(self.perm_order, self.parent_weights)
         # self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, method='L-BFGS-B').x.reshape((self.num_s, self.num_s))
-        self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, jac=True, method='Newton-CG').x.reshape((self.num_s, self.num_s))
+        # self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, jac=True, method='Newton-CG').x.reshape((self.num_s, self.num_s))
+        self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, method='L-BFGS-B').x.reshape((self.num_s, self.num_s))
         old_ll = self.ll
         while not(iter_count > 100 or ll_diff < 0.1):
             print(f"Iteration of weight optimization: {iter_count}")
             # self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, jac=True, method='Newton-CG').x.reshape((self.num_s, self.num_s))
-            self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, jac=True, method='Newton-CG').x.reshape((self.num_s, self.num_s))
+            # self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, jac=True, method='Newton-CG').x.reshape((self.num_s, self.num_s))
+            self.Beta = minimize(self.global_opt_fun, x0=self.Beta.flatten(), args=(), tol=0.01, method='L-BFGS-B').x.reshape((self.num_s, self.num_s))
             self.W = modified_logistic(inv(self.I - self.Beta) - self.I)
             # self.W = utils.unorder_mat(self.perm_order, self.W_tilde)
             self.parent_weights = 1* (self.W > 0.5)
@@ -212,15 +157,6 @@ class NEMOrderMCMC:
     
    
     def calculate_local_optimum(self, i, k):
-        """
-        Calculates the local optimum for the given old and new weights.
-        Equivalent to equation 19in the Abstract from Dr. Jack Kuipers.
-        Args:
-            weights:
-
-        Returns:
-            numpy.ndarray: The local optimum.
-        """
         local_vec = np.exp(self.score_tables[i][k])
         a = (local_vec - 1.0) * self.order_weights[k]
         b = 1.0 - expit(self.parent_weights[i][k]) * a + expit(self.parent_weights[i][k]) * (local_vec - 1.0)
@@ -233,20 +169,6 @@ class NEMOrderMCMC:
         return expit(res.x)
 
     def get_optimal_weights(self, abs_diff=1e-6, max_iter=1, use_nem=False, i1=None, i2=None, init=False, ultra_verbose=False):
-        """
-            Calculates the optimal weights for the NEM model using the specified relative error and maximum number of iterations.
-
-            Args:
-            - abs_diff: a float representing the absolute difference threshold for convergence (default: 0.1)
-            - max_iter: an integer representing the maximum number of iterations (default: 1000)
-
-            Returns:
-            - parent_weights: a list of length num_s containing the optimal weights for each variable's parents
-
-            TODO:
-            - Check if log-likelihood ratios are updated accordingly
-            - Tackle overflows
-        """
         old_ll = -float('inf')
         ll_diff = float('inf')
         iter_count = 1
@@ -306,15 +228,6 @@ class NEMOrderMCMC:
             return False, curr_score, curr_net, curr_perm_order
         
     def get_new_order(self, curr_perm_order, swap_prob=0.95):
-        """
-        Swaps two adjacent nodes in the permutation order with a probability of swap_prob.
-
-        Args:
-        - swap_prob (float): Probability of swapping two nodes in the permutation order.
-
-        Returns:
-        - perm_order (numpy.ndarray): A 1D numpy array representing the permutation order of the nodes in the network.
-        """
         # counter = 0
         perm_order = curr_perm_order.copy()
         
@@ -341,21 +254,8 @@ class NEMOrderMCMC:
         return perm_order, i1, i2
    
     def method(self, swap_prob=0.95, gamma=1, seed=1234, n_iterations=500, verbose=True, ultra_verbose=False, use_nem=False):
-        """
-        Runs the MCMC algorithm to find the optimal permutation order for the NEM model.
-
-        Args:
-        - swap_prob (float): Probability of swapping two nodes in the permutation order.
-        - gamma (float): Scaling factor for the acceptance rate calculation.
-        - seed (int): Seed for the random number generator.
-        - n_iterations (int): Number of iterations to run the MCMC algorithm.
-
-        Returns:
-        - best_score (float): The highest score achieved during the MCMC iterations.
-        - best_nem (list): The optimal NEM model found during the MCMC iterations.
-        """
         curr_score = self.get_optimal_weights(init=True, ultra_verbose=ultra_verbose, use_nem=use_nem)
-        # curr_score = self.opt_weights()
+        curr_score = self.opt_weights()
         best_score = curr_score
         dag, _ = self.create_dag(self.parent_weights)
         best_dag = dag
@@ -413,18 +313,6 @@ class NEMOrderMCMC:
 
 
 def replica_exchange_step(replicas, gammas, n_replicas, n_iters, scores, upwards_cylce):
-    """
-    Runs the replica exchange MCMC algorithm to find the optimal permutation order for the NEM model.
-
-    Args:
-    - gammas (list): List of scaling factors for the acceptance rate calculation for each replica.
-    - n_replicas (int): Number of replicas to run the replica exchange MCMC algorithm.
-    - n_steps (int): Number of steps to run the replica exchange MCMC algorithm.
-
-    Returns:
-    - best_score (float): The highest score achieved during the MCMC iterations.
-    - best_nem (NEMOrderMCMC): The optimal NEM model found during the MCMC iterations.
-    """
     n_exchanges = 0
     for i in range(n_replicas):
         replicas[i].method(n_iterations=n_iters, gamma=gammas[i], verbose=True)

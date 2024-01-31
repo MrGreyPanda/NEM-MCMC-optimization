@@ -161,9 +161,9 @@ def hamming_distance(mat_a, mat_b):
 #     nparents = r['nparents']
 #     print(permy, parents, nparents)
 
-def order_arr(arr1, unsorted_array):
-    # Get the indices that would sort arr1
-    sort_indices = np.argsort(arr1)
+def order_arr(order, unsorted_array):
+    # Get the indices that would sort order
+    sort_indices = np.argsort(order)
 
     # Sort the array along each axis, except the first one
     sorted_array = unsorted_array.copy()
@@ -223,4 +223,10 @@ def min_swaps_to_match(arr1, arr2):
             i = correct_idx  # Continue with the new index
             
     return swaps
+
+def get_real_order_guess(adj_mat):
+    pass
+
+def is_lower_triangular(arr):
+    return np.allclose(np.tril(arr), arr)
 
