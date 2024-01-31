@@ -53,6 +53,15 @@ def ancestor(incidence):
     ancestor_mat = (incidence2 > 0).astype(int)
     return ancestor_mat
 
+def initial_order_guess(observed_knockdown_mat):
+    """
+    Make an "educated" guess on the order of the nodes in the network.
+    """
+    num_s = observed_knockdown_mat.shape[0]
+    sum_col = np.sum(observed_knockdown_mat, axis=1)
+    order = np.arange(num_s)
+    order = np.argsort(-sum_col)
+    return order
 
 def compute_ll_ratios(n_parents, U, parent_weights, reduced_score_tables):
     """

@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import time
 import wandb
 from comp import Comp
+from methods import InverseMethod
 
 def initial_order_guess(observed_knockdown_mat):
     """
@@ -112,7 +113,7 @@ def main():
     # plt.ylabel('Score')
     # plt.title('Score vs. Iteration')
     # plt.show()
-    inv_method = InverseMethod(permutation_order, num_s, num_e, my_nem.U, my_nem.get_score_tables(my_nem.observed_knockdown_mat), adj_matrix)
+    inv_method = InverseMethod(permutation_order, num_s, num_e, my_nem.U, my_nem.get_score_tables(my_nem.observed_knockdown_mat))
     weights, ll = inv_method.optimize()
     # comparator = Comp(permutation_order, num_s, num_e, my_nem.U, my_nem.get_score_tables(my_nem.observed_knockdown_mat), adj_matrix)
     # weights, ll = comparator.optimize()

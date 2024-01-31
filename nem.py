@@ -6,14 +6,14 @@ from scipy.optimize import minimize
 
 
 class NEM:
-    def __init__(self, adj_matrix, end_nodes, errors, num_s, num_e):
+    def __init__(self, adj_matrix, end_nodes, errors, num_s, num_e, seed=42):
         self.num_s = num_s
         self.num_e = num_e
         self.adj_matrix = adj_matrix
         alpha = errors[0]
         beta = errors[1]
         self.real_knockdown_mat = utils.create_real_knockdown_mat(adj_matrix, end_nodes)
-        
+        random.seed(seed)
         self.A = np.log(alpha / (1.0 - beta))
         self.B = np.log(beta / (1.0 - alpha))
         self.observed_knockdown_mat = utils.create_observed_knockdown_mat(self.real_knockdown_mat, alpha, beta)

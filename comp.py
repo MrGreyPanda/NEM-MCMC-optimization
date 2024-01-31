@@ -195,25 +195,8 @@ class Comp:
     def optimize(self):
         bounds = [(-40, 40)]
         init_val = 6.0
-        # weights = np.zeros((self.num_s, self.num_s))
-        # weights = self.get_permissible_parents(perm_order=self.order, weights=weights, init_val=init_val)
-        weights = self.adj_mat.copy().T
-        for i in range(self.num_s):
-            for j in range(self.num_s):
-                if weights [i][j] == 0:
-                    weights[i][j] = -5000.0
-                elif weights[i][j] == 1:
-                    weights[i][j] = 500
-        weights = utils.order_arr(self.order, weights)
-        # weights = solve_triangular(self.I - np.exp(weights), self.I, lower=True)
-        weights = np.exp(weights)
-        print(weights)
-        weights = weights / (1.0 + weights)
-        weights = utils.unorder_arr(self.order, weights)
-        weights = 1 * (weights > 0.5)
-        _, curr_ll = self.calculate_ll(self.compute_cell_ratios(weights, self.score_tables))
-        print(f"Initial LL: {curr_ll}")
-        print(f"Weight difference: {np.sum(np.abs(weights - self.adj_mat.T))}")
+        weights = np.zeros((self.num_s, self.num_s))
+        weights = self.get_permissible_parents(perm_order=self.order, weights=weights, init_val=init_val)
         max_iter = 10000
         ll_diff = float('inf')
         ll_old = -float('inf')
