@@ -1,0 +1,105 @@
+Best ll: -295.8080213542375
+Rounded LL: -319.02908195416677
+Comparison: real_ll: -144.01923650414497 - inferred_ll: -319.02908195416677
+Hamming Distance: 5
+Network 1:
+Best ll: -1312.2542064955182
+Rounded LL: -1304.4255904318054
+Comparison: real_ll: -930.5443495682625 - inferred_ll: -1304.4255904318054
+Hamming Distance: 36
+Network 2:
+Best ll: -303.80129222659184
+Rounded LL: -309.76910347796615
+Comparison: real_ll: -201.23114686148492 - inferred_ll: -309.76910347796615
+Hamming Distance: 11
+Network 3:
+Best ll: -283.85483858274915
+Rounded LL: -241.10085025446537
+Comparison: real_ll: -220.7771361329188 - inferred_ll: -241.10085025446537
+Hamming Distance: 1
+Network 4:
+Best ll: -645.2112970833507
+Rounded LL: -618.3013134708224
+Comparison: real_ll: -551.5594921197501 - inferred_ll: -618.3013134708224
+Hamming Distance: 12
+Network 5:
+Best ll: -622.4087273543742
+Rounded LL: -668.130648898104
+Comparison: real_ll: -522.2305544129528 - inferred_ll: -668.130648898104
+Hamming Distance: 9
+Network 6:
+Best ll: -529.8585447751102
+Rounded LL: -523.9313720065766
+Comparison: real_ll: -408.29818089048274 - inferred_ll: -523.9313720065766
+Hamming Distance: 5
+Network 7:
+Best ll: -437.9038928664865
+Rounded LL: -478.26344438802465
+Comparison: real_ll: -289.2232306729102 - inferred_ll: -478.26344438802465
+Hamming Distance: 12
+Network 8:
+Best ll: -203.00413402275083
+Rounded LL: -177.73701863033637
+Comparison: real_ll: -155.80385898756117 - inferred_ll: -177.73701863033637
+Hamming Distance: 1
+Network 9:
+Best ll: -250.43967613402938
+Rounded LL: -235.14501004742297
+Comparison: real_ll: -186.23713134519747 - inferred_ll: -235.14501004742297
+Hamming Distance: 1
+Network 10:
+Best ll: -1375.4180546752118
+Rounded LL: -1340.1599976623859
+Comparison: real_ll: -966.9587436579045 - inferred_ll: -1340.1599976623859
+Hamming Distance: 64
+Network 11:
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py", line 118, in <module>
+    conduct_fixed_e_genes_experiments()
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py", line 108, in conduct_fixed_e_genes_experiments
+    weights, ll = inv_method.optimize()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/methods.py", line 124, in optimize
+    ll, weights = self.opt_b(weights, bounds)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/methods.py", line 106, in opt_b
+    new_parent_weights[i][k] = self.calculate_local_optimum_b_inv(i, k, order_weights, bounds, expit_weights, new_parent_weights)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/methods.py", line 90, in calculate_local_optimum_b_inv
+    res = minimize(self.local_ll_sum_b_inv, x0=weights[i][k], bounds=bounds, options={'eps': 1e-3}, args=(weights, i, k, local_vec, a_vec), method='L-BFGS-B', tol=0.1)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_minimize.py", line 710, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py", line 307, in _minimize_lbfgsb
+    sf = _prepare_scalar_function(fun, x0, jac=jac, args=args, epsilon=eps,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_optimize.py", line 383, in _prepare_scalar_function
+    sf = ScalarFunction(fun, x0, args, grad, hess,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 177, in __init__
+    self._update_grad()
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 256, in _update_grad
+    self._update_grad_impl()
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 173, in update_grad
+    self.g = approx_derivative(fun_wrapped, self.x, f0=self.f,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_numdiff.py", line 505, in approx_derivative
+    return _dense_difference(fun_wrapped, x0, f0, h,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_numdiff.py", line 576, in _dense_difference
+    df = fun(x) - f0
+         ^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_numdiff.py", line 456, in fun_wrapped
+    f = np.atleast_1d(fun(x, *args, **kwargs))
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/methods.py", line 77, in local_ll_sum_b_inv
+    B = solve_triangular(self.eye - weights, self.eye, lower=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/linalg/_basic.py", line 350, in solve_triangular
+    x, info = trtrs(a1.T, b1, overwrite_b=overwrite_b, lower=not lower,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

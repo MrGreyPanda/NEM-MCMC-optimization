@@ -9,6 +9,7 @@ import wandb
 from scipy.linalg import solve_triangular, inv
 from scipy.special import expit, logit
 from enum import Enum
+import methods
 
 def local_ll_sum(x, c):
     res = -np.sum(np.log(c * expit(x) + 1.0))

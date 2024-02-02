@@ -1,0 +1,217 @@
+2024-02-02 09:52:33,320 INFO    StreamThr :38102 [internal.py:wandb_internal():86] W&B internal server running at pid: 38102, started at: 2024-02-02 09:52:33.319944
+2024-02-02 09:52:33,321 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: status
+2024-02-02 09:52:33,321 INFO    WriterThread:38102 [datastore.py:open_for_write():85] open: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/run-mkvpefio.wandb
+2024-02-02 09:52:33,322 DEBUG   SenderThread:38102 [sender.py:send():380] send: header
+2024-02-02 09:52:33,333 DEBUG   SenderThread:38102 [sender.py:send():380] send: run
+2024-02-02 09:52:33,969 INFO    SenderThread:38102 [dir_watcher.py:__init__():211] watching files in: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files
+2024-02-02 09:52:33,969 INFO    SenderThread:38102 [sender.py:_start_run_threads():1124] run started: mkvpefio with start time 1706863953.32017
+2024-02-02 09:52:33,974 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: check_version
+2024-02-02 09:52:33,974 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: check_version
+2024-02-02 09:52:34,119 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: run_start
+2024-02-02 09:52:34,126 DEBUG   HandlerThread:38102 [system_info.py:__init__():32] System info init
+2024-02-02 09:52:34,126 DEBUG   HandlerThread:38102 [system_info.py:__init__():47] System info init done
+2024-02-02 09:52:34,127 INFO    HandlerThread:38102 [system_monitor.py:start():194] Starting system monitor
+2024-02-02 09:52:34,127 INFO    SystemMonitor:38102 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-02-02 09:52:34,127 INFO    HandlerThread:38102 [system_monitor.py:probe():214] Collecting system info
+2024-02-02 09:52:34,127 DEBUG   HandlerThread:38102 [system_info.py:probe():196] Probing system
+2024-02-02 09:52:34,128 INFO    SystemMonitor:38102 [interfaces.py:start():190] Started cpu monitoring
+2024-02-02 09:52:34,130 INFO    SystemMonitor:38102 [interfaces.py:start():190] Started disk monitoring
+2024-02-02 09:52:34,130 INFO    SystemMonitor:38102 [interfaces.py:start():190] Started gpuapple monitoring
+2024-02-02 09:52:34,137 INFO    SystemMonitor:38102 [interfaces.py:start():190] Started memory monitoring
+2024-02-02 09:52:34,139 INFO    SystemMonitor:38102 [interfaces.py:start():190] Started network monitoring
+2024-02-02 09:52:34,143 DEBUG   HandlerThread:38102 [system_info.py:_probe_git():181] Probing git
+2024-02-02 09:52:34,159 DEBUG   HandlerThread:38102 [system_info.py:_probe_git():189] Probing git done
+2024-02-02 09:52:34,160 DEBUG   HandlerThread:38102 [system_info.py:probe():244] Probing system done
+2024-02-02 09:52:34,160 DEBUG   HandlerThread:38102 [system_monitor.py:probe():223] {'os': 'macOS-14.2.1-arm64-arm-64bit', 'python': '3.11.4', 'heartbeatAt': '2024-02-02T08:52:34.127790', 'startedAt': '2024-02-02T08:52:33.315213', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py', 'codePathLocal': 'experiments.py', 'codePath': 'experiments.py', 'git': {'remote': 'https://github.com/MrGreyPanda/NEM-MCMC-optimization', 'commit': '1f585f3dbb5201da2479b414e6c0261813804d5b'}, 'email': 'simon.aaron.menzi@gmail.com', 'root': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython', 'host': 'MacBook-Pro-von-Simon.local', 'username': 'simonmenzi', 'executable': '/opt/homebrew/opt/python@3.11/bin/python3.11', 'cpu_count': 8, 'cpu_count_logical': 8, 'disk': {'/': {'total': 460.4317207336426, 'used': 9.42868423461914}}, 'gpuapple': {'type': 'arm', 'vendor': 'Apple'}, 'memory': {'total': 16.0}}
+2024-02-02 09:52:34,160 INFO    HandlerThread:38102 [system_monitor.py:probe():224] Finished collecting system info
+2024-02-02 09:52:34,160 INFO    HandlerThread:38102 [system_monitor.py:probe():227] Publishing system info
+2024-02-02 09:52:34,160 DEBUG   HandlerThread:38102 [system_info.py:_save_pip():52] Saving list of pip packages installed into the current environment
+2024-02-02 09:52:34,160 DEBUG   HandlerThread:38102 [system_info.py:_save_pip():68] Saving pip packages done
+2024-02-02 09:52:34,160 INFO    HandlerThread:38102 [system_monitor.py:probe():229] Finished publishing system info
+2024-02-02 09:52:34,163 DEBUG   SenderThread:38102 [sender.py:send():380] send: files
+2024-02-02 09:52:34,163 INFO    SenderThread:38102 [sender.py:_save_file():1380] saving file wandb-metadata.json with policy now
+2024-02-02 09:52:34,166 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: stop_status
+2024-02-02 09:52:34,167 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: stop_status
+2024-02-02 09:52:34,168 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: internal_messages
+2024-02-02 09:52:34,390 DEBUG   SenderThread:38102 [sender.py:send():380] send: telemetry
+2024-02-02 09:52:34,835 INFO    wandb-upload_0:38102 [upload_job.py:push():131] Uploaded file /var/folders/pk/6hljgbr11057fzl21z_9f67h0000gn/T/tmpw1r2at6lwandb/k42hpjw6-wandb-metadata.json
+2024-02-02 09:52:34,972 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/output.log
+2024-02-02 09:52:34,972 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/requirements.txt
+2024-02-02 09:52:34,972 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/wandb-metadata.json
+2024-02-02 09:52:36,988 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/output.log
+2024-02-02 09:52:37,406 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-02 09:52:37,409 DEBUG   SenderThread:38102 [sender.py:send():380] send: history
+2024-02-02 09:52:37,409 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: summary_record
+2024-02-02 09:52:37,410 INFO    SenderThread:38102 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2024-02-02 09:52:37,987 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/wandb-summary.json
+2024-02-02 09:52:38,081 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-02 09:52:38,082 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-02 09:52:38,082 DEBUG   SenderThread:38102 [sender.py:send():380] send: history
+2024-02-02 09:52:38,082 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: summary_record
+2024-02-02 09:52:38,083 INFO    SenderThread:38102 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2024-02-02 09:52:38,083 DEBUG   SenderThread:38102 [sender.py:send():380] send: history
+2024-02-02 09:52:38,083 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: summary_record
+2024-02-02 09:52:38,083 INFO    SenderThread:38102 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2024-02-02 09:52:38,995 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/wandb-summary.json
+2024-02-02 09:52:38,995 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/output.log
+2024-02-02 09:52:39,089 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: status_report
+2024-02-02 09:52:41,010 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/output.log
+2024-02-02 09:52:42,077 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-02 09:52:42,077 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-02 09:52:42,078 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-02 09:52:42,078 DEBUG   SenderThread:38102 [sender.py:send():380] send: history
+2024-02-02 09:52:42,078 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: summary_record
+2024-02-02 09:52:42,078 INFO    SenderThread:38102 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2024-02-02 09:52:42,079 DEBUG   SenderThread:38102 [sender.py:send():380] send: history
+2024-02-02 09:52:42,079 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: summary_record
+2024-02-02 09:52:42,079 INFO    SenderThread:38102 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2024-02-02 09:52:42,079 DEBUG   SenderThread:38102 [sender.py:send():380] send: history
+2024-02-02 09:52:42,079 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: summary_record
+2024-02-02 09:52:42,079 INFO    SenderThread:38102 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2024-02-02 09:52:43,023 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/wandb-summary.json
+2024-02-02 09:52:45,033 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/output.log
+2024-02-02 09:52:45,100 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: status_report
+2024-02-02 09:52:48,039 DEBUG   SenderThread:38102 [sender.py:send():380] send: exit
+2024-02-02 09:52:48,039 INFO    SenderThread:38102 [sender.py:send_exit():585] handling exit code: 255
+2024-02-02 09:52:48,039 INFO    SenderThread:38102 [sender.py:send_exit():587] handling runtime: 13
+2024-02-02 09:52:48,039 INFO    SenderThread:38102 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2024-02-02 09:52:48,040 INFO    SenderThread:38102 [sender.py:send_exit():593] send defer
+2024-02-02 09:52:48,040 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:48,040 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 0
+2024-02-02 09:52:48,041 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:48,041 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 0
+2024-02-02 09:52:48,041 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 1
+2024-02-02 09:52:48,041 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:48,041 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 1
+2024-02-02 09:52:48,041 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:48,041 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 1
+2024-02-02 09:52:48,041 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 2
+2024-02-02 09:52:48,041 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:48,041 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 2
+2024-02-02 09:52:48,042 INFO    HandlerThread:38102 [system_monitor.py:finish():203] Stopping system monitor
+2024-02-02 09:52:48,042 DEBUG   SystemMonitor:38102 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-02-02 09:52:48,042 DEBUG   SystemMonitor:38102 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-02-02 09:52:48,042 INFO    HandlerThread:38102 [interfaces.py:finish():202] Joined cpu monitor
+2024-02-02 09:52:48,042 DEBUG   SystemMonitor:38102 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-02-02 09:52:48,042 INFO    HandlerThread:38102 [interfaces.py:finish():202] Joined disk monitor
+2024-02-02 09:52:48,053 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/wandb-summary.json
+2024-02-02 09:52:48,482 INFO    HandlerThread:38102 [interfaces.py:finish():202] Joined gpuapple monitor
+2024-02-02 09:52:48,482 INFO    HandlerThread:38102 [interfaces.py:finish():202] Joined memory monitor
+2024-02-02 09:52:48,482 INFO    HandlerThread:38102 [interfaces.py:finish():202] Joined network monitor
+2024-02-02 09:52:48,482 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:48,482 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 2
+2024-02-02 09:52:48,482 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 3
+2024-02-02 09:52:48,482 DEBUG   SenderThread:38102 [sender.py:send():380] send: telemetry
+2024-02-02 09:52:48,482 DEBUG   SenderThread:38102 [sender.py:send():380] send: stats
+2024-02-02 09:52:48,483 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:48,483 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 3
+2024-02-02 09:52:48,485 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:48,485 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 3
+2024-02-02 09:52:48,485 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 4
+2024-02-02 09:52:48,485 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:48,485 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 4
+2024-02-02 09:52:48,485 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:48,485 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 4
+2024-02-02 09:52:48,485 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 5
+2024-02-02 09:52:48,485 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:48,485 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 5
+2024-02-02 09:52:48,485 DEBUG   SenderThread:38102 [sender.py:send():380] send: summary
+2024-02-02 09:52:48,486 INFO    SenderThread:38102 [sender.py:_save_file():1380] saving file wandb-summary.json with policy end
+2024-02-02 09:52:48,486 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:48,486 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 5
+2024-02-02 09:52:48,486 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 6
+2024-02-02 09:52:48,486 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:48,486 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 6
+2024-02-02 09:52:48,486 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:48,486 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 6
+2024-02-02 09:52:48,488 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: status_report
+2024-02-02 09:52:48,657 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 7
+2024-02-02 09:52:48,657 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:48,657 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 7
+2024-02-02 09:52:48,657 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:48,657 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 7
+2024-02-02 09:52:49,043 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: poll_exit
+2024-02-02 09:52:49,055 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/config.yaml
+2024-02-02 09:52:49,055 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/wandb-summary.json
+2024-02-02 09:52:50,058 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/output.log
+2024-02-02 09:52:52,047 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 8
+2024-02-02 09:52:52,047 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: poll_exit
+2024-02-02 09:52:52,047 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:52,047 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 8
+2024-02-02 09:52:52,047 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:52,047 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 8
+2024-02-02 09:52:52,047 INFO    SenderThread:38102 [job_builder.py:build():298] Attempting to build job artifact
+2024-02-02 09:52:52,048 INFO    SenderThread:38102 [job_builder.py:_get_source_type():428] is repo sourced job
+2024-02-02 09:52:52,062 INFO    Thread-12 :38102 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/output.log
+2024-02-02 09:52:52,077 INFO    SenderThread:38102 [job_builder.py:build():404] adding wandb-job metadata file
+2024-02-02 09:52:52,078 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 9
+2024-02-02 09:52:52,078 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:52,079 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 9
+2024-02-02 09:52:52,079 DEBUG   SenderThread:38102 [sender.py:send():380] send: artifact
+2024-02-02 09:52:53,265 INFO    wandb-upload_1:38102 [upload_job.py:push():86] Skipped uploading /Users/simonmenzi/Library/Application Support/wandb/artifacts/staging/tmpjbazizxr
+2024-02-02 09:52:53,658 INFO    wandb-upload_0:38102 [upload_job.py:push():89] Uploaded file /Users/simonmenzi/Library/Application Support/wandb/artifacts/staging/tmp7s_niskk
+2024-02-02 09:52:54,070 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: keepalive
+2024-02-02 09:52:54,773 INFO    SenderThread:38102 [sender.py:send_artifact():1458] sent artifact job-https___github.com_MrGreyPanda_NEM-MCMC-optimization_experiments.py - {'id': 'QXJ0aWZhY3Q6NzExNjY3MDY5', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjEzNTY3Mjc3NQ==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NzExNjY2NTU5', 'versionIndex': 4}}}
+2024-02-02 09:52:54,773 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:54,773 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 9
+2024-02-02 09:52:54,773 INFO    SenderThread:38102 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-02-02 09:52:55,073 INFO    SenderThread:38102 [dir_watcher.py:finish():388] scan: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files
+2024-02-02 09:52:55,073 INFO    SenderThread:38102 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/requirements.txt requirements.txt
+2024-02-02 09:52:55,073 INFO    SenderThread:38102 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/output.log output.log
+2024-02-02 09:52:55,074 INFO    SenderThread:38102 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/config.yaml config.yaml
+2024-02-02 09:52:55,075 INFO    SenderThread:38102 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/wandb-summary.json wandb-summary.json
+2024-02-02 09:52:55,075 INFO    SenderThread:38102 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/wandb-metadata.json wandb-metadata.json
+2024-02-02 09:52:55,075 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 10
+2024-02-02 09:52:55,076 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:55,076 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 10
+2024-02-02 09:52:55,077 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:55,077 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 10
+2024-02-02 09:52:55,077 INFO    SenderThread:38102 [file_pusher.py:finish():175] shutting down file pusher
+2024-02-02 09:52:55,461 INFO    wandb-upload_3:38102 [upload_job.py:push():131] Uploaded file /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/wandb-summary.json
+2024-02-02 09:52:55,525 INFO    wandb-upload_2:38102 [upload_job.py:push():131] Uploaded file /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/config.yaml
+2024-02-02 09:52:55,570 INFO    wandb-upload_1:38102 [upload_job.py:push():131] Uploaded file /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/requirements.txt
+2024-02-02 09:52:55,572 INFO    wandb-upload_0:38102 [upload_job.py:push():131] Uploaded file /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/files/output.log
+2024-02-02 09:52:55,773 INFO    Thread-11 (_thread_body):38102 [sender.py:transition_state():613] send defer: 11
+2024-02-02 09:52:55,774 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:55,774 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 11
+2024-02-02 09:52:55,774 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:55,775 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 11
+2024-02-02 09:52:55,775 INFO    SenderThread:38102 [file_pusher.py:join():181] waiting for file pusher
+2024-02-02 09:52:55,775 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 12
+2024-02-02 09:52:55,775 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:55,775 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 12
+2024-02-02 09:52:55,775 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:55,775 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 12
+2024-02-02 09:52:55,776 INFO    SenderThread:38102 [file_stream.py:finish():595] file stream finish called
+2024-02-02 09:52:55,988 INFO    SenderThread:38102 [file_stream.py:finish():599] file stream finish is done
+2024-02-02 09:52:55,988 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 13
+2024-02-02 09:52:55,988 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:55,988 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 13
+2024-02-02 09:52:55,988 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:55,988 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 13
+2024-02-02 09:52:55,988 INFO    SenderThread:38102 [sender.py:transition_state():613] send defer: 14
+2024-02-02 09:52:55,989 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: defer
+2024-02-02 09:52:55,989 DEBUG   SenderThread:38102 [sender.py:send():380] send: final
+2024-02-02 09:52:55,989 INFO    HandlerThread:38102 [handler.py:handle_request_defer():172] handle defer: 14
+2024-02-02 09:52:55,989 DEBUG   SenderThread:38102 [sender.py:send():380] send: footer
+2024-02-02 09:52:55,990 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: defer
+2024-02-02 09:52:55,990 INFO    SenderThread:38102 [sender.py:send_request_defer():609] handle sender defer: 14
+2024-02-02 09:52:55,990 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: poll_exit
+2024-02-02 09:52:55,990 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: poll_exit
+2024-02-02 09:52:55,991 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: server_info
+2024-02-02 09:52:55,991 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: get_summary
+2024-02-02 09:52:55,991 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: sampled_history
+2024-02-02 09:52:55,992 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: internal_messages
+2024-02-02 09:52:55,992 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: server_info
+2024-02-02 09:52:55,993 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: job_info
+2024-02-02 09:52:56,152 DEBUG   SenderThread:38102 [sender.py:send_request():407] send_request: job_info
+2024-02-02 09:52:56,153 INFO    MainThread:38102 [wandb_run.py:_footer_history_summary_info():3760] rendering history
+2024-02-02 09:52:56,153 INFO    MainThread:38102 [wandb_run.py:_footer_history_summary_info():3792] rendering summary
+2024-02-02 09:52:57,155 DEBUG   HandlerThread:38102 [handler.py:handle_request():146] handle_request: status_report
+2024-02-02 09:52:58,426 WARNING StreamThr :38102 [internal.py:is_dead():414] Internal process exiting, parent pid 38093 disappeared
+2024-02-02 09:52:58,426 ERROR   StreamThr :38102 [internal.py:wandb_internal():152] Internal process shutdown.
+2024-02-02 09:52:59,162 INFO    HandlerThread:38102 [handler.py:finish():866] shutting down handler
+2024-02-02 09:52:59,165 INFO    WriterThread:38102 [datastore.py:close():294] close: /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240202_095233-mkvpefio/run-mkvpefio.wandb
+2024-02-02 09:52:59,165 INFO    SenderThread:38102 [sender.py:finish():1536] shutting down sender
+2024-02-02 09:52:59,166 INFO    SenderThread:38102 [file_pusher.py:finish():175] shutting down file pusher
+2024-02-02 09:52:59,166 INFO    SenderThread:38102 [file_pusher.py:join():181] waiting for file pusher

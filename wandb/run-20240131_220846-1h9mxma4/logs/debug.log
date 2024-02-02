@@ -1,0 +1,61 @@
+2024-01-31 22:08:46,611 INFO    MainThread:68189 [wandb_setup.py:_flush():76] Current SDK version is 0.16.0
+2024-01-31 22:08:46,611 INFO    MainThread:68189 [wandb_setup.py:_flush():76] Configure stats pid to 68189
+2024-01-31 22:08:46,611 INFO    MainThread:68189 [wandb_setup.py:_flush():76] Loading settings from /Users/simonmenzi/.config/wandb/settings
+2024-01-31 22:08:46,611 INFO    MainThread:68189 [wandb_setup.py:_flush():76] Loading settings from /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/settings
+2024-01-31 22:08:46,611 INFO    MainThread:68189 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-01-31 22:08:46,612 INFO    MainThread:68189 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'experiments.py', 'program_abspath': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py', 'program': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py'}
+2024-01-31 22:08:46,612 INFO    MainThread:68189 [wandb_init.py:_log_setup():524] Logging user logs to /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240131_220846-1h9mxma4/logs/debug.log
+2024-01-31 22:08:46,612 INFO    MainThread:68189 [wandb_init.py:_log_setup():525] Logging internal logs to /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240131_220846-1h9mxma4/logs/debug-internal.log
+2024-01-31 22:08:46,612 INFO    MainThread:68189 [wandb_init.py:init():564] calling init triggers
+2024-01-31 22:08:46,613 INFO    MainThread:68189 [wandb_init.py:init():571] wandb.init called with sweep_config: {}
+config: {'seed': 42, 'num_s': 24, 'num_e': 206, 'adj_matrix': array([[0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1,
+        1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
+        1, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
+        0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+        1, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0,
+        0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0]]), 'errors': array([0.05, 0.1 ]), 'permutation_order': array([ 2,  0,  3,  4,  1,  5,  6,  9,  8,  7, 11, 10, 12, 13, 14, 16, 15,
+       22, 18, 17, 23, 21, 19, 20])}
+2024-01-31 22:08:46,613 INFO    MainThread:68189 [wandb_init.py:init():609] wandb.init() called when a run is still active
+2024-01-31 22:09:00,132 WARNING MsgRouterThr:68189 [router.py:message_loop():77] message_loop has been closed
