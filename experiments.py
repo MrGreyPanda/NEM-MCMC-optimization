@@ -137,7 +137,8 @@ def conduct_one_big_run():
     print(f"Hamming Distance: {np.sum(np.abs(weights - adj_matrix))}")
     # print(f"weights:\n{weights}")
 
+# Comment out and run with python experiments.py
 # conduct_var_e_genes_experiments()
 # conduct_fixed_e_genes_experiments()
 # gen_thesis_data()
-conduct_one_big_run()
+# conduct_one_big_run()

@@ -1,5 +1,5 @@
- numpy=1.26.2
- matplotlib=3.8.2
- wandb=0.16.0
- graphviz=0.20.1
- scipy=1.5.4
+ numpy
+ matplotlib
+ wandb
+ graphviz
+ scipy
