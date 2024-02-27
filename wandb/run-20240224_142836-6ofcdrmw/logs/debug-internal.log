@@ -1,0 +1,419 @@
+2024-02-24 14:28:37,550 INFO    StreamThr :45803 [internal.py:wandb_internal():86] W&B internal server running at pid: 45803, started at: 2024-02-24 14:28:37.548643
+2024-02-24 14:28:37,552 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: status
+2024-02-24 14:28:37,554 INFO    WriterThread:45803 [datastore.py:open_for_write():87] open: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/run-6ofcdrmw.wandb
+2024-02-24 14:28:37,557 DEBUG   SenderThread:45803 [sender.py:send():382] send: header
+2024-02-24 14:28:37,557 DEBUG   SenderThread:45803 [sender.py:send():382] send: run
+2024-02-24 14:28:38,109 INFO    SenderThread:45803 [dir_watcher.py:__init__():211] watching files in: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files
+2024-02-24 14:28:38,109 INFO    SenderThread:45803 [sender.py:_start_run_threads():1136] run started: 6ofcdrmw with start time 1708781316.728687
+2024-02-24 14:28:38,131 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: check_version
+2024-02-24 14:28:38,132 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: check_version
+2024-02-24 14:28:38,327 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: run_start
+2024-02-24 14:28:38,330 DEBUG   HandlerThread:45803 [system_info.py:__init__():27] System info init
+2024-02-24 14:28:38,330 DEBUG   HandlerThread:45803 [system_info.py:__init__():42] System info init done
+2024-02-24 14:28:38,330 INFO    HandlerThread:45803 [system_monitor.py:start():194] Starting system monitor
+2024-02-24 14:28:38,330 INFO    SystemMonitor:45803 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-02-24 14:28:38,330 INFO    HandlerThread:45803 [system_monitor.py:probe():214] Collecting system info
+2024-02-24 14:28:38,331 INFO    SystemMonitor:45803 [interfaces.py:start():190] Started cpu monitoring
+2024-02-24 14:28:38,333 INFO    SystemMonitor:45803 [interfaces.py:start():190] Started disk monitoring
+2024-02-24 14:28:38,333 DEBUG   HandlerThread:45803 [system_info.py:probe():151] Probing system
+2024-02-24 14:28:38,335 INFO    SystemMonitor:45803 [interfaces.py:start():190] Started gpuapple monitoring
+2024-02-24 14:28:38,342 INFO    SystemMonitor:45803 [interfaces.py:start():190] Started memory monitoring
+2024-02-24 14:28:38,343 INFO    SystemMonitor:45803 [interfaces.py:start():190] Started network monitoring
+2024-02-24 14:28:38,344 DEBUG   HandlerThread:45803 [system_info.py:_probe_git():136] Probing git
+2024-02-24 14:28:38,370 DEBUG   HandlerThread:45803 [system_info.py:_probe_git():144] Probing git done
+2024-02-24 14:28:38,370 DEBUG   HandlerThread:45803 [system_info.py:probe():199] Probing system done
+2024-02-24 14:28:38,370 DEBUG   HandlerThread:45803 [system_monitor.py:probe():223] {'os': 'macOS-14.3.1-arm64-arm-64bit', 'python': '3.9.6', 'heartbeatAt': '2024-02-24T13:28:38.335609', 'startedAt': '2024-02-24T13:28:36.721975', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py', 'codePathLocal': 'experiments.py', 'codePath': 'experiments.py', 'git': {'remote': 'git@github.com:MrGreyPanda/NEM-MCMC-optimization.git', 'commit': '6f3839b87311460d74d79e15cf0a02460f4a44db'}, 'email': None, 'root': '/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization', 'host': 'Simons-MacBook-Pro.local', 'username': 'simonmenzi', 'executable': '/Library/Developer/CommandLineTools/usr/bin/python3', 'cpu_count': 12, 'cpu_count_logical': 12, 'cpu_freq': {'current': 4056, 'min': 696, 'max': 4056}, 'cpu_freq_per_core': [{'current': 4056, 'min': 696, 'max': 4056}], 'disk': {'/': {'total': 926.3517189025879, 'used': 9.438549041748047}}, 'gpuapple': {'type': 'arm', 'vendor': 'Apple'}, 'memory': {'total': 36.0}}
+2024-02-24 14:28:38,370 INFO    HandlerThread:45803 [system_monitor.py:probe():224] Finished collecting system info
+2024-02-24 14:28:38,370 INFO    HandlerThread:45803 [system_monitor.py:probe():227] Publishing system info
+2024-02-24 14:28:38,371 INFO    HandlerThread:45803 [system_monitor.py:probe():229] Finished publishing system info
+2024-02-24 14:28:38,371 DEBUG   SenderThread:45803 [sender.py:send():382] send: files
+2024-02-24 14:28:38,371 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-metadata.json with policy now
+2024-02-24 14:28:38,375 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: python_packages
+2024-02-24 14:28:38,375 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: python_packages
+2024-02-24 14:28:38,376 DEBUG   SenderThread:45803 [sender.py:send():382] send: telemetry
+2024-02-24 14:28:38,376 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:38,376 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:38,376 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:38,377 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:38,380 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: stop_status
+2024-02-24 14:28:38,380 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: internal_messages
+2024-02-24 14:28:38,380 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: stop_status
+2024-02-24 14:28:38,994 INFO    wandb-upload_0:45803 [upload_job.py:push():131] Uploaded file /var/folders/4x/bzxx80xd48q63dk3pss2mn680000gn/T/tmptxasyz_dwandb/ac61hn2t-wandb-metadata.json
+2024-02-24 14:28:39,114 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-metadata.json
+2024-02-24 14:28:39,115 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:28:39,115 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:28:39,115 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/requirements.txt
+2024-02-24 14:28:40,951 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:40,952 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:40,953 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:40,953 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:40,953 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:40,957 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:40,957 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:40,958 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:40,958 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:40,958 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:40,959 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:40,959 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:40,959 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:40,959 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:40,959 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:40,959 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:40,960 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:40,960 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:40,960 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:40,960 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:41,127 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:28:41,127 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:28:42,939 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: status_report
+2024-02-24 14:28:43,137 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:28:44,834 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:44,835 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:44,835 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:44,835 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:44,835 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:44,841 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:44,841 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:44,843 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:44,844 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:44,844 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:44,844 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:44,844 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:44,844 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:44,844 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:44,844 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:44,844 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:44,845 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:44,845 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:44,845 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:44,845 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:45,146 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:28:45,146 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:28:47,156 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:28:47,803 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:47,810 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:47,810 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:47,811 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:47,812 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:47,812 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:47,812 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:47,813 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:47,813 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:47,814 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:47,813 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:47,816 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:47,816 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:47,816 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:47,817 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:47,817 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:47,817 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:47,818 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:47,818 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:47,818 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:48,161 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:28:48,821 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: status_report
+2024-02-24 14:28:49,164 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:28:51,168 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:28:53,388 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: internal_messages
+2024-02-24 14:28:53,397 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: stop_status
+2024-02-24 14:28:53,398 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: stop_status
+2024-02-24 14:28:53,447 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:53,448 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:53,448 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:53,448 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:53,449 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:53,596 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:53,596 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:53,597 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:53,597 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:53,597 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:53,597 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:53,597 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:53,597 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:53,597 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:53,597 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:53,598 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:53,598 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:53,598 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:53,598 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:53,598 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:54,176 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:28:54,603 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: status_report
+2024-02-24 14:28:55,178 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:28:57,077 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:57,078 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:57,078 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:57,078 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:57,078 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:28:57,080 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:57,080 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:57,080 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:57,081 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:57,081 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:57,081 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:57,081 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:57,081 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:57,082 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:57,083 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:57,083 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:57,083 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:57,083 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:28:57,083 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:28:57,083 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:28:57,184 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:28:57,184 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:28:59,188 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:00,067 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: status_report
+2024-02-24 14:29:01,175 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:01,175 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:01,176 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:01,176 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:01,176 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:01,176 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:01,177 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:01,178 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:01,178 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:01,178 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:01,179 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:01,179 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:01,179 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:01,180 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:01,180 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:01,180 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:01,180 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:01,180 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:01,181 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:01,181 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:01,200 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:29:01,201 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:03,211 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:04,501 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:04,502 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:04,502 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:04,502 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:04,503 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:04,504 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:04,504 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:04,505 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:04,505 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:04,505 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:04,505 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:04,505 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:04,506 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:04,506 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:04,506 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:04,506 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:04,506 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:04,506 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:04,507 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:04,507 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:05,221 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:29:05,221 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:05,521 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: status_report
+2024-02-24 14:29:07,233 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:07,715 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:07,716 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:07,716 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:07,716 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:07,717 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:07,717 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:07,718 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:07,719 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:07,719 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:07,720 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:07,720 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:07,721 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:07,721 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:07,721 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:07,721 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:07,721 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:07,721 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:07,722 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:07,722 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:07,722 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:08,238 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:29:08,385 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: stop_status
+2024-02-24 14:29:08,385 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: internal_messages
+2024-02-24 14:29:08,385 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: stop_status
+2024-02-24 14:29:09,243 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:10,587 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: status_report
+2024-02-24 14:29:10,600 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:10,601 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:10,601 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:10,602 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:10,602 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:10,779 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:10,779 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:10,780 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:10,780 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:10,780 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:10,780 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:10,781 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:10,781 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:10,781 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:10,781 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:10,782 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:10,782 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:10,782 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:10,782 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:10,783 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:11,249 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:29:11,250 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/config.yaml
+2024-02-24 14:29:11,250 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:13,261 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:13,262 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:13,262 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:13,262 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: partial_history
+2024-02-24 14:29:13,263 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:13,265 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:13,266 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:13,266 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:13,267 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:13,267 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:13,267 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:13,267 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:13,267 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:13,268 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:13,268 DEBUG   SenderThread:45803 [sender.py:send():382] send: history
+2024-02-24 14:29:13,268 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: summary_record
+2024-02-24 14:29:13,268 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:13,268 DEBUG   SenderThread:45803 [sender.py:send():382] send: telemetry
+2024-02-24 14:29:13,269 DEBUG   SenderThread:45803 [sender.py:send():382] send: exit
+2024-02-24 14:29:13,269 INFO    SenderThread:45803 [sender.py:send_exit():589] handling exit code: 0
+2024-02-24 14:29:13,269 INFO    SenderThread:45803 [sender.py:send_exit():591] handling runtime: 34
+2024-02-24 14:29:13,269 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:13,269 INFO    SenderThread:45803 [sender.py:send_exit():597] send defer
+2024-02-24 14:29:13,269 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:13,269 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 0
+2024-02-24 14:29:13,269 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:13,269 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 0
+2024-02-24 14:29:13,269 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 1
+2024-02-24 14:29:13,270 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:13,270 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 1
+2024-02-24 14:29:13,270 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:13,270 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 1
+2024-02-24 14:29:13,270 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 2
+2024-02-24 14:29:13,270 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:13,270 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 2
+2024-02-24 14:29:13,270 INFO    HandlerThread:45803 [system_monitor.py:finish():203] Stopping system monitor
+2024-02-24 14:29:13,270 INFO    HandlerThread:45803 [interfaces.py:finish():202] Joined cpu monitor
+2024-02-24 14:29:13,271 INFO    HandlerThread:45803 [interfaces.py:finish():202] Joined disk monitor
+2024-02-24 14:29:13,271 INFO    HandlerThread:45803 [interfaces.py:finish():202] Joined gpuapple monitor
+2024-02-24 14:29:13,271 INFO    HandlerThread:45803 [interfaces.py:finish():202] Joined memory monitor
+2024-02-24 14:29:13,271 INFO    HandlerThread:45803 [interfaces.py:finish():202] Joined network monitor
+2024-02-24 14:29:13,270 DEBUG   SystemMonitor:45803 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-02-24 14:29:13,271 DEBUG   SystemMonitor:45803 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-02-24 14:29:13,271 DEBUG   SystemMonitor:45803 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-02-24 14:29:13,272 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:13,272 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 2
+2024-02-24 14:29:13,272 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 3
+2024-02-24 14:29:13,272 DEBUG   SenderThread:45803 [sender.py:send():382] send: telemetry
+2024-02-24 14:29:13,272 DEBUG   SenderThread:45803 [sender.py:send():382] send: stats
+2024-02-24 14:29:13,272 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:13,274 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 3
+2024-02-24 14:29:13,277 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:13,277 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 3
+2024-02-24 14:29:13,277 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 4
+2024-02-24 14:29:13,278 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:13,278 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 4
+2024-02-24 14:29:13,279 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:13,279 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 4
+2024-02-24 14:29:13,279 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 5
+2024-02-24 14:29:13,279 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:13,279 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 5
+2024-02-24 14:29:13,280 DEBUG   SenderThread:45803 [sender.py:send():382] send: summary
+2024-02-24 14:29:13,280 INFO    SenderThread:45803 [sender.py:_save_file():1403] saving file wandb-summary.json with policy end
+2024-02-24 14:29:13,281 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:13,281 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 5
+2024-02-24 14:29:13,281 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 6
+2024-02-24 14:29:13,281 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:13,281 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 6
+2024-02-24 14:29:13,281 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:13,281 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 6
+2024-02-24 14:29:13,285 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: status_report
+2024-02-24 14:29:13,457 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 7
+2024-02-24 14:29:13,458 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:13,458 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 7
+2024-02-24 14:29:13,458 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:13,458 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 7
+2024-02-24 14:29:14,267 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:29:14,267 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/config.yaml
+2024-02-24 14:29:14,268 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: poll_exit
+2024-02-24 14:29:15,046 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 8
+2024-02-24 14:29:15,046 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: poll_exit
+2024-02-24 14:29:15,046 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:15,046 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 8
+2024-02-24 14:29:15,047 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:15,047 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 8
+2024-02-24 14:29:15,047 INFO    SenderThread:45803 [job_builder.py:build():296] Attempting to build job artifact
+2024-02-24 14:29:15,048 INFO    SenderThread:45803 [job_builder.py:_get_source_type():426] is repo sourced job
+2024-02-24 14:29:15,049 INFO    SenderThread:45803 [job_builder.py:build():402] adding wandb-job metadata file
+2024-02-24 14:29:15,052 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 9
+2024-02-24 14:29:15,052 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:15,052 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 9
+2024-02-24 14:29:15,052 DEBUG   SenderThread:45803 [sender.py:send():382] send: artifact
+2024-02-24 14:29:15,269 INFO    Thread-25 :45803 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:15,273 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: poll_exit
+2024-02-24 14:29:15,990 INFO    SenderThread:45803 [sender.py:send_artifact():1494] sent artifact job-git_github.com_MrGreyPanda_NEM-MCMC-optimization.git_experiments.py - {'id': 'QXJ0aWZhY3Q6NzMwNTY5MzYz', 'state': 'COMMITTED', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjE0MjYxMzE4Mg==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NzMwNTY5MzYz', 'versionIndex': 4}}}
+2024-02-24 14:29:15,991 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:15,991 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 9
+2024-02-24 14:29:15,991 INFO    SenderThread:45803 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-02-24 14:29:16,273 INFO    SenderThread:45803 [dir_watcher.py:finish():388] scan: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files
+2024-02-24 14:29:16,274 INFO    SenderThread:45803 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/requirements.txt requirements.txt
+2024-02-24 14:29:16,274 INFO    SenderThread:45803 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log output.log
+2024-02-24 14:29:16,281 INFO    SenderThread:45803 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/config.yaml config.yaml
+2024-02-24 14:29:16,286 INFO    SenderThread:45803 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json wandb-summary.json
+2024-02-24 14:29:16,291 INFO    SenderThread:45803 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-metadata.json wandb-metadata.json
+2024-02-24 14:29:16,292 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 10
+2024-02-24 14:29:16,293 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: poll_exit
+2024-02-24 14:29:16,293 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:16,296 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 10
+2024-02-24 14:29:16,297 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:16,297 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 10
+2024-02-24 14:29:16,297 INFO    SenderThread:45803 [file_pusher.py:finish():172] shutting down file pusher
+2024-02-24 14:29:16,797 INFO    wandb-upload_0:45803 [upload_job.py:push():131] Uploaded file /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/requirements.txt
+2024-02-24 14:29:16,882 INFO    wandb-upload_2:45803 [upload_job.py:push():131] Uploaded file /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/config.yaml
+2024-02-24 14:29:16,886 INFO    wandb-upload_3:45803 [upload_job.py:push():131] Uploaded file /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/wandb-summary.json
+2024-02-24 14:29:17,055 INFO    wandb-upload_1:45803 [upload_job.py:push():131] Uploaded file /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/files/output.log
+2024-02-24 14:29:17,256 INFO    Thread-24 :45803 [sender.py:transition_state():617] send defer: 11
+2024-02-24 14:29:17,257 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:17,257 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 11
+2024-02-24 14:29:17,258 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:17,258 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 11
+2024-02-24 14:29:17,258 INFO    SenderThread:45803 [file_pusher.py:join():178] waiting for file pusher
+2024-02-24 14:29:17,259 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 12
+2024-02-24 14:29:17,259 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:17,260 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 12
+2024-02-24 14:29:17,260 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:17,260 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 12
+2024-02-24 14:29:17,260 INFO    SenderThread:45803 [file_stream.py:finish():595] file stream finish called
+2024-02-24 14:29:17,277 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: poll_exit
+2024-02-24 14:29:17,418 INFO    SenderThread:45803 [file_stream.py:finish():599] file stream finish is done
+2024-02-24 14:29:17,418 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 13
+2024-02-24 14:29:17,419 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: poll_exit
+2024-02-24 14:29:17,419 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:17,420 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 13
+2024-02-24 14:29:17,420 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:17,420 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 13
+2024-02-24 14:29:17,421 INFO    SenderThread:45803 [sender.py:transition_state():617] send defer: 14
+2024-02-24 14:29:17,422 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: defer
+2024-02-24 14:29:17,422 DEBUG   SenderThread:45803 [sender.py:send():382] send: final
+2024-02-24 14:29:17,422 INFO    HandlerThread:45803 [handler.py:handle_request_defer():172] handle defer: 14
+2024-02-24 14:29:17,422 DEBUG   SenderThread:45803 [sender.py:send():382] send: footer
+2024-02-24 14:29:17,423 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: defer
+2024-02-24 14:29:17,423 INFO    SenderThread:45803 [sender.py:send_request_defer():613] handle sender defer: 14
+2024-02-24 14:29:17,425 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: poll_exit
+2024-02-24 14:29:17,425 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: poll_exit
+2024-02-24 14:29:17,426 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: internal_messages
+2024-02-24 14:29:17,427 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: server_info
+2024-02-24 14:29:17,428 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: server_info
+2024-02-24 14:29:17,428 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: get_summary
+2024-02-24 14:29:17,431 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: sampled_history
+2024-02-24 14:29:17,432 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: job_info
+2024-02-24 14:29:17,576 DEBUG   SenderThread:45803 [sender.py:send_request():409] send_request: job_info
+2024-02-24 14:29:17,579 DEBUG   HandlerThread:45803 [handler.py:handle_request():146] handle_request: shutdown
+2024-02-24 14:29:17,579 INFO    HandlerThread:45803 [handler.py:finish():869] shutting down handler
+2024-02-24 14:29:18,437 INFO    WriterThread:45803 [datastore.py:close():296] close: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_142836-6ofcdrmw/run-6ofcdrmw.wandb
+2024-02-24 14:29:18,581 INFO    SenderThread:45803 [sender.py:finish():1572] shutting down sender
+2024-02-24 14:29:18,581 INFO    SenderThread:45803 [file_pusher.py:finish():172] shutting down file pusher
+2024-02-24 14:29:18,582 INFO    SenderThread:45803 [file_pusher.py:join():178] waiting for file pusher

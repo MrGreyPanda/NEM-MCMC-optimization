@@ -36,7 +36,6 @@ def remove_old_output():
         os.mkdir("output")
 
 def clean(curr_dir):
-    
     directory = curr_dir+"/output"
     for filename in os.listdir(directory):
         if filename.endswith(".gv"):

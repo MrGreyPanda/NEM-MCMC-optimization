@@ -1,0 +1,19 @@
+num_s: 13
+num_s: 13
+num_s: 13
+num_s: 13
+num_s: 13
+num_s: 13
+num_s: 13
+num_s: 13
+num_s: 13
+num_s: 13
+num_s: 13
+num_s: 13
+num_e: 13
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 189, in <module>
+    conduct_var_e_genes_experiments_w_rein()
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 74, in conduct_var_e_genes_experiments_w_rein
+    weights, ll = inv_method.optimize(weights = weights)
+UnboundLocalError: local variable 'weights' referenced before assignment

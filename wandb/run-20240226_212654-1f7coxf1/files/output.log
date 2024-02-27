@@ -1,0 +1,14 @@
+
+num_e: 13
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 214, in <module>
+    conduct_var_e_genes_experiments_w_reinit(Methods=[InverseMethod, Method])
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 66, in conduct_var_e_genes_experiments_w_reinit
+    curr_nem = NEM(adj_matrix, end_nodes, errors, num_s, num_e, seed=seed)
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/nem.py", line 20, in __init__
+    self.U = self.get_node_lr_table(self.get_score_tables(self.observed_knockdown_mat))
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/nem.py", line 53, in get_score_tables
+    all_score_tables.append(self.build_score_table(node, knockdown_mat))
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/nem.py", line 41, in build_score_table
+    score_table[node, :] = self.compute_scores(node, knockdown_mat)
+ValueError: could not broadcast input array from shape (12,) into shape (13,)

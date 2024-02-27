@@ -1,0 +1,49 @@
+{
+    "os": "macOS-14.3.1-arm64-arm-64bit",
+    "python": "3.9.6",
+    "heartbeatAt": "2024-02-24T14:06:08.324212",
+    "startedAt": "2024-02-24T14:06:06.682674",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py",
+    "codePathLocal": "experiments.py",
+    "codePath": "experiments.py",
+    "git": {
+        "remote": "git@github.com:MrGreyPanda/NEM-MCMC-optimization.git",
+        "commit": "6f3839b87311460d74d79e15cf0a02460f4a44db"
+    },
+    "email": null,
+    "root": "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization",
+    "host": "Simons-MacBook-Pro.local",
+    "username": "simonmenzi",
+    "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "cpu_count": 12,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 4056,
+        "min": 696,
+        "max": 4056
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 4056,
+            "min": 696,
+            "max": 4056
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 926.3517189025879,
+            "used": 9.438549041748047
+        }
+    },
+    "gpuapple": {
+        "type": "arm",
+        "vendor": "Apple"
+    },
+    "memory": {
+        "total": 36.0
+    }
+}

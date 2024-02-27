@@ -1,0 +1,7 @@
+num_e: 13
+num_s: 13
+Best ll: -23.041754327070503
+Rounded LL: -24.449905740428342
+Comparison: real_ll: -20.348550431052367 - inferred_ll: -24.449905740428342
+Hamming Distance: 24
+Time elapsed (s): 0.8053717613220215

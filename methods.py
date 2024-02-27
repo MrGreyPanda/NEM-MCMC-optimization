@@ -68,7 +68,6 @@ class InverseMethod:
         for i in range(self.num_s):
             for j in self.parents_list[i]:
                 new_weights[i][j] = np.exp(new_weights[i][j])
-                
         return new_weights
     
     def local_ll_sum_b_inv(self, x, weights, i, k, local_vec, a_vec):
@@ -82,12 +81,35 @@ class InverseMethod:
         res = -np.sum(np.log(B[i][k] * c_vec + 1.0))
         return res
     
+    def local_ll_sum_b_inv_with_grad(self, x, weights, i, k, local_vec, a_vec):
+        weights[i][k] = x
+        exp_weights = np.exp(weights)
+        o_weights = utils.order_arr(self.order, exp_weights)
+        B = solve_triangular(self.eye - o_weights, self.eye, lower=True)
+        D = utils.unorder_arr(self.order, B.copy())
+        B = B / (1.0 + B)
+        B = utils.unorder_arr(self.order, B)
+        cell_ratios = self.compute_cell_ratios(B, self.score_tables)
+        order_weights, _ = self.calculate_ll(cell_ratios)
+        a_vec = (local_vec - 1.0) * order_weights[i]
+        b_vec = 1.0 - B[i][k] * a_vec + B[i][k] * (local_vec - 1.0)
+        c_vec = a_vec / b_vec
+        res = -np.sum(np.log(B[i][k] * c_vec + 1.0))
+        delcr = 1.0 / (1.0 - weights[i][k] + weights[i][k] * np.exp(self.score_tables[i][k])) * (np.exp(self.score_tables[i][k]) - 1.0)
+        delrho = np.exp(cell_ratios - np.logaddexp.reduce(cell_ratios, axis=0)) * delcr * (1.0 - 1.0 / (np.sum(np.exp(self.score_tables[i][k]), axis=0)) * np.sum(np.exp(self.score_tables[i][k]), axis=0))
+        dela = ((local_vec - 1.0) * delrho)
+        V_ik= -(D @ exp_weights @ D)[i][k] / (1 + D[i][k])**2 * exp_weights[i][k] * D[i][k]
+        jac = -np.sum((1.0 / (B[i][k] * c_vec + 1.0)) * (V_ik * c_vec)
+                      + (dela*b_vec-a_vec*(V_ik * a_vec + V_ik * dela + V_ik * (local_vec - 1.0))) / b_vec ** 2 * B[i][k])
+        return res, jac
+    
     def calculate_local_optimum_b_inv(self, i, k, order_weights, bounds, expit_weights, weights):
         local_vec = np.exp(self.score_tables[i][k])
         a_vec = (local_vec - 1.0) * order_weights[i]
         # b_vec = 1.0 - expit_weights[i][k] * a_vec + expit_weights[i][k] * (local_vec - 1.0)
         # c_vec = a_vec / b_vec
         res = minimize(self.local_ll_sum_b_inv, x0=weights[i][k], bounds=bounds, options={'eps': 1e-3}, args=(weights, i, k, local_vec, a_vec), method='L-BFGS-B', tol=0.1)
+        # res = minimize(self.local_ll_sum_b_inv_with_grad, x0=weights[i][k], bounds=bounds, jac=True, options={'eps': 1e-3}, args=(weights, i, k, local_vec, a_vec), method='L-BFGS-B', tol=0.1)
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         return res.x
@@ -97,7 +119,6 @@ class InverseMethod:
         inv_weights = solve_triangular(self.eye - np.exp(new_parent_weights), self.eye, lower=True)
         expit_weights = inv_weights / (1.0 + inv_weights)
         expit_weights = utils.unorder_arr(self.order, expit_weights)
-        
         cell_ratios = self.compute_cell_ratios(expit_weights, self.score_tables)
         order_weights, ll = self.calculate_ll(cell_ratios)
         new_parent_weights = utils.unorder_arr(self.order, new_parent_weights)
@@ -107,12 +128,18 @@ class InverseMethod:
         weights = new_parent_weights.copy()
         return ll, weights
     
-    def optimize(self, max_iter=1000, rel_diff=1e-8):
+    def optimize(self, max_iter=1000, rel_diff=1e-8, weights=None, init_weight=-5000.0, init_val=0.0, use_wandb=False):
         bounds = [(-5000, 500)]
-        init_val = 0.0
-        # weights = np.zeros((self.num_s, self.num_s))
-        weights = np.full((self.num_s, self.num_s), -5000.0)
-        weights = self.get_permissible_parents(perm_order=self.order, weights=weights, init_val=init_val)
+        if weights is None:
+            weights = np.full((self.num_s, self.num_s), init_weight, dtype=np.float64)
+            weights = self.get_permissible_parents(perm_order=self.order, weights=weights, init_val=init_val)
+        else: 
+            for i in range(self.num_s):
+                for j in range(self.num_s):
+                    if weights[i][j] == 0.0:
+                        weights[i][j] = init_weight
+                    else:
+                        weights[i][j] = init_val
         ll_diff = float('inf')
         ll_old = -float('inf')
         ll_list = []
@@ -134,13 +161,14 @@ class InverseMethod:
         weights = weight_list[best_index]
         print(f"Best ll: {best_ll}")
         weights = utils.order_arr(self.order, np.exp(weights))
-        # B_tilde = inv(np.eye(self.num_s) - np.exp(weights)) - np.eye(self.num_s)
         B_tilde = solve_triangular(self.eye - weights, self.eye, lower=True)
         B_tilde = B_tilde / (1.0 + B_tilde)
         B_tilde = 1 * (B_tilde > 0.5)
         B_tilde = utils.unorder_arr(self.order, B_tilde)
         _, real_ll = self.calculate_ll(self.compute_cell_ratios(B_tilde, self.score_tables))
         print(f"Rounded LL: {real_ll}")
+        if(use_wandb):
+            wandb.log({"Diff LL-LL-rounded": best_ll - real_ll})
         return B_tilde.T, real_ll
 
 
@@ -179,7 +207,6 @@ class ExpitMethod:
                                             weights[i][j] +
                                             weights[i][j] *
                                             np.exp(score_tables[i][j]))
-        
         return cell_ratios
 
     def calculate_ll(self, cell_ratios):
@@ -364,7 +391,8 @@ class Method:
         if res.success is False:
             raise Exception(f"Minimization not successful, Reason: {res.message}")
         
-        return res.x 
+        return res.x
+    
 
     def opt_γ(self, weights, bounds):
         cell_ratios = self.compute_cell_ratios(weights, self.score_tables)
@@ -376,7 +404,7 @@ class Method:
         weights = new_parent_weights.copy()
         return ll, weights
     
-    def optimize(self, max_iter=1000, rel_diff=1e-8):
+    def optimize(self, max_iter=1000, rel_diff=1e-8, use_wandb=False):
         bounds = [(0, 1)]
         init_val = 0.5
         weights = np.zeros((self.num_s, self.num_s))
@@ -398,10 +426,11 @@ class Method:
             ll_diff = np.abs(ll - ll_old)
             ll_old = ll
             iter_count += 1
-            print(f"Iteration {iter_count}: LL: {ll}, ll_diff: {ll_diff}")
         weights = weight_list[best_index]
         weights = 1 * (weights > 0.5)
         print(f"Best ll: {best_ll}")
         _, real_ll = self.calculate_ll(self.compute_cell_ratios(weights, self.score_tables))
+        if use_wandb:
+            wandb.log({"Diff LL-LL-rounded": best_ll - real_ll})
         print(f"Rounded LL: {real_ll}")
         return weights.T, real_ll
