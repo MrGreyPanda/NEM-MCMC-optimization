@@ -215,9 +215,72 @@ def conduct_one_big_run(seeds=[42], network_nrs=[12], Method=InverseMethod):
         wandb.finish()
         print("#################")
 
+def conduct_var_e_genes_experiments_w_reinit_averaged(seeds=[42], network_nrs=[12], Methods=[InverseMethod]):
+    wandb.login()
+    for network_nr in network_nrs:
+        curr_dir = os.getcwd()
+        network_nr = 12
+        print(f"Network {network_nr}:")
+        network_path = f"{curr_dir}/DAGs/networks/network{network_nr}/network{network_nr}"
+        adj_matrix, end_nodes, errors, num_s, num_e = utils.read_csv_to_adj(network_path + ".csv")
+        num_e_max = num_s * 30
+                   
+        for Method in Methods:
+            run = wandb.init(
+            project="MCMC-NEM",
+            name=f"Var E Genes, reinitializing weights, network {network_nr}, n_e_max: {num_e_max}, Method: {Method.__name__}",
+            # Track hyperparameters and run metadata
+            config={
+                "Experiment": "Var E Genes, reinitializing weights, averaged",
+                "num_s": num_s,
+                "num_e_max": num_e_max,
+                "adj_matrix": adj_matrix,
+                "network_nr": network_nr
+            })
+            comp = [0 for _ in range(num_e_max - num_s)]
+            hamming_distance = [0 for _ in range(num_e_max - num_s)]
+            time_elapsed = [0 for _ in range(num_e_max - num_s)]
+            for seed in seeds:
+                end_nodes = []
+                for _ in range(num_s - 1):
+                    end_nodes.append(rnd.randint(0, num_s-1))
+                rnd.seed(seed)
+                for j in range(num_s, num_e_max, 1):
+                    num_e = j
+                    end_nodes.append(rnd.randint(0, num_s-1))
+                    print(f"num_e: {num_e}")
+                    curr_nem = NEM(adj_matrix, end_nodes, errors, num_s, num_e, seed=seed)
+                    permutation_order = utils.initial_order_guess(curr_nem.observed_knockdown_mat)
+     
+                    # Set the project where this run will be logged
+                    print(f"num_s: {num_s}")
+                    start = time.time()
+                    method = Method(permutation_order, num_s, num_e, curr_nem.U, curr_nem.get_score_tables(curr_nem.observed_knockdown_mat))
+                    weights, ll = method.optimize(use_wandb=False) # use_wandb=false such that the resulting tables are correct
+                    end = time.time()
+                    comp[j-num_s] += curr_nem.obs_ll - ll
+                    hamming_distance[j-num_s] += np.sum(np.abs(weights - adj_matrix))
+                    time_elapsed[j-num_s] += end-start
+                    print(f"Comparison: real_ll: {curr_nem.obs_ll} - inferred_ll: {ll} = {comp}")
+                    print(f"Hamming Distance: {hamming_distance}")
+                    print(f"Time elapsed (s): {end-start}")
+                    
+                    # print(f"weights:\n{weights}")
+            for i in range(num_e_max - num_s):
+                comp[i] /= len(seeds)
+                hamming_distance[i] /= len(seeds)
+                time_elapsed[i] /= len(seeds)
+                wandb.log({"Comparison": comp[i]})
+                wandb.log({"Hamming Distance": hamming_distance[i]})
+                wandb.log({"num_e": i+num_s})
+                wandb.log({"Time elapsed (s)": time_elapsed[i]})
+            wandb.finish()
+            print("#################")
+
 # Comment out and run with python experiments.py
-conduct_var_e_genes_experiments_w_reinit(Methods=[Method])
+# conduct_var_e_genes_experiments_w_reinit(Methods=[Method])
 # conduct_var_e_genes_experiments()
 # conduct_fixed_e_genes_experiments()
 # gen_thesis_data()
 # conduct_one_big_run([0,1,2,3,42,99,100,132,420,999], [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19])
+conduct_var_e_genes_experiments_w_reinit_averaged(seeds=[0,1,2,3,42,99,100,132,420,999], network_nrs=[12], Methods=[InverseMethod])
