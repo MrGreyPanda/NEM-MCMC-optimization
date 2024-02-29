@@ -1,0 +1,105 @@
+2024-01-31 22:12:17,172 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Current SDK version is 0.16.0
+2024-01-31 22:12:17,172 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Configure stats pid to 68519
+2024-01-31 22:12:17,173 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Loading settings from /Users/simonmenzi/.config/wandb/settings
+2024-01-31 22:12:17,173 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Loading settings from /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/settings
+2024-01-31 22:12:17,173 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-01-31 22:12:17,173 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'experiments.py', 'program_abspath': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py', 'program': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py'}
+2024-01-31 22:12:17,173 INFO    MainThread:68519 [wandb_init.py:_log_setup():524] Logging user logs to /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240131_221217-lmghzsf9/logs/debug.log
+2024-01-31 22:12:17,173 INFO    MainThread:68519 [wandb_init.py:_log_setup():525] Logging internal logs to /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240131_221217-lmghzsf9/logs/debug-internal.log
+2024-01-31 22:12:17,174 INFO    MainThread:68519 [wandb_init.py:init():564] calling init triggers
+2024-01-31 22:12:17,174 INFO    MainThread:68519 [wandb_init.py:init():571] wandb.init called with sweep_config: {}
+config: {'seed': 42, 'num_s': 9, 'num_e': 168, 'adj_matrix': array([[0, 0, 0, 1, 0, 1, 0, 1, 1],
+       [0, 0, 0, 1, 0, 1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 1],
+       [0, 0, 0, 0, 0, 1, 0, 1, 1],
+       [0, 0, 0, 0, 0, 0, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0]]), 'errors': array([0.05, 0.08]), 'permutation_order': array([1, 0, 4, 3, 5, 6, 2, 7, 8])}
+2024-01-31 22:12:17,174 INFO    MainThread:68519 [wandb_init.py:init():609] wandb.init() called when a run is still active
+2024-01-31 22:12:18,180 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Current SDK version is 0.16.0
+2024-01-31 22:12:18,180 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Configure stats pid to 68519
+2024-01-31 22:12:18,180 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Loading settings from /Users/simonmenzi/.config/wandb/settings
+2024-01-31 22:12:18,180 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Loading settings from /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/settings
+2024-01-31 22:12:18,180 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-01-31 22:12:18,181 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'experiments.py', 'program_abspath': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py', 'program': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py'}
+2024-01-31 22:12:18,181 INFO    MainThread:68519 [wandb_init.py:_log_setup():524] Logging user logs to /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240131_221218-0br3fgji/logs/debug.log
+2024-01-31 22:12:18,181 INFO    MainThread:68519 [wandb_init.py:_log_setup():525] Logging internal logs to /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240131_221218-0br3fgji/logs/debug-internal.log
+2024-01-31 22:12:18,181 INFO    MainThread:68519 [wandb_init.py:init():564] calling init triggers
+2024-01-31 22:12:18,181 INFO    MainThread:68519 [wandb_init.py:init():571] wandb.init called with sweep_config: {}
+config: {'seed': 42, 'num_s': 26, 'num_e': 255, 'adj_matrix': array([[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1,
+        0, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0,
+        1, 0, 0, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1,
+        0, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+        0, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1,
+        0, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+        0, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 1, 1, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        1, 0, 0, 1],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0]]), 'errors': array([0.05, 0.1 ]), 'permutation_order': array([ 1,  6,  2,  0,  8,  4,  5,  3, 10, 13,  7, 15, 11, 14, 19, 12, 18,
+        9, 20, 16, 23, 17, 24, 21, 25, 22])}
+2024-01-31 22:12:18,181 INFO    MainThread:68519 [wandb_init.py:init():609] wandb.init() called when a run is still active
+2024-01-31 22:12:26,284 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Current SDK version is 0.16.0
+2024-01-31 22:12:26,284 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Configure stats pid to 68519
+2024-01-31 22:12:26,284 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Loading settings from /Users/simonmenzi/.config/wandb/settings
+2024-01-31 22:12:26,284 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Loading settings from /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/settings
+2024-01-31 22:12:26,284 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-01-31 22:12:26,284 INFO    MainThread:68519 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'experiments.py', 'program_abspath': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py', 'program': '/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py'}
+2024-01-31 22:12:26,285 INFO    MainThread:68519 [wandb_init.py:_log_setup():524] Logging user logs to /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240131_221226-fhy4xu71/logs/debug.log
+2024-01-31 22:12:26,285 INFO    MainThread:68519 [wandb_init.py:_log_setup():525] Logging internal logs to /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/wandb/run-20240131_221226-fhy4xu71/logs/debug-internal.log
+2024-01-31 22:12:26,285 INFO    MainThread:68519 [wandb_init.py:init():564] calling init triggers
+2024-01-31 22:12:26,285 INFO    MainThread:68519 [wandb_init.py:init():571] wandb.init called with sweep_config: {}
+config: {'seed': 42, 'num_s': 39, 'num_e': 453, 'adj_matrix': array([[0, 0, 0, ..., 1, 1, 1],
+       [0, 0, 0, ..., 1, 1, 1],
+       [0, 0, 0, ..., 1, 1, 1],
+       ...,
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0],
+       [0, 0, 0, ..., 0, 0, 0]]), 'errors': array([0.05, 0.1 ]), 'permutation_order': array([ 3,  2,  1,  0,  6,  4,  7, 14,  5, 11,  9,  8, 10, 13, 12, 17, 16,
+       18, 19, 15, 20, 21, 27, 23, 24, 29, 22, 25, 26, 28, 33, 32, 34, 30,
+       36, 31, 37, 35, 38])}
+2024-01-31 22:12:26,285 INFO    MainThread:68519 [wandb_init.py:init():609] wandb.init() called when a run is still active
+2024-01-31 22:12:51,855 WARNING MsgRouterThr:68519 [router.py:message_loop():77] message_loop has been closed

@@ -1,0 +1,36 @@
+
+0-th iteration
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/main.py", line 117, in <module>
+    main()
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/main.py", line 89, in main
+    score, best_dag = mcmc_nem.method(n_iterations=n_iterations, gamma=gamma, seed=seed, swap_prob=swap_prob, verbose=True, use_nem=use_nem)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 334, in method
+    wandb.log({"ll-score": ll})
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 229, in get_optimal_weights
+    else:
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 144, in calculate_local_optimum
+    res = minimize(local_ll_sum, x0=0.5, bounds=[(0.0, 1.0)], args=(c,), method='L-BFGS-B', tol=0.1)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_minimize.py", line 710, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py", line 365, in _minimize_lbfgsb
+    f, g = func_and_grad(x)
+           ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 285, in fun_and_grad
+    self._update_fun()
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 251, in _update_fun
+    self._update_fun_impl()
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 155, in update_fun
+    self.f = fun_wrapped(self.x)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 12, in local_ll_sum
+    res = -np.sum(np.log(c * x + 1.0))
+                  ^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

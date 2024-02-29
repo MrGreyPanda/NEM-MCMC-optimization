@@ -1,0 +1,1777 @@
+num_s: 39
+num_e: 39
+Best ll: -280.9976182040043
+Rounded LL: -292.84403105994414
+Comparison: real_ll: -229.73529643445232 - inferred_ll: -292.84403105994414
+Hamming Distance: 148
+num_e: 40
+Best ll: -271.6464460894002
+Rounded LL: -284.1830502276397
+Comparison: real_ll: -212.89519304652197 - inferred_ll: -284.1830502276397
+Hamming Distance: 139
+num_e: 41
+Best ll: -291.3310835205739
+Rounded LL: -302.281725137041
+Comparison: real_ll: -221.30627291851943 - inferred_ll: -302.281725137041
+Hamming Distance: 125
+num_e: 42
+Best ll: -282.8461039173473
+Rounded LL: -284.89897356785013
+Comparison: real_ll: -216.1890844352899 - inferred_ll: -284.89897356785013
+Hamming Distance: 108
+num_e: 43
+Best ll: -292.49760420477065
+Rounded LL: -297.1007233585224
+Comparison: real_ll: -221.97786308976626 - inferred_ll: -297.1007233585224
+Hamming Distance: 139
+num_e: 44
+Best ll: -308.25966037322655
+Rounded LL: -318.2437997814428
+Comparison: real_ll: -243.661527635546 - inferred_ll: -318.2437997814428
+Hamming Distance: 143
+num_e: 45
+Best ll: -360.50442971121214
+Rounded LL: -364.21296359301107
+Comparison: real_ll: -259.11515500943784 - inferred_ll: -364.21296359301107
+Hamming Distance: 144
+num_e: 46
+Best ll: -308.6570001851115
+Rounded LL: -330.05294609771266
+Comparison: real_ll: -265.97653476386176 - inferred_ll: -330.05294609771266
+Hamming Distance: 111
+num_e: 47
+Best ll: -322.3340716806321
+Rounded LL: -346.1895486080294
+Comparison: real_ll: -263.5920926268153 - inferred_ll: -346.1895486080294
+Hamming Distance: 151
+num_e: 48
+Best ll: -329.0197240333534
+Rounded LL: -339.0032648204723
+Comparison: real_ll: -267.2875681078899 - inferred_ll: -339.0032648204723
+Hamming Distance: 147
+num_e: 49
+Best ll: -337.356459875477
+Rounded LL: -340.21856982123177
+Comparison: real_ll: -277.13502972166305 - inferred_ll: -340.21856982123177
+Hamming Distance: 129
+num_e: 50
+Best ll: -347.0346697345572
+Rounded LL: -353.192906341303
+Comparison: real_ll: -284.9517348001847 - inferred_ll: -353.192906341303
+Hamming Distance: 132
+num_e: 51
+Best ll: -356.643171244884
+Rounded LL: -363.299275886437
+Comparison: real_ll: -291.32068937064054 - inferred_ll: -363.299275886437
+Hamming Distance: 133
+num_e: 52
+Best ll: -388.1626055913346
+Rounded LL: -400.79127323429486
+Comparison: real_ll: -293.7462008157838 - inferred_ll: -400.79127323429486
+Hamming Distance: 121
+num_e: 53
+Best ll: -388.90125746078763
+Rounded LL: -425.85503075512327
+Comparison: real_ll: -293.84327361397754 - inferred_ll: -425.85503075512327
+Hamming Distance: 126
+num_e: 54
+Best ll: -372.4343562213569
+Rounded LL: -382.50636305687624
+Comparison: real_ll: -287.15314810071294 - inferred_ll: -382.50636305687624
+Hamming Distance: 124
+num_e: 55
+Best ll: -393.629713149209
+Rounded LL: -401.9508780484294
+Comparison: real_ll: -313.66500482292764 - inferred_ll: -401.9508780484294
+Hamming Distance: 125
+num_e: 56
+Best ll: -405.2209786072153
+Rounded LL: -410.24497996575946
+Comparison: real_ll: -319.7756644543188 - inferred_ll: -410.24497996575946
+Hamming Distance: 128
+num_e: 57
+Best ll: -420.3431533450397
+Rounded LL: -444.82867389185816
+Comparison: real_ll: -346.5767954167912 - inferred_ll: -444.82867389185816
+Hamming Distance: 116
+num_e: 58
+Best ll: -423.89723598355107
+Rounded LL: -444.95001984488647
+Comparison: real_ll: -344.1569990295057 - inferred_ll: -444.95001984488647
+Hamming Distance: 141
+num_e: 59
+Best ll: -439.64125788324816
+Rounded LL: -462.9947601385795
+Comparison: real_ll: -330.0447445457303 - inferred_ll: -462.9947601385795
+Hamming Distance: 117
+num_e: 60
+Best ll: -420.0506286779626
+Rounded LL: -437.59645065355375
+Comparison: real_ll: -335.0635131438051 - inferred_ll: -437.59645065355375
+Hamming Distance: 105
+num_e: 61
+Best ll: -423.38719025185566
+Rounded LL: -429.33691970908757
+Comparison: real_ll: -336.96385348715387 - inferred_ll: -429.33691970908757
+Hamming Distance: 134
+num_e: 62
+Best ll: -428.5627471306487
+Rounded LL: -447.42494964000264
+Comparison: real_ll: -355.0779922647365 - inferred_ll: -447.42494964000264
+Hamming Distance: 107
+num_e: 63
+Best ll: -473.7290653784784
+Rounded LL: -495.9404414340135
+Comparison: real_ll: -366.2944541292232 - inferred_ll: -495.9404414340135
+Hamming Distance: 123
+num_e: 64
+Best ll: -461.07523312510864
+Rounded LL: -495.3846463071269
+Comparison: real_ll: -362.0465342003241 - inferred_ll: -495.3846463071269
+Hamming Distance: 128
+num_e: 65
+Best ll: -480.0088368163144
+Rounded LL: -502.6115389840128
+Comparison: real_ll: -377.29827647031095 - inferred_ll: -502.6115389840128
+Hamming Distance: 106
+num_e: 66
+Best ll: -471.57307589776946
+Rounded LL: -480.49470158752376
+Comparison: real_ll: -364.5238856190874 - inferred_ll: -480.49470158752376
+Hamming Distance: 121
+num_e: 67
+Best ll: -449.49522494599677
+Rounded LL: -479.0429443565941
+Comparison: real_ll: -383.4553962419002 - inferred_ll: -479.0429443565941
+Hamming Distance: 114
+num_e: 68
+Best ll: -486.50717366184114
+Rounded LL: -505.1999999133124
+Comparison: real_ll: -382.41491996027185 - inferred_ll: -505.1999999133124
+Hamming Distance: 123
+num_e: 69
+Best ll: -495.350137750165
+Rounded LL: -527.3721413001356
+Comparison: real_ll: -391.7840214901674 - inferred_ll: -527.3721413001356
+Hamming Distance: 110
+num_e: 70
+Best ll: -504.21086948784006
+Rounded LL: -513.7759405952077
+Comparison: real_ll: -389.58697060047734 - inferred_ll: -513.7759405952077
+Hamming Distance: 94
+num_e: 71
+Best ll: -504.438783113332
+Rounded LL: -543.2677514616179
+Comparison: real_ll: -389.82880650583235 - inferred_ll: -543.2677514616179
+Hamming Distance: 119
+num_e: 72
+Best ll: -526.5754256209027
+Rounded LL: -577.6022272445018
+Comparison: real_ll: -413.762702294162 - inferred_ll: -577.6022272445018
+Hamming Distance: 111
+num_e: 73
+Best ll: -563.1744192581282
+Rounded LL: -581.2647613919651
+Comparison: real_ll: -429.33987917138063 - inferred_ll: -581.2647613919651
+Hamming Distance: 114
+num_e: 74
+Best ll: -514.6380862121193
+Rounded LL: -551.4107574321508
+Comparison: real_ll: -434.4484993795959 - inferred_ll: -551.4107574321508
+Hamming Distance: 103
+num_e: 75
+Best ll: -557.0810935092913
+Rounded LL: -551.5806064280628
+Comparison: real_ll: -460.023788155814 - inferred_ll: -551.5806064280628
+Hamming Distance: 108
+num_e: 76
+Best ll: -537.9481885747743
+Rounded LL: -560.4491494014605
+Comparison: real_ll: -445.53997418239663 - inferred_ll: -560.4491494014605
+Hamming Distance: 100
+num_e: 77
+Best ll: -588.0028182653332
+Rounded LL: -653.5893946605833
+Comparison: real_ll: -458.16820002162666 - inferred_ll: -653.5893946605833
+Hamming Distance: 121
+num_e: 78
+Best ll: -548.9523335675553
+Rounded LL: -552.9264937593813
+Comparison: real_ll: -445.34994995972806 - inferred_ll: -552.9264937593813
+Hamming Distance: 97
+num_e: 79
+Best ll: -606.5366908411294
+Rounded LL: -636.2690423634072
+Comparison: real_ll: -468.16718333491787 - inferred_ll: -636.2690423634072
+Hamming Distance: 130
+num_e: 80
+Best ll: -596.548852899644
+Rounded LL: -606.2780819120476
+Comparison: real_ll: -457.1168331098854 - inferred_ll: -606.2780819120476
+Hamming Distance: 109
+num_e: 81
+Best ll: -541.24761661131
+Rounded LL: -552.5851359852949
+Comparison: real_ll: -441.2049314378949 - inferred_ll: -552.5851359852949
+Hamming Distance: 115
+num_e: 82
+Best ll: -592.1117168463326
+Rounded LL: -676.8782111361859
+Comparison: real_ll: -469.06617289435144 - inferred_ll: -676.8782111361859
+Hamming Distance: 126
+num_e: 83
+Best ll: -603.8483121143304
+Rounded LL: -628.9873274395192
+Comparison: real_ll: -482.1407123854457 - inferred_ll: -628.9873274395192
+Hamming Distance: 106
+num_e: 84
+Best ll: -601.9030117014619
+Rounded LL: -634.6164894634277
+Comparison: real_ll: -500.375612865277 - inferred_ll: -634.6164894634277
+Hamming Distance: 123
+num_e: 85
+Best ll: -606.3600200705213
+Rounded LL: -639.1106862623218
+Comparison: real_ll: -488.4243090794365 - inferred_ll: -639.1106862623218
+Hamming Distance: 112
+num_e: 86
+Best ll: -624.5617581854613
+Rounded LL: -649.1836605182197
+Comparison: real_ll: -500.79023038079595 - inferred_ll: -649.1836605182197
+Hamming Distance: 108
+num_e: 87
+Best ll: -660.2638848017932
+Rounded LL: -700.1551044118012
+Comparison: real_ll: -527.2750133869451 - inferred_ll: -700.1551044118012
+Hamming Distance: 114
+num_e: 88
+Best ll: -621.9508365609272
+Rounded LL: -659.9020168834563
+Comparison: real_ll: -522.4354227730674 - inferred_ll: -659.9020168834563
+Hamming Distance: 90
+num_e: 89
+Best ll: -666.9066966396541
+Rounded LL: -708.2444553808215
+Comparison: real_ll: -536.2883033256714 - inferred_ll: -708.2444553808215
+Hamming Distance: 104
+num_e: 90
+Best ll: -691.8399547873503
+Rounded LL: -742.6813746823808
+Comparison: real_ll: -535.4359007610722 - inferred_ll: -742.6813746823808
+Hamming Distance: 143
+num_e: 91
+Best ll: -668.7488892704082
+Rounded LL: -690.6130398889821
+Comparison: real_ll: -545.6533464033168 - inferred_ll: -690.6130398889821
+Hamming Distance: 92
+num_e: 92
+Best ll: -678.8513216257454
+Rounded LL: -704.9743906813151
+Comparison: real_ll: -544.3001060779194 - inferred_ll: -704.9743906813151
+Hamming Distance: 110
+num_e: 93
+Best ll: -666.177334652416
+Rounded LL: -690.0333102923026
+Comparison: real_ll: -523.1702168710586 - inferred_ll: -690.0333102923026
+Hamming Distance: 105
+num_e: 94
+Best ll: -681.8794718633662
+Rounded LL: -722.7057808370477
+Comparison: real_ll: -547.4551660901374 - inferred_ll: -722.7057808370477
+Hamming Distance: 129
+num_e: 95
+Best ll: -695.6316782283307
+Rounded LL: -755.2644467175007
+Comparison: real_ll: -561.388531183297 - inferred_ll: -755.2644467175007
+Hamming Distance: 103
+num_e: 96
+Best ll: -697.8610292600259
+Rounded LL: -748.8680962030891
+Comparison: real_ll: -567.3794008071363 - inferred_ll: -748.8680962030891
+Hamming Distance: 89
+num_e: 97
+Best ll: -693.3639131708728
+Rounded LL: -740.0622602398623
+Comparison: real_ll: -577.0485275442851 - inferred_ll: -740.0622602398623
+Hamming Distance: 95
+num_e: 98
+Best ll: -706.4296152666568
+Rounded LL: -749.398291716909
+Comparison: real_ll: -569.7430816663972 - inferred_ll: -749.398291716909
+Hamming Distance: 86
+num_e: 99
+Best ll: -687.5665814876156
+Rounded LL: -719.8967063139524
+Comparison: real_ll: -564.049307620891 - inferred_ll: -719.8967063139524
+Hamming Distance: 92
+num_e: 100
+Best ll: -730.351291510675
+Rounded LL: -793.3669988238644
+Comparison: real_ll: -581.3973594820153 - inferred_ll: -793.3669988238644
+Hamming Distance: 105
+num_e: 101
+Best ll: -704.1226117712052
+Rounded LL: -749.3018196312003
+Comparison: real_ll: -561.258492737538 - inferred_ll: -749.3018196312003
+Hamming Distance: 102
+num_e: 102
+Best ll: -747.2719957284886
+Rounded LL: -780.7724418510587
+Comparison: real_ll: -595.0650683394747 - inferred_ll: -780.7724418510587
+Hamming Distance: 116
+num_e: 103
+Best ll: -730.2813532422504
+Rounded LL: -763.0893724381043
+Comparison: real_ll: -613.6604776546035 - inferred_ll: -763.0893724381043
+Hamming Distance: 88
+num_e: 104
+Best ll: -756.3856135464093
+Rounded LL: -804.8832920919855
+Comparison: real_ll: -616.4257662273719 - inferred_ll: -804.8832920919855
+Hamming Distance: 96
+num_e: 105
+Best ll: -776.1841719919423
+Rounded LL: -837.0171229384787
+Comparison: real_ll: -659.303916047573 - inferred_ll: -837.0171229384787
+Hamming Distance: 109
+num_e: 106
+Best ll: -775.2795559956098
+Rounded LL: -845.1308276050441
+Comparison: real_ll: -654.0273039682327 - inferred_ll: -845.1308276050441
+Hamming Distance: 93
+num_e: 107
+Best ll: -826.0871758606713
+Rounded LL: -873.7351121449049
+Comparison: real_ll: -651.4892246252205 - inferred_ll: -873.7351121449049
+Hamming Distance: 111
+num_e: 108
+Best ll: -819.564750021408
+Rounded LL: -869.7571268107031
+Comparison: real_ll: -655.5440363421823 - inferred_ll: -869.7571268107031
+Hamming Distance: 106
+num_e: 109
+Best ll: -782.6678806029598
+Rounded LL: -858.9641133622995
+Comparison: real_ll: -661.3546106723004 - inferred_ll: -858.9641133622995
+Hamming Distance: 113
+num_e: 110
+Best ll: -784.5261280955008
+Rounded LL: -843.3496922781042
+Comparison: real_ll: -660.1319516633858 - inferred_ll: -843.3496922781042
+Hamming Distance: 104
+num_e: 111
+Best ll: -855.2275647226243
+Rounded LL: -924.4709185501586
+Comparison: real_ll: -666.1345250041506 - inferred_ll: -924.4709185501586
+Hamming Distance: 138
+num_e: 112
+Best ll: -828.8028867306352
+Rounded LL: -898.28347776629
+Comparison: real_ll: -670.0733221272742 - inferred_ll: -898.28347776629
+Hamming Distance: 84
+num_e: 113
+Best ll: -892.306993454289
+Rounded LL: -941.6580116881764
+Comparison: real_ll: -679.6609122055096 - inferred_ll: -941.6580116881764
+Hamming Distance: 123
+num_e: 114
+Best ll: -875.7082700505671
+Rounded LL: -914.2301050109508
+Comparison: real_ll: -678.8504729541722 - inferred_ll: -914.2301050109508
+Hamming Distance: 130
+num_e: 115
+Best ll: -847.1624020547447
+Rounded LL: -909.645391283641
+Comparison: real_ll: -696.2821665217034 - inferred_ll: -909.645391283641
+Hamming Distance: 127
+num_e: 116
+Best ll: -867.3163312336325
+Rounded LL: -908.2659361862303
+Comparison: real_ll: -679.6526679109169 - inferred_ll: -908.2659361862303
+Hamming Distance: 95
+num_e: 117
+Best ll: -858.5729360707867
+Rounded LL: -904.8658322542245
+Comparison: real_ll: -692.6395433348345 - inferred_ll: -904.8658322542245
+Hamming Distance: 95
+num_e: 118
+Best ll: -888.2842650531273
+Rounded LL: -986.0012444110042
+Comparison: real_ll: -696.3360361771249 - inferred_ll: -986.0012444110042
+Hamming Distance: 140
+num_e: 119
+Best ll: -836.0565054739258
+Rounded LL: -916.9930384215874
+Comparison: real_ll: -709.4974293961054 - inferred_ll: -916.9930384215874
+Hamming Distance: 102
+num_e: 120
+Best ll: -979.9699516014974
+Rounded LL: -1046.5408520716483
+Comparison: real_ll: -724.1519127066066 - inferred_ll: -1046.5408520716483
+Hamming Distance: 144
+num_e: 121
+Best ll: -965.8943397418262
+Rounded LL: -1028.949082515189
+Comparison: real_ll: -740.1092054266754 - inferred_ll: -1028.949082515189
+Hamming Distance: 111
+num_e: 122
+Best ll: -938.5980852270433
+Rounded LL: -969.2601212555962
+Comparison: real_ll: -731.006971387884 - inferred_ll: -969.2601212555962
+Hamming Distance: 118
+num_e: 123
+Best ll: -940.8244257890975
+Rounded LL: -1024.7904356977092
+Comparison: real_ll: -739.8598851386082 - inferred_ll: -1024.7904356977092
+Hamming Distance: 113
+num_e: 124
+Best ll: -925.8158075739537
+Rounded LL: -946.5065193740749
+Comparison: real_ll: -746.8850868178811 - inferred_ll: -946.5065193740749
+Hamming Distance: 122
+num_e: 125
+Best ll: -919.422960041231
+Rounded LL: -968.7030276919212
+Comparison: real_ll: -741.0851491430566 - inferred_ll: -968.7030276919212
+Hamming Distance: 89
+num_e: 126
+Best ll: -1006.864786345652
+Rounded LL: -1096.5788092608434
+Comparison: real_ll: -774.4325221141711 - inferred_ll: -1096.5788092608434
+Hamming Distance: 130
+num_e: 127
+Best ll: -957.2118818243468
+Rounded LL: -993.7581924835247
+Comparison: real_ll: -775.7859356958288 - inferred_ll: -993.7581924835247
+Hamming Distance: 84
+num_e: 128
+Best ll: -984.7506305118393
+Rounded LL: -1012.8384929797709
+Comparison: real_ll: -775.0562103665656 - inferred_ll: -1012.8384929797709
+Hamming Distance: 100
+num_e: 129
+Best ll: -932.9468361030831
+Rounded LL: -988.7724542902083
+Comparison: real_ll: -774.6520291981892 - inferred_ll: -988.7724542902083
+Hamming Distance: 107
+num_e: 130
+Best ll: -982.9196460297984
+Rounded LL: -1044.610604300811
+Comparison: real_ll: -821.9370245643858 - inferred_ll: -1044.610604300811
+Hamming Distance: 130
+num_e: 131
+Best ll: -1021.1289009083984
+Rounded LL: -1064.83163629171
+Comparison: real_ll: -787.6218883534704 - inferred_ll: -1064.83163629171
+Hamming Distance: 91
+num_e: 132
+Best ll: -1016.6724545091554
+Rounded LL: -1068.7183323618685
+Comparison: real_ll: -808.2349170290621 - inferred_ll: -1068.7183323618685
+Hamming Distance: 94
+num_e: 133
+Best ll: -1019.1575499357574
+Rounded LL: -1065.7155119571273
+Comparison: real_ll: -832.5963763189959 - inferred_ll: -1065.7155119571273
+Hamming Distance: 101
+num_e: 134
+Best ll: -1031.2031013335497
+Rounded LL: -1105.603553758006
+Comparison: real_ll: -862.6568679531479 - inferred_ll: -1105.603553758006
+Hamming Distance: 123
+num_e: 135
+Best ll: -991.9933142253977
+Rounded LL: -1039.4513036561564
+Comparison: real_ll: -812.4524558076365 - inferred_ll: -1039.4513036561564
+Hamming Distance: 98
+num_e: 136
+Best ll: -1053.441147872658
+Rounded LL: -1071.8293961956977
+Comparison: real_ll: -820.6954557399922 - inferred_ll: -1071.8293961956977
+Hamming Distance: 110
+num_e: 137
+Best ll: -1042.4252355337408
+Rounded LL: -1083.1888974558917
+Comparison: real_ll: -825.8181081820678 - inferred_ll: -1083.1888974558917
+Hamming Distance: 111
+num_e: 138
+Best ll: -1051.6175224642805
+Rounded LL: -1096.8680955194827
+Comparison: real_ll: -849.5426432825011 - inferred_ll: -1096.8680955194827
+Hamming Distance: 130
+num_e: 139
+Best ll: -1102.7281181173246
+Rounded LL: -1180.2110673353698
+Comparison: real_ll: -854.1897531035779 - inferred_ll: -1180.2110673353698
+Hamming Distance: 85
+num_e: 140
+Best ll: -1058.4958748662825
+Rounded LL: -1176.0939350788615
+Comparison: real_ll: -863.1354563371774 - inferred_ll: -1176.0939350788615
+Hamming Distance: 89
+num_e: 141
+Best ll: -1105.2051329648125
+Rounded LL: -1226.3665514864704
+Comparison: real_ll: -872.9581724617057 - inferred_ll: -1226.3665514864704
+Hamming Distance: 138
+num_e: 142
+Best ll: -1065.5878812507297
+Rounded LL: -1150.9714628195538
+Comparison: real_ll: -833.5578793674412 - inferred_ll: -1150.9714628195538
+Hamming Distance: 100
+num_e: 143
+Best ll: -1062.9015155157363
+Rounded LL: -1174.0745081309215
+Comparison: real_ll: -876.8559282055528 - inferred_ll: -1174.0745081309215
+Hamming Distance: 104
+num_e: 144
+Best ll: -1138.8042550569894
+Rounded LL: -1200.5521269106193
+Comparison: real_ll: -891.1025415816782 - inferred_ll: -1200.5521269106193
+Hamming Distance: 90
+num_e: 145
+Best ll: -1091.7013792396315
+Rounded LL: -1165.6552931735039
+Comparison: real_ll: -896.4881728178714 - inferred_ll: -1165.6552931735039
+Hamming Distance: 119
+num_e: 146
+Best ll: -1107.3817509026346
+Rounded LL: -1200.1323111478223
+Comparison: real_ll: -904.4195204958247 - inferred_ll: -1200.1323111478223
+Hamming Distance: 92
+num_e: 147
+Best ll: -1150.0502786137008
+Rounded LL: -1249.2135345958943
+Comparison: real_ll: -927.0762892514366 - inferred_ll: -1249.2135345958943
+Hamming Distance: 105
+num_e: 148
+Best ll: -1153.6572484109408
+Rounded LL: -1260.735953800982
+Comparison: real_ll: -918.9981645952557 - inferred_ll: -1260.735953800982
+Hamming Distance: 103
+num_e: 149
+Best ll: -1086.2939106545707
+Rounded LL: -1120.7764307761754
+Comparison: real_ll: -896.334382611609 - inferred_ll: -1120.7764307761754
+Hamming Distance: 94
+num_e: 150
+Best ll: -1117.8747253530648
+Rounded LL: -1227.1891951170262
+Comparison: real_ll: -922.9670955139155 - inferred_ll: -1227.1891951170262
+Hamming Distance: 93
+num_e: 151
+Best ll: -1130.9686724762394
+Rounded LL: -1211.7502510019553
+Comparison: real_ll: -932.1404829800821 - inferred_ll: -1211.7502510019553
+Hamming Distance: 107
+num_e: 152
+Best ll: -1137.8459014270486
+Rounded LL: -1222.1063214208575
+Comparison: real_ll: -927.8720893772447 - inferred_ll: -1222.1063214208575
+Hamming Distance: 120
+num_e: 153
+Best ll: -1118.869109456459
+Rounded LL: -1223.0416600051153
+Comparison: real_ll: -943.3026748405366 - inferred_ll: -1223.0416600051153
+Hamming Distance: 79
+num_e: 154
+Best ll: -1172.390729341017
+Rounded LL: -1249.7990957323036
+Comparison: real_ll: -955.5466104100149 - inferred_ll: -1249.7990957323036
+Hamming Distance: 111
+num_e: 155
+Best ll: -1183.7597608050858
+Rounded LL: -1274.9876768706854
+Comparison: real_ll: -967.043964714786 - inferred_ll: -1274.9876768706854
+Hamming Distance: 147
+num_e: 156
+Best ll: -1204.9868772238322
+Rounded LL: -1315.3701702901958
+Comparison: real_ll: -955.8677587829192 - inferred_ll: -1315.3701702901958
+Hamming Distance: 116
+num_e: 157
+Best ll: -1198.5829029602385
+Rounded LL: -1297.5048266108238
+Comparison: real_ll: -993.506674624373 - inferred_ll: -1297.5048266108238
+Hamming Distance: 86
+num_e: 158
+Best ll: -1243.9789500039972
+Rounded LL: -1333.4943353775054
+Comparison: real_ll: -983.6987827134354 - inferred_ll: -1333.4943353775054
+Hamming Distance: 156
+num_e: 159
+Best ll: -1153.301910260898
+Rounded LL: -1238.827583512474
+Comparison: real_ll: -961.6155045745046 - inferred_ll: -1238.827583512474
+Hamming Distance: 105
+num_e: 160
+Best ll: -1184.1443812139203
+Rounded LL: -1273.0897807723716
+Comparison: real_ll: -974.4476456861503 - inferred_ll: -1273.0897807723716
+Hamming Distance: 117
+num_e: 161
+Best ll: -1197.962980260051
+Rounded LL: -1317.95259569131
+Comparison: real_ll: -993.6339154875268 - inferred_ll: -1317.95259569131
+Hamming Distance: 100
+num_e: 162
+Best ll: -1185.5814773276234
+Rounded LL: -1282.5450871299936
+Comparison: real_ll: -981.1265845704575 - inferred_ll: -1282.5450871299936
+Hamming Distance: 90
+num_e: 163
+Best ll: -1197.950858777038
+Rounded LL: -1250.8071203793727
+Comparison: real_ll: -1022.4876502143084 - inferred_ll: -1250.8071203793727
+Hamming Distance: 115
+num_e: 164
+Best ll: -1162.9164621895902
+Rounded LL: -1278.4915354025181
+Comparison: real_ll: -998.5940645696294 - inferred_ll: -1278.4915354025181
+Hamming Distance: 81
+num_e: 165
+Best ll: -1187.8742201649684
+Rounded LL: -1291.5601794745396
+Comparison: real_ll: -970.6073669215706 - inferred_ll: -1291.5601794745396
+Hamming Distance: 111
+num_e: 166
+Best ll: -1222.162694318807
+Rounded LL: -1325.6256057246953
+Comparison: real_ll: -1021.3078760657097 - inferred_ll: -1325.6256057246953
+Hamming Distance: 98
+num_e: 167
+Best ll: -1241.3580894130555
+Rounded LL: -1316.4843764564696
+Comparison: real_ll: -1058.8860863408902 - inferred_ll: -1316.4843764564696
+Hamming Distance: 90
+num_e: 168
+Best ll: -1211.280761687081
+Rounded LL: -1287.7925216201986
+Comparison: real_ll: -981.3698989352861 - inferred_ll: -1287.7925216201986
+Hamming Distance: 106
+num_e: 169
+Best ll: -1269.5191846694258
+Rounded LL: -1329.924951612412
+Comparison: real_ll: -1026.4752467767566 - inferred_ll: -1329.924951612412
+Hamming Distance: 114
+num_e: 170
+Best ll: -1253.2352806737856
+Rounded LL: -1333.5301778955181
+Comparison: real_ll: -1004.7392041052148 - inferred_ll: -1333.5301778955181
+Hamming Distance: 108
+num_e: 171
+Best ll: -1272.703817484965
+Rounded LL: -1370.1527082746186
+Comparison: real_ll: -1050.4837257342097 - inferred_ll: -1370.1527082746186
+Hamming Distance: 133
+num_e: 172
+Best ll: -1260.567022431884
+Rounded LL: -1365.304959215889
+Comparison: real_ll: -1034.0099332418645 - inferred_ll: -1365.304959215889
+Hamming Distance: 142
+num_e: 173
+Best ll: -1246.9860238199954
+Rounded LL: -1358.3011292908598
+Comparison: real_ll: -1036.8142560275505 - inferred_ll: -1358.3011292908598
+Hamming Distance: 102
+num_e: 174
+Best ll: -1336.544371248143
+Rounded LL: -1472.6106806214723
+Comparison: real_ll: -1052.5673177554984 - inferred_ll: -1472.6106806214723
+Hamming Distance: 126
+num_e: 175
+Best ll: -1259.6438423716656
+Rounded LL: -1341.102374892235
+Comparison: real_ll: -1087.1263553804706 - inferred_ll: -1341.102374892235
+Hamming Distance: 103
+num_e: 176
+Best ll: -1322.1218200444314
+Rounded LL: -1398.1325237486562
+Comparison: real_ll: -1114.818900992364 - inferred_ll: -1398.1325237486562
+Hamming Distance: 88
+num_e: 177
+Best ll: -1334.0316392049958
+Rounded LL: -1379.205064598252
+Comparison: real_ll: -1082.0074690325484 - inferred_ll: -1379.205064598252
+Hamming Distance: 81
+num_e: 178
+Best ll: -1322.506975657759
+Rounded LL: -1394.9325224875815
+Comparison: real_ll: -1103.6754747898165 - inferred_ll: -1394.9325224875815
+Hamming Distance: 84
+num_e: 179
+Best ll: -1313.7852331225486
+Rounded LL: -1439.8178571201893
+Comparison: real_ll: -1124.2016627566027 - inferred_ll: -1439.8178571201893
+Hamming Distance: 74
+num_e: 180
+Best ll: -1399.359712614129
+Rounded LL: -1504.5353071916536
+Comparison: real_ll: -1115.3669992265773 - inferred_ll: -1504.5353071916536
+Hamming Distance: 102
+num_e: 181
+Best ll: -1401.7579903458814
+Rounded LL: -1532.8169644738414
+Comparison: real_ll: -1126.7819842097324 - inferred_ll: -1532.8169644738414
+Hamming Distance: 118
+num_e: 182
+Best ll: -1364.5284270977497
+Rounded LL: -1460.6328930293125
+Comparison: real_ll: -1112.3520217780097 - inferred_ll: -1460.6328930293125
+Hamming Distance: 95
+num_e: 183
+Best ll: -1364.4569639335884
+Rounded LL: -1421.8543304956052
+Comparison: real_ll: -1128.1889115627998 - inferred_ll: -1421.8543304956052
+Hamming Distance: 137
+num_e: 184
+Best ll: -1409.8933984061823
+Rounded LL: -1514.7731384526476
+Comparison: real_ll: -1127.4162045507287 - inferred_ll: -1514.7731384526476
+Hamming Distance: 111
+num_e: 185
+Best ll: -1375.2358136259088
+Rounded LL: -1524.135078995199
+Comparison: real_ll: -1122.3682833440007 - inferred_ll: -1524.135078995199
+Hamming Distance: 86
+num_e: 186
+Best ll: -1371.3842742846489
+Rounded LL: -1461.8841154320505
+Comparison: real_ll: -1169.0565506219266 - inferred_ll: -1461.8841154320505
+Hamming Distance: 102
+num_e: 187
+Best ll: -1470.8723462456524
+Rounded LL: -1568.739730288288
+Comparison: real_ll: -1152.040079618225 - inferred_ll: -1568.739730288288
+Hamming Distance: 136
+num_e: 188
+Best ll: -1420.8517015349169
+Rounded LL: -1495.5642989535386
+Comparison: real_ll: -1181.1107401009099 - inferred_ll: -1495.5642989535386
+Hamming Distance: 84
+num_e: 189
+Best ll: -1412.5214702835253
+Rounded LL: -1503.0448620548798
+Comparison: real_ll: -1181.620529182639 - inferred_ll: -1503.0448620548798
+Hamming Distance: 96
+num_e: 190
+Best ll: -1384.6757624053628
+Rounded LL: -1489.653519294129
+Comparison: real_ll: -1126.596906002759 - inferred_ll: -1489.653519294129
+Hamming Distance: 147
+num_e: 191
+Best ll: -1484.516871735982
+Rounded LL: -1630.7733624759562
+Comparison: real_ll: -1186.5131072315542 - inferred_ll: -1630.7733624759562
+Hamming Distance: 140
+num_e: 192
+Best ll: -1429.5000830683925
+Rounded LL: -1496.127961855819
+Comparison: real_ll: -1205.5824989435819 - inferred_ll: -1496.127961855819
+Hamming Distance: 106
+num_e: 193
+Best ll: -1387.115539494714
+Rounded LL: -1512.664126804602
+Comparison: real_ll: -1190.076903189682 - inferred_ll: -1512.664126804602
+Hamming Distance: 74
+num_e: 194
+Best ll: -1490.1251597375215
+Rounded LL: -1635.5457512069029
+Comparison: real_ll: -1221.3961702493752 - inferred_ll: -1635.5457512069029
+Hamming Distance: 142
+num_e: 195
+Best ll: -1489.6823310832692
+Rounded LL: -1607.5298643903445
+Comparison: real_ll: -1240.066947521941 - inferred_ll: -1607.5298643903445
+Hamming Distance: 112
+num_e: 196
+Best ll: -1526.6986430102777
+Rounded LL: -1638.4963341361292
+Comparison: real_ll: -1224.7886880359738 - inferred_ll: -1638.4963341361292
+Hamming Distance: 109
+num_e: 197
+Best ll: -1494.0991424227786
+Rounded LL: -1605.7940241295878
+Comparison: real_ll: -1205.5870088551658 - inferred_ll: -1605.7940241295878
+Hamming Distance: 128
+num_e: 198
+Best ll: -1521.904839020148
+Rounded LL: -1576.1210929263266
+Comparison: real_ll: -1231.1191164318539 - inferred_ll: -1576.1210929263266
+Hamming Distance: 124
+num_e: 199
+Best ll: -1525.4568853153323
+Rounded LL: -1671.185774434182
+Comparison: real_ll: -1222.1831401046022 - inferred_ll: -1671.185774434182
+Hamming Distance: 126
+num_e: 200
+Best ll: -1483.7355012080038
+Rounded LL: -1569.6316107363746
+Comparison: real_ll: -1217.4947408273042 - inferred_ll: -1569.6316107363746
+Hamming Distance: 107
+num_e: 201
+Best ll: -1524.0209905266606
+Rounded LL: -1670.2738683523555
+Comparison: real_ll: -1242.7368801719745 - inferred_ll: -1670.2738683523555
+Hamming Distance: 128
+num_e: 202
+Best ll: -1549.3235254225692
+Rounded LL: -1652.4363455638659
+Comparison: real_ll: -1246.813391299916 - inferred_ll: -1652.4363455638659
+Hamming Distance: 116
+num_e: 203
+Best ll: -1463.4840128591375
+Rounded LL: -1597.8909138484137
+Comparison: real_ll: -1228.1789418008043 - inferred_ll: -1597.8909138484137
+Hamming Distance: 127
+num_e: 204
+Best ll: -1620.9794276072178
+Rounded LL: -1744.0345144428395
+Comparison: real_ll: -1267.5795630507541 - inferred_ll: -1744.0345144428395
+Hamming Distance: 140
+num_e: 205
+Best ll: -1547.262626507632
+Rounded LL: -1651.8993969686187
+Comparison: real_ll: -1212.1545575539137 - inferred_ll: -1651.8993969686187
+Hamming Distance: 109
+num_e: 206
+Best ll: -1645.280387365912
+Rounded LL: -1841.8683882063265
+Comparison: real_ll: -1281.6972520578765 - inferred_ll: -1841.8683882063265
+Hamming Distance: 146
+num_e: 207
+Best ll: -1538.4564342967728
+Rounded LL: -1627.6418450415706
+Comparison: real_ll: -1298.628915795362 - inferred_ll: -1627.6418450415706
+Hamming Distance: 114
+num_e: 208
+Best ll: -1580.311526208424
+Rounded LL: -1699.6928580003037
+Comparison: real_ll: -1269.972131086527 - inferred_ll: -1699.6928580003037
+Hamming Distance: 137
+num_e: 209
+Best ll: -1604.5364240252954
+Rounded LL: -1731.4112796288139
+Comparison: real_ll: -1329.3065100379192 - inferred_ll: -1731.4112796288139
+Hamming Distance: 123
+num_e: 210
+Best ll: -1599.0049952593415
+Rounded LL: -1723.0921788107134
+Comparison: real_ll: -1287.7992239316627 - inferred_ll: -1723.0921788107134
+Hamming Distance: 91
+num_e: 211
+Best ll: -1536.7801077019722
+Rounded LL: -1650.4475074460472
+Comparison: real_ll: -1262.2909492653332 - inferred_ll: -1650.4475074460472
+Hamming Distance: 86
+num_e: 212
+Best ll: -1559.5970025806323
+Rounded LL: -1647.71391785401
+Comparison: real_ll: -1273.3561843772989 - inferred_ll: -1647.71391785401
+Hamming Distance: 128
+num_e: 213
+Best ll: -1485.51581671419
+Rounded LL: -1623.7848618627006
+Comparison: real_ll: -1276.5182484045054 - inferred_ll: -1623.7848618627006
+Hamming Distance: 90
+num_e: 214
+Best ll: -1600.5509711865461
+Rounded LL: -1701.8010790616697
+Comparison: real_ll: -1277.2533526109514 - inferred_ll: -1701.8010790616697
+Hamming Distance: 114
+num_e: 215
+Best ll: -1586.4770263407213
+Rounded LL: -1693.2292282307462
+Comparison: real_ll: -1298.277881646934 - inferred_ll: -1693.2292282307462
+Hamming Distance: 118
+num_e: 216
+Best ll: -1523.26278030551
+Rounded LL: -1605.7824320986008
+Comparison: real_ll: -1291.4333083285665 - inferred_ll: -1605.7824320986008
+Hamming Distance: 70
+num_e: 217
+Best ll: -1709.9444906637189
+Rounded LL: -1900.8607294064384
+Comparison: real_ll: -1308.2470364289045 - inferred_ll: -1900.8607294064384
+Hamming Distance: 160
+num_e: 218
+Best ll: -1590.4097674499837
+Rounded LL: -1698.8755606472064
+Comparison: real_ll: -1323.2531977922606 - inferred_ll: -1698.8755606472064
+Hamming Distance: 104
+num_e: 219
+Best ll: -1587.7106517666377
+Rounded LL: -1676.2095515405465
+Comparison: real_ll: -1303.4992754100883 - inferred_ll: -1676.2095515405465
+Hamming Distance: 85
+num_e: 220
+Best ll: -1654.8265655399648
+Rounded LL: -1827.5115544343416
+Comparison: real_ll: -1352.1237515646137 - inferred_ll: -1827.5115544343416
+Hamming Distance: 122
+num_e: 221
+Best ll: -1605.926650862523
+Rounded LL: -1732.8741756092481
+Comparison: real_ll: -1337.3861746737525 - inferred_ll: -1732.8741756092481
+Hamming Distance: 89
+num_e: 222
+Best ll: -1556.1119262415148
+Rounded LL: -1668.5513030455102
+Comparison: real_ll: -1330.303664330572 - inferred_ll: -1668.5513030455102
+Hamming Distance: 79
+num_e: 223
+Best ll: -1647.377910268202
+Rounded LL: -1718.3055864504022
+Comparison: real_ll: -1348.4154779556202 - inferred_ll: -1718.3055864504022
+Hamming Distance: 94
+num_e: 224
+Best ll: -1692.8978584920617
+Rounded LL: -1868.4160087388468
+Comparison: real_ll: -1388.4209344672404 - inferred_ll: -1868.4160087388468
+Hamming Distance: 126
+num_e: 225
+Best ll: -1594.9621917522143
+Rounded LL: -1671.7226603772574
+Comparison: real_ll: -1356.1685222399922 - inferred_ll: -1671.7226603772574
+Hamming Distance: 84
+num_e: 226
+Best ll: -1694.3584355539863
+Rounded LL: -1845.2733117619493
+Comparison: real_ll: -1395.2304664521266 - inferred_ll: -1845.2733117619493
+Hamming Distance: 118
+num_e: 227
+Best ll: -1617.6744154310345
+Rounded LL: -1767.5673552685464
+Comparison: real_ll: -1369.9409617839087 - inferred_ll: -1767.5673552685464
+Hamming Distance: 106
+num_e: 228
+Best ll: -1684.7050729995572
+Rounded LL: -1789.102015064445
+Comparison: real_ll: -1359.4593743893888 - inferred_ll: -1789.102015064445
+Hamming Distance: 117
+num_e: 229
+Best ll: -1679.8566941963309
+Rounded LL: -1842.0822037108073
+Comparison: real_ll: -1391.9952321053931 - inferred_ll: -1842.0822037108073
+Hamming Distance: 109
+num_e: 230
+Best ll: -1709.2421368963212
+Rounded LL: -1839.703610870078
+Comparison: real_ll: -1368.3855632370846 - inferred_ll: -1839.703610870078
+Hamming Distance: 146
+num_e: 231
+Best ll: -1817.8671918927482
+Rounded LL: -1937.9344091383448
+Comparison: real_ll: -1408.8897822299552 - inferred_ll: -1937.9344091383448
+Hamming Distance: 126
+num_e: 232
+Best ll: -1712.6863693150526
+Rounded LL: -1759.0050534509285
+Comparison: real_ll: -1399.008238842013 - inferred_ll: -1759.0050534509285
+Hamming Distance: 91
+num_e: 233
+Best ll: -1773.1616776467374
+Rounded LL: -1930.8758611121993
+Comparison: real_ll: -1378.8478635593863 - inferred_ll: -1930.8758611121993
+Hamming Distance: 158
+num_e: 234
+Best ll: -1716.41330639283
+Rounded LL: -1765.3655667663288
+Comparison: real_ll: -1431.4766242517103 - inferred_ll: -1765.3655667663288
+Hamming Distance: 83
+num_e: 235
+Best ll: -1716.8921622965588
+Rounded LL: -1846.8584377210132
+Comparison: real_ll: -1426.694447015501 - inferred_ll: -1846.8584377210132
+Hamming Distance: 90
+num_e: 236
+Best ll: -1750.467418680956
+Rounded LL: -1897.8940812794126
+Comparison: real_ll: -1426.9168210456924 - inferred_ll: -1897.8940812794126
+Hamming Distance: 115
+num_e: 237
+Best ll: -1846.6941481073827
+Rounded LL: -2021.7927842268268
+Comparison: real_ll: -1450.3294003425494 - inferred_ll: -2021.7927842268268
+Hamming Distance: 175
+num_e: 238
+Best ll: -1869.8763241160361
+Rounded LL: -2014.083745651076
+Comparison: real_ll: -1469.7895319677154 - inferred_ll: -2014.083745651076
+Hamming Distance: 131
+num_e: 239
+Best ll: -1764.5935583906578
+Rounded LL: -1895.9641501009414
+Comparison: real_ll: -1482.7619542375278 - inferred_ll: -1895.9641501009414
+Hamming Distance: 86
+num_e: 240
+Best ll: -1736.543221315932
+Rounded LL: -1916.0684614502168
+Comparison: real_ll: -1478.0794241953508 - inferred_ll: -1916.0684614502168
+Hamming Distance: 93
+num_e: 241
+Best ll: -1775.9622336814407
+Rounded LL: -1889.6926423046414
+Comparison: real_ll: -1463.9698670585162 - inferred_ll: -1889.6926423046414
+Hamming Distance: 118
+num_e: 242
+Best ll: -1856.8236223191284
+Rounded LL: -2014.9557072606915
+Comparison: real_ll: -1495.7507438952146 - inferred_ll: -2014.9557072606915
+Hamming Distance: 156
+num_e: 243
+Best ll: -1845.479575842669
+Rounded LL: -1984.14419200781
+Comparison: real_ll: -1519.2532449727862 - inferred_ll: -1984.14419200781
+Hamming Distance: 114
+num_e: 244
+Best ll: -1848.111771740954
+Rounded LL: -1917.7477745492204
+Comparison: real_ll: -1515.3580815211087 - inferred_ll: -1917.7477745492204
+Hamming Distance: 95
+num_e: 245
+Best ll: -1781.284115493668
+Rounded LL: -1855.0230042636636
+Comparison: real_ll: -1490.4987689001875 - inferred_ll: -1855.0230042636636
+Hamming Distance: 96
+num_e: 246
+Best ll: -1865.7643135977662
+Rounded LL: -1982.7053295432697
+Comparison: real_ll: -1518.2108625794087 - inferred_ll: -1982.7053295432697
+Hamming Distance: 134
+num_e: 247
+Best ll: -1946.213660772638
+Rounded LL: -2091.623015335879
+Comparison: real_ll: -1510.767393731357 - inferred_ll: -2091.623015335879
+Hamming Distance: 124
+num_e: 248
+Best ll: -1818.9592973579522
+Rounded LL: -1921.8145539833824
+Comparison: real_ll: -1511.7551619078233 - inferred_ll: -1921.8145539833824
+Hamming Distance: 111
+num_e: 249
+Best ll: -1911.237628756744
+Rounded LL: -2092.2678679535343
+Comparison: real_ll: -1522.384562609468 - inferred_ll: -2092.2678679535343
+Hamming Distance: 124
+num_e: 250
+Best ll: -1937.758767792641
+Rounded LL: -2104.571691606974
+Comparison: real_ll: -1527.2197914018482 - inferred_ll: -2104.571691606974
+Hamming Distance: 154
+num_e: 251
+Best ll: -1866.1231431474423
+Rounded LL: -2037.7166942931551
+Comparison: real_ll: -1536.5259471408262 - inferred_ll: -2037.7166942931551
+Hamming Distance: 121
+num_e: 252
+Best ll: -1971.898160607603
+Rounded LL: -2084.427973251697
+Comparison: real_ll: -1596.1277923336288 - inferred_ll: -2084.427973251697
+Hamming Distance: 112
+num_e: 253
+Best ll: -1973.688577153275
+Rounded LL: -2079.173234398686
+Comparison: real_ll: -1550.6271781160613 - inferred_ll: -2079.173234398686
+Hamming Distance: 183
+num_e: 254
+Best ll: -2074.956210054957
+Rounded LL: -2166.456028962951
+Comparison: real_ll: -1582.594032242487 - inferred_ll: -2166.456028962951
+Hamming Distance: 127
+num_e: 255
+Best ll: -2039.2633460501656
+Rounded LL: -2235.6352797738145
+Comparison: real_ll: -1528.3780591245122 - inferred_ll: -2235.6352797738145
+Hamming Distance: 143
+num_e: 256
+Best ll: -1999.6728992827238
+Rounded LL: -2150.996738124701
+Comparison: real_ll: -1595.4376600416792 - inferred_ll: -2150.996738124701
+Hamming Distance: 143
+num_e: 257
+Best ll: -1956.0708661888718
+Rounded LL: -2076.3128421211986
+Comparison: real_ll: -1568.3742465542998 - inferred_ll: -2076.3128421211986
+Hamming Distance: 113
+num_e: 258
+Best ll: -1889.501894520241
+Rounded LL: -2044.5368107244108
+Comparison: real_ll: -1573.2319437187957 - inferred_ll: -2044.5368107244108
+Hamming Distance: 104
+num_e: 259
+Best ll: -2058.172756078869
+Rounded LL: -2243.2081206703433
+Comparison: real_ll: -1589.1340753671286 - inferred_ll: -2243.2081206703433
+Hamming Distance: 178
+num_e: 260
+Best ll: -2011.0158504243514
+Rounded LL: -2176.539914898039
+Comparison: real_ll: -1636.0013008709739 - inferred_ll: -2176.539914898039
+Hamming Distance: 122
+num_e: 261
+Best ll: -2006.6827451557963
+Rounded LL: -2106.1499397092603
+Comparison: real_ll: -1594.7747737876807 - inferred_ll: -2106.1499397092603
+Hamming Distance: 139
+num_e: 262
+Best ll: -1987.8141105995828
+Rounded LL: -2164.185863171853
+Comparison: real_ll: -1617.041523296982 - inferred_ll: -2164.185863171853
+Hamming Distance: 128
+num_e: 263
+Best ll: -2131.6062995028105
+Rounded LL: -2299.5552311426995
+Comparison: real_ll: -1650.1035996205926 - inferred_ll: -2299.5552311426995
+Hamming Distance: 168
+num_e: 264
+Best ll: -1917.443353755737
+Rounded LL: -2036.371281881019
+Comparison: real_ll: -1618.5359426142466 - inferred_ll: -2036.371281881019
+Hamming Distance: 96
+num_e: 265
+Best ll: -2017.9562943115468
+Rounded LL: -2188.58651158622
+Comparison: real_ll: -1641.6034861274495 - inferred_ll: -2188.58651158622
+Hamming Distance: 113
+num_e: 266
+Best ll: -1997.5279100333341
+Rounded LL: -2112.8322855919905
+Comparison: real_ll: -1665.588213647781 - inferred_ll: -2112.8322855919905
+Hamming Distance: 111
+num_e: 267
+Best ll: -2068.654670510327
+Rounded LL: -2163.011519170325
+Comparison: real_ll: -1655.4272777677793 - inferred_ll: -2163.011519170325
+Hamming Distance: 130
+num_e: 268
+Best ll: -2133.1203638069014
+Rounded LL: -2233.0238576470574
+Comparison: real_ll: -1642.3085230083875 - inferred_ll: -2233.0238576470574
+Hamming Distance: 165
+num_e: 269
+Best ll: -2100.375609918895
+Rounded LL: -2244.7300328707256
+Comparison: real_ll: -1628.2213792376638 - inferred_ll: -2244.7300328707256
+Hamming Distance: 118
+num_e: 270
+Best ll: -2024.1952775553857
+Rounded LL: -2220.036663739053
+Comparison: real_ll: -1661.5908812738478 - inferred_ll: -2220.036663739053
+Hamming Distance: 112
+num_e: 271
+Best ll: -2088.3440130802187
+Rounded LL: -2269.81179561582
+Comparison: real_ll: -1681.05360242442 - inferred_ll: -2269.81179561582
+Hamming Distance: 138
+num_e: 272
+Best ll: -2019.3204585511075
+Rounded LL: -2100.931031122008
+Comparison: real_ll: -1660.056786243304 - inferred_ll: -2100.931031122008
+Hamming Distance: 98
+num_e: 273
+Best ll: -2043.5330645717124
+Rounded LL: -2130.4935762468604
+Comparison: real_ll: -1705.779669734484 - inferred_ll: -2130.4935762468604
+Hamming Distance: 92
+num_e: 274
+Best ll: -2048.951043221497
+Rounded LL: -2192.1601267525357
+Comparison: real_ll: -1693.1447547493326 - inferred_ll: -2192.1601267525357
+Hamming Distance: 108
+num_e: 275
+Best ll: -2182.693398175781
+Rounded LL: -2417.0744149628867
+Comparison: real_ll: -1699.840373966723 - inferred_ll: -2417.0744149628867
+Hamming Distance: 147
+num_e: 276
+Best ll: -2162.8275323936673
+Rounded LL: -2285.636872882713
+Comparison: real_ll: -1713.3252549111871 - inferred_ll: -2285.636872882713
+Hamming Distance: 155
+num_e: 277
+Best ll: -2132.8415349664647
+Rounded LL: -2254.675680442814
+Comparison: real_ll: -1729.9504579202733 - inferred_ll: -2254.675680442814
+Hamming Distance: 143
+num_e: 278
+Best ll: -2099.7109403920217
+Rounded LL: -2301.7112665665704
+Comparison: real_ll: -1722.7971860059072 - inferred_ll: -2301.7112665665704
+Hamming Distance: 152
+num_e: 279
+Best ll: -2069.654484674305
+Rounded LL: -2222.3508881981184
+Comparison: real_ll: -1713.7870570858847 - inferred_ll: -2222.3508881981184
+Hamming Distance: 114
+num_e: 280
+Best ll: -2120.0344234245567
+Rounded LL: -2261.778159558704
+Comparison: real_ll: -1720.96865019127 - inferred_ll: -2261.778159558704
+Hamming Distance: 106
+num_e: 281
+Best ll: -2170.1041989348682
+Rounded LL: -2342.608741126475
+Comparison: real_ll: -1735.140711114378 - inferred_ll: -2342.608741126475
+Hamming Distance: 116
+num_e: 282
+Best ll: -2171.085439831148
+Rounded LL: -2327.9499912268125
+Comparison: real_ll: -1768.4147028250773 - inferred_ll: -2327.9499912268125
+Hamming Distance: 97
+num_e: 283
+Best ll: -2107.647231530486
+Rounded LL: -2146.3661594954233
+Comparison: real_ll: -1746.9005629666199 - inferred_ll: -2146.3661594954233
+Hamming Distance: 118
+num_e: 284
+Best ll: -2232.7570383908624
+Rounded LL: -2360.8448433109106
+Comparison: real_ll: -1754.6920681359827 - inferred_ll: -2360.8448433109106
+Hamming Distance: 125
+num_e: 285
+Best ll: -2225.0475215677798
+Rounded LL: -2332.069683297349
+Comparison: real_ll: -1739.1502539185392 - inferred_ll: -2332.069683297349
+Hamming Distance: 136
+num_e: 286
+Best ll: -2270.0865305656885
+Rounded LL: -2388.4208857478698
+Comparison: real_ll: -1779.4439937589354 - inferred_ll: -2388.4208857478698
+Hamming Distance: 142
+num_e: 287
+Best ll: -2180.807001314883
+Rounded LL: -2335.622419636167
+Comparison: real_ll: -1801.263498190112 - inferred_ll: -2335.622419636167
+Hamming Distance: 99
+num_e: 288
+Best ll: -2247.434706154992
+Rounded LL: -2466.2226484087014
+Comparison: real_ll: -1802.9540129108284 - inferred_ll: -2466.2226484087014
+Hamming Distance: 126
+num_e: 289
+Best ll: -2251.936475981016
+Rounded LL: -2439.328818897818
+Comparison: real_ll: -1781.5509733748556 - inferred_ll: -2439.328818897818
+Hamming Distance: 132
+num_e: 290
+Best ll: -2374.604614158604
+Rounded LL: -2504.2831216828727
+Comparison: real_ll: -1764.564332431884 - inferred_ll: -2504.2831216828727
+Hamming Distance: 169
+num_e: 291
+Best ll: -2178.1847313581734
+Rounded LL: -2298.5918214456856
+Comparison: real_ll: -1824.4372602578953 - inferred_ll: -2298.5918214456856
+Hamming Distance: 87
+num_e: 292
+Best ll: -2170.628968154357
+Rounded LL: -2258.1870549557225
+Comparison: real_ll: -1816.1417427426054 - inferred_ll: -2258.1870549557225
+Hamming Distance: 79
+num_e: 293
+Best ll: -2152.454998384328
+Rounded LL: -2256.9745497556223
+Comparison: real_ll: -1838.9379625494907 - inferred_ll: -2256.9745497556223
+Hamming Distance: 79
+num_e: 294
+Best ll: -2458.6849619446666
+Rounded LL: -2632.1900861529593
+Comparison: real_ll: -1822.1364973226762 - inferred_ll: -2632.1900861529593
+Hamming Distance: 190
+num_e: 295
+Best ll: -2281.988539079802
+Rounded LL: -2399.604610921474
+Comparison: real_ll: -1848.3754018086527 - inferred_ll: -2399.604610921474
+Hamming Distance: 141
+num_e: 296
+Best ll: -2149.680040568044
+Rounded LL: -2257.2209045571144
+Comparison: real_ll: -1763.8085181244182 - inferred_ll: -2257.2209045571144
+Hamming Distance: 83
+num_e: 297
+Best ll: -2136.1180934585027
+Rounded LL: -2267.15073568026
+Comparison: real_ll: -1827.5991607743892 - inferred_ll: -2267.15073568026
+Hamming Distance: 85
+num_e: 298
+Best ll: -2182.6353149262136
+Rounded LL: -2258.080835636596
+Comparison: real_ll: -1807.9847363575536 - inferred_ll: -2258.080835636596
+Hamming Distance: 80
+num_e: 299
+Best ll: -2155.2256843236587
+Rounded LL: -2242.218191393416
+Comparison: real_ll: -1853.2577363522987 - inferred_ll: -2242.218191393416
+Hamming Distance: 57
+num_e: 300
+Best ll: -2181.2902912018367
+Rounded LL: -2271.267087453947
+Comparison: real_ll: -1829.0473277313044 - inferred_ll: -2271.267087453947
+Hamming Distance: 72
+num_e: 301
+Best ll: -2183.115420627222
+Rounded LL: -2279.1778018599707
+Comparison: real_ll: -1812.0817985636954 - inferred_ll: -2279.1778018599707
+Hamming Distance: 75
+num_e: 302
+Best ll: -2342.2889555148217
+Rounded LL: -2518.5491758427997
+Comparison: real_ll: -1844.1137158916017 - inferred_ll: -2518.5491758427997
+Hamming Distance: 144
+num_e: 303
+Best ll: -2270.715130430658
+Rounded LL: -2373.6972705750136
+Comparison: real_ll: -1867.5866838397762 - inferred_ll: -2373.6972705750136
+Hamming Distance: 117
+num_e: 304
+Best ll: -2223.6817795556144
+Rounded LL: -2269.672995871544
+Comparison: real_ll: -1831.1717507707078 - inferred_ll: -2269.672995871544
+Hamming Distance: 98
+num_e: 305
+Best ll: -2248.065840307352
+Rounded LL: -2370.204906418623
+Comparison: real_ll: -1886.9379250300012 - inferred_ll: -2370.204906418623
+Hamming Distance: 79
+num_e: 306
+Best ll: -2281.3031693618964
+Rounded LL: -2348.542522803404
+Comparison: real_ll: -1875.9724324533338 - inferred_ll: -2348.542522803404
+Hamming Distance: 95
+num_e: 307
+Best ll: -2311.2468877934266
+Rounded LL: -2468.788467226735
+Comparison: real_ll: -1886.6305026359855 - inferred_ll: -2468.788467226735
+Hamming Distance: 118
+num_e: 308
+Best ll: -2334.87019719795
+Rounded LL: -2473.9277529441465
+Comparison: real_ll: -1871.5197509064785 - inferred_ll: -2473.9277529441465
+Hamming Distance: 106
+num_e: 309
+Best ll: -2368.697524163799
+Rounded LL: -2509.189996511911
+Comparison: real_ll: -1897.1313548018124 - inferred_ll: -2509.189996511911
+Hamming Distance: 81
+num_e: 310
+Best ll: -2346.696875276752
+Rounded LL: -2459.7031992549705
+Comparison: real_ll: -1892.9324612434455 - inferred_ll: -2459.7031992549705
+Hamming Distance: 101
+num_e: 311
+Best ll: -2392.0157956340636
+Rounded LL: -2449.2424277214423
+Comparison: real_ll: -1906.6577982645597 - inferred_ll: -2449.2424277214423
+Hamming Distance: 134
+num_e: 312
+Best ll: -2268.409997280901
+Rounded LL: -2383.3998081833224
+Comparison: real_ll: -1899.9796165464406 - inferred_ll: -2383.3998081833224
+Hamming Distance: 91
+num_e: 313
+Best ll: -2291.6166022038155
+Rounded LL: -2411.6775569053393
+Comparison: real_ll: -1903.9002257480167 - inferred_ll: -2411.6775569053393
+Hamming Distance: 111
+num_e: 314
+Best ll: -2384.483132794328
+Rounded LL: -2514.155778150619
+Comparison: real_ll: -1927.4637075632716 - inferred_ll: -2514.155778150619
+Hamming Distance: 120
+num_e: 315
+Best ll: -2423.2123279241996
+Rounded LL: -2552.933632503204
+Comparison: real_ll: -1921.3187577228243 - inferred_ll: -2552.933632503204
+Hamming Distance: 111
+num_e: 316
+Best ll: -2389.3043438504897
+Rounded LL: -2582.0071428921096
+Comparison: real_ll: -1957.8983590235237 - inferred_ll: -2582.0071428921096
+Hamming Distance: 128
+num_e: 317
+Best ll: -2356.8874446752634
+Rounded LL: -2481.38709502746
+Comparison: real_ll: -1953.601114466141 - inferred_ll: -2481.38709502746
+Hamming Distance: 100
+num_e: 318
+Best ll: -2413.7230691193877
+Rounded LL: -2500.921259539185
+Comparison: real_ll: -1969.0695092098515 - inferred_ll: -2500.921259539185
+Hamming Distance: 123
+num_e: 319
+Best ll: -2405.3794415410625
+Rounded LL: -2539.9671753425255
+Comparison: real_ll: -1946.2571097483212 - inferred_ll: -2539.9671753425255
+Hamming Distance: 126
+num_e: 320
+Best ll: -2462.716526827519
+Rounded LL: -2596.6286490004622
+Comparison: real_ll: -1954.2364596863101 - inferred_ll: -2596.6286490004622
+Hamming Distance: 130
+num_e: 321
+Best ll: -2408.196932948026
+Rounded LL: -2591.5022134269893
+Comparison: real_ll: -1983.7247531722016 - inferred_ll: -2591.5022134269893
+Hamming Distance: 117
+num_e: 322
+Best ll: -2376.260203974118
+Rounded LL: -2467.697943287355
+Comparison: real_ll: -1982.9617733917833 - inferred_ll: -2467.697943287355
+Hamming Distance: 91
+num_e: 323
+Best ll: -2404.677110818048
+Rounded LL: -2523.0326351815306
+Comparison: real_ll: -1935.2374147308462 - inferred_ll: -2523.0326351815306
+Hamming Distance: 103
+num_e: 324
+Best ll: -2496.401585255524
+Rounded LL: -2553.9007128462413
+Comparison: real_ll: -2005.5381222052088 - inferred_ll: -2553.9007128462413
+Hamming Distance: 104
+num_e: 325
+Best ll: -2492.8046539698803
+Rounded LL: -2680.504610646859
+Comparison: real_ll: -1956.0940694372084 - inferred_ll: -2680.504610646859
+Hamming Distance: 133
+num_e: 326
+Best ll: -2501.517101355018
+Rounded LL: -2669.7555750827023
+Comparison: real_ll: -1971.0325958637886 - inferred_ll: -2669.7555750827023
+Hamming Distance: 130
+num_e: 327
+Best ll: -2410.6934258348438
+Rounded LL: -2531.727639811104
+Comparison: real_ll: -1995.5371376183764 - inferred_ll: -2531.727639811104
+Hamming Distance: 95
+num_e: 328
+Best ll: -2501.1846691771225
+Rounded LL: -2638.620985445745
+Comparison: real_ll: -1997.9874023710731 - inferred_ll: -2638.620985445745
+Hamming Distance: 92
+num_e: 329
+Best ll: -2375.8511884759305
+Rounded LL: -2491.364925426937
+Comparison: real_ll: -2006.6405983146367 - inferred_ll: -2491.364925426937
+Hamming Distance: 64
+num_e: 330
+Best ll: -2449.040783979631
+Rounded LL: -2654.553205190172
+Comparison: real_ll: -2002.6959264895897 - inferred_ll: -2654.553205190172
+Hamming Distance: 94
+num_e: 331
+Best ll: -2475.622721330763
+Rounded LL: -2643.4527430375742
+Comparison: real_ll: -2009.9005141514658 - inferred_ll: -2643.4527430375742
+Hamming Distance: 92
+num_e: 332
+Best ll: -2471.8051291115407
+Rounded LL: -2608.187073496471
+Comparison: real_ll: -2002.8910834491362 - inferred_ll: -2608.187073496471
+Hamming Distance: 89
+num_e: 333
+Best ll: -2393.4688376725744
+Rounded LL: -2538.8664702661313
+Comparison: real_ll: -1998.8297307586224 - inferred_ll: -2538.8664702661313
+Hamming Distance: 81
+num_e: 334
+Best ll: -2475.255087178715
+Rounded LL: -2645.672892169126
+Comparison: real_ll: -2028.1181330220345 - inferred_ll: -2645.672892169126
+Hamming Distance: 67
+num_e: 335
+Best ll: -2402.2312946333886
+Rounded LL: -2506.9815218244116
+Comparison: real_ll: -2022.7229557225273 - inferred_ll: -2506.9815218244116
+Hamming Distance: 81
+num_e: 336
+Best ll: -2480.1740895641806
+Rounded LL: -2578.86075264041
+Comparison: real_ll: -2072.078503008271 - inferred_ll: -2578.86075264041
+Hamming Distance: 73
+num_e: 337
+Best ll: -2597.108974271508
+Rounded LL: -2736.5150300235714
+Comparison: real_ll: -2135.1637979841253 - inferred_ll: -2736.5150300235714
+Hamming Distance: 121
+num_e: 338
+Best ll: -2496.209663803929
+Rounded LL: -2650.9983854297225
+Comparison: real_ll: -2063.7809258499847 - inferred_ll: -2650.9983854297225
+Hamming Distance: 88
+num_e: 339
+Best ll: -2433.900764118758
+Rounded LL: -2656.715951522014
+Comparison: real_ll: -2071.9121199733963 - inferred_ll: -2656.715951522014
+Hamming Distance: 100
+num_e: 340
+Best ll: -2602.4102868943546
+Rounded LL: -2801.1553621845364
+Comparison: real_ll: -2098.504301490085 - inferred_ll: -2801.1553621845364
+Hamming Distance: 137
+num_e: 341
+Best ll: -2659.9260441952224
+Rounded LL: -2820.659064141469
+Comparison: real_ll: -2131.066129237096 - inferred_ll: -2820.659064141469
+Hamming Distance: 117
+num_e: 342
+Best ll: -2614.5185192057174
+Rounded LL: -2818.117506300409
+Comparison: real_ll: -2103.49936099086 - inferred_ll: -2818.117506300409
+Hamming Distance: 153
+num_e: 343
+Best ll: -2710.0367167347154
+Rounded LL: -2981.837868209011
+Comparison: real_ll: -2145.56196812557 - inferred_ll: -2981.837868209011
+Hamming Distance: 121
+num_e: 344
+Best ll: -2687.5297377658644
+Rounded LL: -2898.5909880593317
+Comparison: real_ll: -2140.6991441191462 - inferred_ll: -2898.5909880593317
+Hamming Distance: 140
+num_e: 345
+Best ll: -2603.213107026178
+Rounded LL: -2797.6163374848707
+Comparison: real_ll: -2148.075880543783 - inferred_ll: -2797.6163374848707
+Hamming Distance: 119
+num_e: 346
+Best ll: -2686.363677831845
+Rounded LL: -2926.4352013284683
+Comparison: real_ll: -2122.4713636064525 - inferred_ll: -2926.4352013284683
+Hamming Distance: 134
+num_e: 347
+Best ll: -2554.337800028299
+Rounded LL: -2686.829846958608
+Comparison: real_ll: -2140.438253037414 - inferred_ll: -2686.829846958608
+Hamming Distance: 66
+num_e: 348
+Best ll: -2457.283290055696
+Rounded LL: -2534.9703820827217
+Comparison: real_ll: -2139.89818513519 - inferred_ll: -2534.9703820827217
+Hamming Distance: 50
+num_e: 349
+Best ll: -2600.7694730252983
+Rounded LL: -2746.588643484315
+Comparison: real_ll: -2139.2452465871966 - inferred_ll: -2746.588643484315
+Hamming Distance: 98
+num_e: 350
+Best ll: -2739.3357326190035
+Rounded LL: -3028.9275306238646
+Comparison: real_ll: -2159.476522571521 - inferred_ll: -3028.9275306238646
+Hamming Distance: 122
+num_e: 351
+Best ll: -2724.20012205452
+Rounded LL: -2930.4078394972207
+Comparison: real_ll: -2139.057810524994 - inferred_ll: -2930.4078394972207
+Hamming Distance: 125
+num_e: 352
+Best ll: -2704.5129095327948
+Rounded LL: -2861.7159420303374
+Comparison: real_ll: -2205.584067398969 - inferred_ll: -2861.7159420303374
+Hamming Distance: 99
+num_e: 353
+Best ll: -2582.9765204991813
+Rounded LL: -2707.650333801937
+Comparison: real_ll: -2139.9897961146567 - inferred_ll: -2707.650333801937
+Hamming Distance: 105
+num_e: 354
+Best ll: -2689.8832330483838
+Rounded LL: -2846.950732889389
+Comparison: real_ll: -2189.622475375776 - inferred_ll: -2846.950732889389
+Hamming Distance: 104
+num_e: 355
+Best ll: -2829.797242767387
+Rounded LL: -3035.125074573059
+Comparison: real_ll: -2214.9968620331156 - inferred_ll: -3035.125074573059
+Hamming Distance: 138
+num_e: 356
+Best ll: -2884.8441807352788
+Rounded LL: -3217.9403845445663
+Comparison: real_ll: -2183.841923091601 - inferred_ll: -3217.9403845445663
+Hamming Distance: 158
+num_e: 357
+Best ll: -2619.7308256861133
+Rounded LL: -2759.287682236028
+Comparison: real_ll: -2223.246929969607 - inferred_ll: -2759.287682236028
+Hamming Distance: 91
+num_e: 358
+Best ll: -2636.338424449122
+Rounded LL: -2853.093619491699
+Comparison: real_ll: -2221.3259450964565 - inferred_ll: -2853.093619491699
+Hamming Distance: 133
+num_e: 359
+Best ll: -2911.712176819888
+Rounded LL: -3100.555313289694
+Comparison: real_ll: -2263.9858569987273 - inferred_ll: -3100.555313289694
+Hamming Distance: 142
+num_e: 360
+Best ll: -2796.651618228993
+Rounded LL: -3001.639678676332
+Comparison: real_ll: -2185.984570857379 - inferred_ll: -3001.639678676332
+Hamming Distance: 133
+num_e: 361
+Best ll: -2755.157291144478
+Rounded LL: -2877.24720473516
+Comparison: real_ll: -2230.8369781881 - inferred_ll: -2877.24720473516
+Hamming Distance: 118
+num_e: 362
+Best ll: -2913.6378418053555
+Rounded LL: -3274.2505143372086
+Comparison: real_ll: -2310.956315926333 - inferred_ll: -3274.2505143372086
+Hamming Distance: 109
+num_e: 363
+Best ll: -2769.3640376230646
+Rounded LL: -2983.301484078449
+Comparison: real_ll: -2247.253193049081 - inferred_ll: -2983.301484078449
+Hamming Distance: 121
+num_e: 364
+Best ll: -2851.077759746549
+Rounded LL: -2951.0529054912317
+Comparison: real_ll: -2345.82244730948 - inferred_ll: -2951.0529054912317
+Hamming Distance: 129
+num_e: 365
+Best ll: -2803.6539785339664
+Rounded LL: -2961.7387147358804
+Comparison: real_ll: -2241.94545892609 - inferred_ll: -2961.7387147358804
+Hamming Distance: 150
+num_e: 366
+Best ll: -2843.2905832785937
+Rounded LL: -2960.6937365168046
+Comparison: real_ll: -2305.874212962893 - inferred_ll: -2960.6937365168046
+Hamming Distance: 107
+num_e: 367
+Best ll: -2832.069741961059
+Rounded LL: -3017.721718737874
+Comparison: real_ll: -2263.711155678012 - inferred_ll: -3017.721718737874
+Hamming Distance: 99
+num_e: 368
+Best ll: -2937.9798759158602
+Rounded LL: -3030.1471539693753
+Comparison: real_ll: -2247.2654597815276 - inferred_ll: -3030.1471539693753
+Hamming Distance: 111
+num_e: 369
+Best ll: -2806.758326675909
+Rounded LL: -3031.0453472969334
+Comparison: real_ll: -2268.729236512535 - inferred_ll: -3031.0453472969334
+Hamming Distance: 126
+num_e: 370
+Best ll: -2808.230948987815
+Rounded LL: -2935.487421453315
+Comparison: real_ll: -2255.8016480288366 - inferred_ll: -2935.487421453315
+Hamming Distance: 118
+num_e: 371
+Best ll: -2844.3020082288276
+Rounded LL: -3170.974572970541
+Comparison: real_ll: -2282.2060583224747 - inferred_ll: -3170.974572970541
+Hamming Distance: 143
+num_e: 372
+Best ll: -2790.561863239774
+Rounded LL: -3005.8462853557353
+Comparison: real_ll: -2258.8723159145707 - inferred_ll: -3005.8462853557353
+Hamming Distance: 151
+num_e: 373
+Best ll: -2795.806910836961
+Rounded LL: -2930.819360155832
+Comparison: real_ll: -2268.0739909231456 - inferred_ll: -2930.819360155832
+Hamming Distance: 94
+num_e: 374
+Best ll: -2850.5681412743675
+Rounded LL: -3121.2859274682323
+Comparison: real_ll: -2316.816961991439 - inferred_ll: -3121.2859274682323
+Hamming Distance: 118
+num_e: 375
+Best ll: -2762.842342378339
+Rounded LL: -2947.0598208816914
+Comparison: real_ll: -2288.4248293214173 - inferred_ll: -2947.0598208816914
+Hamming Distance: 110
+num_e: 376
+Best ll: -2971.474886798139
+Rounded LL: -3199.329795145475
+Comparison: real_ll: -2335.6051222240612 - inferred_ll: -3199.329795145475
+Hamming Distance: 153
+num_e: 377
+Best ll: -2987.802200263265
+Rounded LL: -3251.7604913348964
+Comparison: real_ll: -2340.7877204218903 - inferred_ll: -3251.7604913348964
+Hamming Distance: 144
+num_e: 378
+Best ll: -2953.904040715977
+Rounded LL: -3181.6343373302734
+Comparison: real_ll: -2345.712678034103 - inferred_ll: -3181.6343373302734
+Hamming Distance: 152
+num_e: 379
+Best ll: -2847.8935543262046
+Rounded LL: -3089.2452189458586
+Comparison: real_ll: -2318.9309564158284 - inferred_ll: -3089.2452189458586
+Hamming Distance: 134
+num_e: 380
+Best ll: -2902.73691364421
+Rounded LL: -3016.056313907759
+Comparison: real_ll: -2306.1113884956712 - inferred_ll: -3016.056313907759
+Hamming Distance: 127
+num_e: 381
+Best ll: -3063.6435646096434
+Rounded LL: -3192.5843860328973
+Comparison: real_ll: -2383.434688804119 - inferred_ll: -3192.5843860328973
+Hamming Distance: 117
+num_e: 382
+Best ll: -2927.691858361485
+Rounded LL: -3178.1060448701596
+Comparison: real_ll: -2367.2053407899307 - inferred_ll: -3178.1060448701596
+Hamming Distance: 128
+num_e: 383
+Best ll: -3094.8392254605806
+Rounded LL: -3205.1189023799975
+Comparison: real_ll: -2397.163540237023 - inferred_ll: -3205.1189023799975
+Hamming Distance: 205
+num_e: 384
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py", line 120, in <module>
+    conduct_var_e_genes_experiments()
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py", line 71, in conduct_var_e_genes_experiments
+    weights, ll = inv_method.optimize()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/methods.py", line 123, in optimize
+    ll, weights = self.opt_b(weights, bounds)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/methods.py", line 105, in opt_b
+    new_parent_weights[i][k] = self.calculate_local_optimum_b_inv(i, k, order_weights, bounds, expit_weights, new_parent_weights)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/methods.py", line 89, in calculate_local_optimum_b_inv
+    res = minimize(self.local_ll_sum_b_inv, x0=weights[i][k], bounds=bounds, options={'eps': 1e-2}, args=(weights, i, k, local_vec, a_vec), method='L-BFGS-B', tol=0.1)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_minimize.py", line 710, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py", line 307, in _minimize_lbfgsb
+    sf = _prepare_scalar_function(fun, x0, jac=jac, args=args, epsilon=eps,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_optimize.py", line 383, in _prepare_scalar_function
+    sf = ScalarFunction(fun, x0, args, grad, hess,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 177, in __init__
+    self._update_grad()
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 256, in _update_grad
+    self._update_grad_impl()
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 173, in update_grad
+    self.g = approx_derivative(fun_wrapped, self.x, f0=self.f,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_numdiff.py", line 505, in approx_derivative
+    return _dense_difference(fun_wrapped, x0, f0, h,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_numdiff.py", line 576, in _dense_difference
+    df = fun(x) - f0
+         ^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_numdiff.py", line 456, in fun_wrapped
+    f = np.atleast_1d(fun(x, *args, **kwargs))
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py", line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/methods.py", line 76, in local_ll_sum_b_inv
+    B = solve_triangular(self.eye - weights, self.eye, lower=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/scipy/linalg/_basic.py", line 350, in solve_triangular
+    x, info = trtrs(a1.T, b1, overwrite_b=overwrite_b, lower=not lower,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

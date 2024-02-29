@@ -1,4 +1,3 @@
-import os
 import dot
 import rnd_dag_gen
 import graphviz

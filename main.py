@@ -10,6 +10,8 @@ import random
 import matplotlib.pyplot as plt
 import time
 import wandb
+from comp import Comp
+from methods import InverseMethod
 
 def initial_order_guess(observed_knockdown_mat):
     """
@@ -34,7 +36,6 @@ def remove_old_output():
         os.mkdir("output")
 
 def clean(curr_dir):
-    
     directory = curr_dir+"/output"
     for filename in os.listdir(directory):
         if filename.endswith(".gv"):
@@ -55,7 +56,7 @@ def output_handling(best_dag, network_path, curr_dir):
     
 
 def main():
-    wandb.login()
+    # wandb.login()
     curr_dir = os.getcwd()
     network_nr = 11
     network_path = f"{curr_dir}/DAGs/networks/network{network_nr}/network{network_nr}"
@@ -63,43 +64,47 @@ def main():
     my_nem = nem.NEM(adj_matrix, end_nodes, errors, num_s, num_e)
     permutation_order = initial_order_guess(my_nem.observed_knockdown_mat)
     gamma = 2.0 * float(my_nem.num_s) / float(my_nem.num_e)
-    n_iterations = 1000
-    seed = 42
-    run = wandb.init(
-    # Set the project where this run will be logged
-    project="MCMC-NEM",
-    # Track hyperparameters and run metadata
-    config={
-        "gamma": gamma,
-        "n_iterations": n_iterations,
-        "seed": seed,
-        "adj_matrix": adj_matrix,
-        "observed_order_score": my_nem.obs_order_ll,
-        "observed_score": my_nem.obs_ll,
-        "real_order_score": my_nem.real_order_ll,
-        "real_score": my_nem.real_ll
-    })
+    n_iterations = 0
+    seed = 55
+    swap_prob = 0.90
+    use_nem=False
+    # run = wandb.init(
+    # # Set the project where this run will be logged
+    # project="MCMC-NEM",
+    # # Track hyperparameters and run metadata
+    # config={
+    #     "gamma": gamma,
+    #     "n_iterations": n_iterations,
+    #     "swap_prob": swap_prob,
+    #     "seed": seed,
+    #     "adj_matrix": adj_matrix,
+    #     "observed_order_score": my_nem.obs_order_ll,
+    #     "observed_score": my_nem.obs_ll,
+    #     "use_nem": use_nem
+    #     # "real_order_score": my_nem.real_order_ll,
+    #     # "real_score": my_nem.real_ll
+    # })
     #### MCMC METHOD ####
-    mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
-    start_time = time.time()
-    score, best_dag = mcmc_nem.method(n_iterations=n_iterations, gamma=gamma, seed=seed)
-    end_time = time.time()
-    print(f"Time elapsed: {end_time-start_time}")
-    score_list = mcmc_nem.curr_score_list
-    best_order = mcmc_nem.best_order
+    # start_time = time.time()
+    ##
+    # mcmc_nem = NEMOrderMCMC(my_nem, permutation_order)
+    # score, best_dag = mcmc_nem.method(n_iterations=n_iterations, gamma=gamma, seed=seed, swap_prob=swap_prob, verbose=True, use_nem=use_nem, ultra_verbose=True)
+    ##
+    # end_time = time.time()
+    # print(f"Time elapsed: {end_time-start_time}")
+    # score_list = mcmc_nem.curr_score_list
+    # best_order = mcmc_nem.best_order
     # #### REPLICA EXCHANGE METHOD ####
     # score, best_mcmc_dag = replica_exchange_method(nem=my_nem, init_order_guess=permutation_order, n_iter=300, n_exchange=20)
     # best_dag = best_mcmc_dag.best_dag
     # best_order = best_mcmc_dag.best_order
     #####
-    print(f"Best order: {best_order}\nReal order: {my_nem.real_parent_order}\nObserved order: {my_nem.obs_parent_order}")
-    print(f"Infered Order Score: {score}")
-    print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
-    print(f"Observed Order Score: {my_nem.obs_order_ll}, Observed Score: {my_nem.obs_ll}")
-    print(f"Best DAG:\n{best_dag}")
-    print(f"Hamming Distance: {utils.hamming_distance(best_dag, adj_matrix)}")
-    # # print(f"Real Order Score: {my_nem.real_order_ll}, Real Score: {my_nem.real_ll}")
-    output_handling(best_dag, network_path, curr_dir)
+    # wandb.log({"Time elapsed (s)": end_time-start_time})
+    # print(f"Best order: {best_order}\nReal order: {my_nem.real_parent_order}\nObserved order: {my_nem.obs_parent_order}")
+    # print(f"Infered Order Score: {score}")
+    # print(f"Best DAG:\n{best_dag}")
+    # print(f"Hamming Distance: {utils.hamming_distance(best_dag, adj_matrix)}")
+    # print(f"Hamming Distance to Ancestor: {utils.hamming_distance(utils.ancestor(best_dag), adj_matrix)}")
     
     # plot the score_list
     # plt.plot(score_list)
@@ -107,6 +112,18 @@ def main():
     # plt.ylabel('Score')
     # plt.title('Score vs. Iteration')
     # plt.show()
+    inv_method = InverseMethod(permutation_order, num_s, num_e, my_nem.U, my_nem.get_score_tables(my_nem.observed_knockdown_mat))
+    weights, ll = inv_method.optimize()
+    # comparator = Comp(permutation_order, num_s, num_e, my_nem.U, my_nem.get_score_tables(my_nem.observed_knockdown_mat), adj_matrix)
+    # weights, ll = comparator.optimize()
+    # weights, ll = comparator.optimize_globally()
+    # weights = np.zeros((num_s, num_s))
+    # weights = comparator.get_permissible_parents(permutation_order, weights, init_val=-0.6)
+    # weights, ll = comparator.opt_with_torch(weights)
+    print(f"Hamming Distance: {utils.hamming_distance(weights, adj_matrix)}")
+    print(f"Hamming Distance to Ancestor: {utils.hamming_distance(utils.ancestor(weights), adj_matrix)}")
+    output_handling(weights, network_path, curr_dir)
+    print(f"Observed Score: {my_nem.obs_ll}")
     
 if __name__ == "__main__":
     main()

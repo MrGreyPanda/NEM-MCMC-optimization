@@ -1,0 +1,8 @@
+num_e: 13
+num_s: 13
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 214, in <module>
+    conduct_var_e_genes_experiments_w_reinit(Methods=[InverseMethod, Method])
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 74, in conduct_var_e_genes_experiments_w_reinit
+    weights, ll = method.optimize(init_val=1.0, use_wandb=True)
+TypeError: optimize() got an unexpected keyword argument 'init_val'

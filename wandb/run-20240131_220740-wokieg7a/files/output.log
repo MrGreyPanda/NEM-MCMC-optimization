@@ -1,0 +1,99 @@
+Best ll: -295.7479833961898
+Rounded LL: -319.02908195416677
+Comparison: real_ll: -144.01923650414497 - inferred_ll: -319.02908195416677
+Hamming Distance: 5
+Network 1:
+Best ll: -1312.7743431528668
+Rounded LL: -1298.2847313601242
+Comparison: real_ll: -930.5443495682625 - inferred_ll: -1298.2847313601242
+Hamming Distance: 35
+Network 2:
+Best ll: -303.98906221701304
+Rounded LL: -309.76910347796615
+Comparison: real_ll: -201.23114686148492 - inferred_ll: -309.76910347796615
+Hamming Distance: 11
+Network 3:
+Best ll: -283.3135182043264
+Rounded LL: -241.10085025446537
+Comparison: real_ll: -220.7771361329188 - inferred_ll: -241.10085025446537
+Hamming Distance: 1
+Network 4:
+Best ll: -644.8436790599349
+Rounded LL: -618.3013134708224
+Comparison: real_ll: -551.5594921197501 - inferred_ll: -618.3013134708224
+Hamming Distance: 12
+Network 5:
+Best ll: -619.7907442435373
+Rounded LL: -668.130648898104
+Comparison: real_ll: -522.2305544129528 - inferred_ll: -668.130648898104
+Hamming Distance: 9
+Network 6:
+Best ll: -529.9262522289921
+Rounded LL: -523.9313720065766
+Comparison: real_ll: -408.29818089048274 - inferred_ll: -523.9313720065766
+Hamming Distance: 5
+Network 7:
+Best ll: -438.4047204558257
+Rounded LL: -478.26344438802465
+Comparison: real_ll: -289.2232306729102 - inferred_ll: -478.26344438802465
+Hamming Distance: 12
+Network 8:
+Best ll: -202.8995585853467
+Rounded LL: -177.73701863033637
+Comparison: real_ll: -155.80385898756117 - inferred_ll: -177.73701863033637
+Hamming Distance: 1
+Network 9:
+Best ll: -250.67202573365515
+Rounded LL: -235.14501004742297
+Comparison: real_ll: -186.23713134519747 - inferred_ll: -235.14501004742297
+Hamming Distance: 1
+Network 10:
+Best ll: -1374.155204202901
+Rounded LL: -1340.1599976623859
+Comparison: real_ll: -966.9587436579045 - inferred_ll: -1340.1599976623859
+Hamming Distance: 64
+Network 11:
+Best ll: -3297.168444730393
+Rounded LL: -3375.237666875205
+Comparison: real_ll: -2827.208922329671 - inferred_ll: -3375.237666875205
+Hamming Distance: 99
+Network 12:
+Best ll: -312.9462592772062
+Rounded LL: -299.3948143702951
+Comparison: real_ll: -197.4451454820103 - inferred_ll: -299.3948143702951
+Hamming Distance: 13
+Network 13:
+Best ll: -1849.3339393406234
+Rounded LL: -1956.7231059772378
+Comparison: real_ll: -1509.4746290001601 - inferred_ll: -1956.7231059772378
+Hamming Distance: 78
+Network 14:
+Best ll: -392.6596983488522
+Rounded LL: -417.646053754285
+Comparison: real_ll: -265.7119859444096 - inferred_ll: -417.646053754285
+Hamming Distance: 23
+Network 15:
+Best ll: -465.5798272825581
+Rounded LL: -493.9956674854142
+Comparison: real_ll: -335.4361838201598 - inferred_ll: -493.9956674854142
+Hamming Distance: 17
+Network 16:
+Best ll: -1370.146279215424
+Rounded LL: -1380.4125469022626
+Comparison: real_ll: -1138.9109973926365 - inferred_ll: -1380.4125469022626
+Hamming Distance: 47
+Network 17:
+Best ll: -2302.066425731763
+Rounded LL: -2437.601347950555
+Comparison: real_ll: -1929.4825296234756 - inferred_ll: -2437.601347950555
+Hamming Distance: 58
+Network 18:
+Best ll: -584.8938718144618
+Rounded LL: -656.8233919013851
+Comparison: real_ll: -462.89867027254763 - inferred_ll: -656.8233919013851
+Hamming Distance: 14
+Network 19:
+Best ll: -920.5971048913457
+Rounded LL: -963.8738549683998
+Comparison: real_ll: -706.2152677847024 - inferred_ll: -963.8738549683998
+Hamming Distance: 48

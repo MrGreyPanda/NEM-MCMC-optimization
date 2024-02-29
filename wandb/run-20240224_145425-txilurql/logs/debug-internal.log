@@ -1,0 +1,19 @@
+2024-02-24 14:54:25,943 INFO    StreamThr :47304 [internal.py:wandb_internal():86] W&B internal server running at pid: 47304, started at: 2024-02-24 14:54:25.940883
+2024-02-24 14:54:25,945 DEBUG   HandlerThread:47304 [handler.py:handle_request():146] handle_request: status
+2024-02-24 14:54:25,946 INFO    WriterThread:47304 [datastore.py:open_for_write():87] open: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_145425-txilurql/run-txilurql.wandb
+2024-02-24 14:54:25,948 DEBUG   SenderThread:47304 [sender.py:send():382] send: header
+2024-02-24 14:54:25,948 DEBUG   SenderThread:47304 [sender.py:send():382] send: run
+2024-02-24 14:54:26,368 DEBUG   HandlerThread:47304 [handler.py:handle_request():146] handle_request: shutdown
+2024-02-24 14:54:26,368 INFO    HandlerThread:47304 [handler.py:finish():869] shutting down handler
+2024-02-24 14:54:26,418 INFO    SenderThread:47304 [dir_watcher.py:__init__():211] watching files in: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_145425-txilurql/files
+2024-02-24 14:54:26,418 INFO    SenderThread:47304 [sender.py:_start_run_threads():1136] run started: txilurql with start time 1708782865.115087
+2024-02-24 14:54:26,419 INFO    SenderThread:47304 [sender.py:finish():1572] shutting down sender
+2024-02-24 14:54:26,419 INFO    SenderThread:47304 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-02-24 14:54:26,952 INFO    WriterThread:47304 [datastore.py:close():296] close: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_145425-txilurql/run-txilurql.wandb
+2024-02-24 14:54:27,423 INFO    SenderThread:47304 [dir_watcher.py:finish():388] scan: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_145425-txilurql/files
+2024-02-24 14:54:27,423 INFO    SenderThread:47304 [dir_watcher.py:finish():402] scan save: /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_145425-txilurql/files/config.yaml config.yaml
+2024-02-24 14:54:27,423 INFO    SenderThread:47304 [file_pusher.py:finish():172] shutting down file pusher
+2024-02-24 14:54:27,423 INFO    SenderThread:47304 [file_pusher.py:join():178] waiting for file pusher
+2024-02-24 14:54:28,112 INFO    wandb-upload_0:47304 [upload_job.py:push():131] Uploaded file /Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/wandb/run-20240224_145425-txilurql/files/config.yaml
+2024-02-24 14:54:28,434 INFO    SenderThread:47304 [file_stream.py:finish():595] file stream finish called
+2024-02-24 14:54:28,686 INFO    SenderThread:47304 [file_stream.py:finish():599] file stream finish is done

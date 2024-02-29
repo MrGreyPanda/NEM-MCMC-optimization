@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py", line 118, in <module>
+    conduct_fixed_e_genes_experiments()
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/experiments.py", line 108, in conduct_fixed_e_genes_experiments
+    weights, ll = inv_method.optimize()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/methods.py", line 124, in optimize
+    wandb.log({"Running LL": ll})
+    ^^^^^
+NameError: name 'wandb' is not defined

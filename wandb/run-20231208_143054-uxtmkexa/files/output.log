@@ -1,0 +1,21 @@
+/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py:14: RuntimeWarning: invalid value encountered in log
+  res = -np.sum(np.log(c * x + 1.0))
+/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py:14: RuntimeWarning: invalid value encountered in log
+  res = -np.sum(np.log(c * x + 1.0))
+/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py:14: RuntimeWarning: invalid value encountered in log
+  res = -np.sum(np.log(c * x + 1.0))
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/main.py", line 118, in <module>
+    main()
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/main.py", line 89, in main
+    score, best_dag = mcmc_nem.method(n_iterations=n_iterations, gamma=gamma, seed=seed, swap_prob=swap_prob, verbose=True, use_nem=use_nem, ultra_verbose=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 340, in method
+    curr_score = self.get_optimal_weights(init=True, ultra_verbose=ultra_verbose, use_nem=use_nem)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 246, in get_optimal_weights
+    new_parent_weights[i][j] = self.calculate_local_optimum(i, j)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py", line 163, in calculate_local_optimum
+    raise Exception(f"Minimization not successful, Reason: {res.message}")
+Exception: Minimization not successful, Reason: NaN result encountered.

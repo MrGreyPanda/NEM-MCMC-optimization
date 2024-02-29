@@ -53,6 +53,15 @@ def ancestor(incidence):
     ancestor_mat = (incidence2 > 0).astype(int)
     return ancestor_mat
 
+def initial_order_guess(observed_knockdown_mat):
+    """
+    Make an "educated" guess on the order of the nodes in the network.
+    """
+    num_s = observed_knockdown_mat.shape[0]
+    sum_col = np.sum(observed_knockdown_mat, axis=1)
+    order = np.arange(num_s)
+    order = np.argsort(-sum_col)
+    return order
 
 def compute_ll_ratios(n_parents, U, parent_weights, reduced_score_tables):
     """
@@ -160,4 +169,73 @@ def hamming_distance(mat_a, mat_b):
 #     parents = r['parents']
 #     nparents = r['nparents']
 #     print(permy, parents, nparents)
+
+def order_arr(order, unsorted_array):
+    # Get the indices that would sort order
+    sort_indices = np.argsort(order)
+
+    # Sort the array along each axis, except the first one
+    sorted_array = unsorted_array.copy()
+    for axis in range(1, sorted_array.ndim):
+        # Reshape sort_indices to be broadcastable over the required axis
+        expanded_indices = np.expand_dims(sort_indices, tuple(range(axis)) + tuple(range(axis + 1, sorted_array.ndim)))
+        # Applying the sort operation along the current axis
+        sorted_array = np.take_along_axis(sorted_array, expanded_indices, axis=axis)
+
+    # Sort along the first axis
+    sorted_array = sorted_array[sort_indices]
+
+    return sorted_array
+
+def unorder_arr(perm_order, sorted_array):
+    """
+    Reorders the rows and columns of a matrix based on a given permutation order.
+
+    Args:
+        perm_order (array-like): The permutation order.
+        sorted_matrix (array-like): The matrix to be reordered.
+
+    Returns:
+        array-like: The reordered matrix.
+    """
+    # Get the indices that would sort perm_order
+    sort_indices = np.argsort(perm_order)
+
+    # Get the indices to unsort (inverse of sorting)
+    unsort_indices = np.argsort(sort_indices)
+
+    # Unsort the array along each axis, except the first one
+    original_array = sorted_array
+    for axis in range(1, original_array.ndim):
+        # Applying the unsort operation along the current axis
+        original_array = np.take_along_axis(original_array, np.expand_dims(unsort_indices, axis=0), axis=axis)
+
+    # Unsort along the first axis
+    original_array = original_array[unsort_indices]
+
+    return original_array
+
+def min_swaps_to_match(arr1, arr2):
+    # Create a mapping from elements to their indices in arr2
+    index_map = {element: i for i, element in enumerate(arr2)}
+    
+    visited = set()  # Keep track of visited elements to avoid cycles
+    swaps = 0  # Count the number of swaps
+    
+    for i in range(len(arr1)):
+        while i not in visited and arr1[i] != arr2[i]:
+            # Swap arr1[i] with the element that should be at the current position
+            correct_idx = index_map[arr1[i]]
+            arr1[i], arr1[correct_idx] = arr1[correct_idx], arr1[i]
+            visited.add(i)
+            swaps += 1
+            i = correct_idx  # Continue with the new index
+            
+    return swaps
+
+def get_real_order_guess(adj_mat):
+    pass
+
+def is_lower_triangular(arr):
+    return np.allclose(np.tril(arr), arr)
 

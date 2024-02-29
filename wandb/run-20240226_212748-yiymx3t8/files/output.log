@@ -1,0 +1,16 @@
+num_e: 13
+num_s: 13
+/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py:101: RuntimeWarning: overflow encountered in scalar power
+  V_ik= -(D @ exp_weights @ D)[i][k] / (1 + D[i][k])**2 * exp_weights[i][k] * D[i][k]
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 214, in <module>
+    conduct_var_e_genes_experiments_w_reinit(Methods=[InverseMethod, Method])
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 74, in conduct_var_e_genes_experiments_w_reinit
+    weights, ll = method.optimize(init_val=1.0, use_wandb=True)
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py", line 151, in optimize
+    ll, weights = self.opt_b(weights, bounds)
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py", line 127, in opt_b
+    new_parent_weights[i][k] = self.calculate_local_optimum_b_inv(i, k, order_weights, bounds, expit_weights, new_parent_weights)
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py", line 114, in calculate_local_optimum_b_inv
+    raise Exception(f"Minimization not successful, Reason: {res.message}")
+Exception: Minimization not successful, Reason: ABNORMAL_TERMINATION_IN_LNSRCH

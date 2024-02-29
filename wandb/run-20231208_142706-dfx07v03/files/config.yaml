@@ -1,0 +1,49 @@
+wandb_version: 1
+
+gamma:
+  desc: null
+  value: 0.17218543046357615
+n_iterations:
+  desc: null
+  value: 0
+swap_prob:
+  desc: null
+  value: 0.9
+seed:
+  desc: null
+  value: 55
+adj_matrix:
+  desc: null
+  value: "[[0 0 0 ... 1 1 1]\n [0 0 0 ... 1 1 1]\n [0 0 0 ... 1 1 1]\n ...\n [0 0\
+    \ 0 ... 0 0 0]\n [0 0 0 ... 0 0 0]\n [0 0 0 ... 0 0 0]]"
+observed_order_score:
+  desc: null
+  value: -11435.801518029686
+observed_score:
+  desc: null
+  value: -2827.208922329671
+use_nem:
+  desc: null
+  value: false
+_wandb:
+  desc: null
+  value:
+    python_version: 3.11.4
+    cli_version: 0.16.0
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1702042026.884863
+    t:
+      1:
+      - 55
+      2:
+      - 55
+      3:
+      - 16
+      - 23
+      4: 3.11.4
+      5: 0.16.0
+      8:
+      - 4
+      - 5
+      13: darwin-arm64

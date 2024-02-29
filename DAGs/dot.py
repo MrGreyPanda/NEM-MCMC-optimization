@@ -1,6 +1,5 @@
 import csv
 import os
-import os
 
 def generate_dot_language(csv_file_path, output_file_path):
     # Read in the CSV file

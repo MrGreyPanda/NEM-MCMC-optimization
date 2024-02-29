@@ -44,7 +44,6 @@ def transitive_reduction(a):
         reduction = reduction_until_now
     return reduction
 
-# Bigger E!
 def gen_rnd_dag(i, output_file_path, min_per_rank=2, max_per_rank=4, min_ranks=3, max_ranks=5, percent=40, probs=[0.05, 0.1]):
     """
     Generates a random directed acyclic graph (DAG) and writes it to a CSV file.

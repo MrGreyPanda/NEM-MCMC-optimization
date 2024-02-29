@@ -1,0 +1,32 @@
+num_s: 13
+num_e: 13
+Best ll: -43.6443839391319
+Rounded LL: -58.65045808578667
+Comparison: real_ll: -26.511830938286312 - inferred_ll: -58.65045808578667
+Hamming Distance: 41
+num_e: 14
+Best ll: -32.35749387699634
+Rounded LL: -64.55953876293292
+Comparison: real_ll: -18.26565837998284 - inferred_ll: -64.55953876293292
+Hamming Distance: 45
+num_e: 15
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 189, in <module>
+    conduct_var_e_genes_experiments_w_reinit(Method=Method)
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 74, in conduct_var_e_genes_experiments_w_reinit
+    weights, ll = method.optimize()
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py", line 399, in optimize
+    ll, weights = self.opt_γ(weights, bounds)
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py", line 382, in opt_γ
+    new_parent_weights[i][k] = self.calculate_local_optimum_γ(i, k, order_weights, new_parent_weights, bounds)
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py", line 370, in calculate_local_optimum_γ
+    res = minimize(local_ll_sum_γ, x0=weights[i][k], bounds=bounds, args=(c,), jac=True, method='L-BFGS-B', tol=0.01)
+  File "/Users/simonmenzi/Library/Python/3.9/lib/python/site-packages/scipy/optimize/_minimize.py", line 713, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+  File "/Users/simonmenzi/Library/Python/3.9/lib/python/site-packages/scipy/optimize/_lbfgsb_py.py", line 309, in _minimize_lbfgsb
+    sf = _prepare_scalar_function(fun, x0, jac=jac, args=args, epsilon=eps,
+  File "/Users/simonmenzi/Library/Python/3.9/lib/python/site-packages/scipy/optimize/_optimize.py", line 402, in _prepare_scalar_function
+    sf = ScalarFunction(fun, x0, args, grad, hess,
+  File "/Users/simonmenzi/Library/Python/3.9/lib/python/site-packages/scipy/optimize/_differentiable_functions.py", line 193, in __init__
+    if sps.issparse(self.H):
+KeyboardInterrupt

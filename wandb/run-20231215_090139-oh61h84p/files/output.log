@@ -1,0 +1,143 @@
+/Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/nem_order_mcmc.py:18: RuntimeWarning: divide by zero encountered in divide
+  beta = expit(1.0 / (1.0 - x))
+Iteration of weight optimization: 0
+LL: -5728.618149797269
+Iteration of weight optimization: 1
+Iteration of weight optimization: 1
+LL: -5728.618149797269
+Iteration of weight optimization: 2
+Iteration of weight optimization: 2
+LL: -5728.618149797269
+Iteration of weight optimization: 3
+Iteration of weight optimization: 3
+LL: -5728.618149797269
+Iteration of weight optimization: 4
+Iteration of weight optimization: 4
+LL: -5728.618149797269
+Iteration of weight optimization: 5
+Iteration of weight optimization: 5
+LL: -5728.618149797269
+Iteration of weight optimization: 6
+Iteration of weight optimization: 6
+LL: -5728.618149797269
+Iteration of weight optimization: 7
+Iteration of weight optimization: 7
+LL: -5728.618149797269
+Iteration of weight optimization: 8
+Iteration of weight optimization: 8
+LL: -5728.618149797269
+Iteration of weight optimization: 9
+Iteration of weight optimization: 9
+LL: -5728.618149797269
+Iteration of weight optimization: 10
+Iteration of weight optimization: 10
+LL: -5728.618149797269
+Iteration of weight optimization: 11
+Iteration of weight optimization: 11
+LL: -5728.618149797269
+Iteration of weight optimization: 12
+Iteration of weight optimization: 12
+LL: -5728.618149797269
+Iteration of weight optimization: 13
+Iteration of weight optimization: 13
+LL: -5728.618149797269
+Iteration of weight optimization: 14
+Iteration of weight optimization: 14
+LL: -5728.618149797269
+Iteration of weight optimization: 15
+Iteration of weight optimization: 15
+LL: -5728.618149797269
+Iteration of weight optimization: 16
+Iteration of weight optimization: 16
+LL: -5728.618149797269
+Iteration of weight optimization: 17
+Iteration of weight optimization: 17
+LL: -5728.618149797269
+Iteration of weight optimization: 18
+Iteration of weight optimization: 18
+LL: -5728.618149797269
+Iteration of weight optimization: 19
+Iteration of weight optimization: 19
+LL: -5728.618149797269
+Iteration of weight optimization: 20
+Iteration of weight optimization: 20
+LL: -5728.618149797269
+Iteration of weight optimization: 21
+Iteration of weight optimization: 21
+LL: -5728.618149797269
+Iteration of weight optimization: 22
+Iteration of weight optimization: 22
+LL: -5728.618149797269
+Iteration of weight optimization: 23
+Iteration of weight optimization: 23
+LL: -5728.618149797269
+Iteration of weight optimization: 24
+Iteration of weight optimization: 24
+LL: -5728.618149797269
+Iteration of weight optimization: 25
+Iteration of weight optimization: 25
+LL: -5728.618149797269
+Iteration of weight optimization: 26
+Iteration of weight optimization: 26
+LL: -5728.618149797269
+Iteration of weight optimization: 27
+Iteration of weight optimization: 27
+LL: -5728.618149797269
+Iteration of weight optimization: 28
+Iteration of weight optimization: 28
+LL: -5728.618149797269
+Iteration of weight optimization: 29
+Iteration of weight optimization: 29
+LL: -5728.618149797269
+Iteration of weight optimization: 30
+Iteration of weight optimization: 30
+LL: -5728.618149797269
+Iteration of weight optimization: 31
+Iteration of weight optimization: 31
+LL: -5728.618149797269
+Iteration of weight optimization: 32
+Iteration of weight optimization: 32
+LL: -5728.618149797269
+Iteration of weight optimization: 33
+Iteration of weight optimization: 33
+LL: -5728.618149797269
+Iteration of weight optimization: 34
+Iteration of weight optimization: 34
+LL: -5728.618149797269
+Iteration of weight optimization: 35
+Iteration of weight optimization: 35
+LL: -5728.618149797269
+Iteration of weight optimization: 36
+Iteration of weight optimization: 36
+LL: -5728.618149797269
+Iteration of weight optimization: 37
+Iteration of weight optimization: 37
+LL: -5728.618149797269
+Iteration of weight optimization: 38
+Iteration of weight optimization: 38
+LL: -5728.618149797269
+Iteration of weight optimization: 39
+Iteration of weight optimization: 39
+LL: -5728.618149797269
+Iteration of weight optimization: 40
+Time elapsed: 6.406641244888306
+Best order: [ 3  2  1  0  6  4  7 14  5 11  9  8 10 13 12 17 16 18 19 15 20 21 27 23
+ 24 29 22 25 26 28 33 32 34 30 36 31 37 35 38]
+Real order: [ 3  0  1  2  4  6  7 14  9 11  8  5 10 12 13 16 17 18 15 19 20 21 23 24
+ 27 26 29 22 25 28 32 33 34 30 31 36 37 35 38]
+Observed order: [ 3  0  1  2  4  6  7 14  9 11  8  5 10 12 13 16 17 18 15 19 20 21 23 24
+ 27 26 29 22 25 28 32 33 34 30 31 36 37 35 38]
+Infered Order Score: -15761.3562720714
+Observed Score: -2827.208922329671
+Best DAG:
+[[0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ ...
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]]
+Hamming Distance: 519
+Hamming Distance to Ancestor: 519
+Generated /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/output/infer_closed.dot
+Generated /Users/simonmenzi/Documents/RW/7. Semester/Bachelor Thesis/MyNEMPython/output/infer_red.dot

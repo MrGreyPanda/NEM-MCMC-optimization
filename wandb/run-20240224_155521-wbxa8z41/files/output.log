@@ -1,0 +1,20 @@
+end_nodes: [6, 6, 0, 4, 8, 7, 6, 4, 7, 5, 3, 8, 2, 4, 2, 1, 4, 8, 2, 4, 1, 1, 5, 7, 8, 1, 5, 6, 5, 3, 8, 7, 7, 8, 4, 0, 8, 0, 1, 6, 0, 7, 5, 3, 5, 1, 3, 3, 3, 2, 8, 7, 1, 1, 5, 8, 7, 1, 4, 8, 4, 1, 8, 5, 8, 3, 8, 4, 7, 1, 6, 5, 3, 4, 2, 3, 2, 0, 4, 7, 1, 1, 2, 2, 0, 1, 8, 6, 8, 4]
+permutation_order: [0 3 1 7 6 4 2 8 5]
+/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py:94: RuntimeWarning: overflow encountered in exp
+  R = D @ np.exp(weights) @ D
+/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py:94: RuntimeWarning: invalid value encountered in matmul
+  R = D @ np.exp(weights) @ D
+/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py:95: RuntimeWarning: overflow encountered in scalar power
+  V_ik= R[i][k] * (1.0 + D[i][k]) - D[i][k] * R[i][k] / (1 + D[i][k])**2
+Traceback (most recent call last):
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 212, in <module>
+    conduct_one_big_run([0,1,2,3,42,99,100,132,420,999], [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19])
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/experiments.py", line 196, in conduct_one_big_run
+    weights, ll = method.optimize()
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py", line 144, in optimize
+    ll, weights = self.opt_b(weights, bounds)
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py", line 120, in opt_b
+    new_parent_weights[i][k] = self.calculate_local_optimum_b_inv(i, k, order_weights, bounds, expit_weights, new_parent_weights)
+  File "/Users/simonmenzi/Developer/Private/NEM-MCMC-optimization/methods.py", line 107, in calculate_local_optimum_b_inv
+    raise Exception(f"Minimization not successful, Reason: {res.message}")
+Exception: Minimization not successful, Reason: ABNORMAL_TERMINATION_IN_LNSRCH
